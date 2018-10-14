@@ -3,13 +3,21 @@ import { StyleSheet, Text, View, SafeAreaView, ScrollView, Dimensions, Image} fr
 import {createDrawerNavigator, DrawerItems} from 'react-navigation';
 import HomeScreen from './screens/HomeScreen'
 import SettingScreen from './screens/SettingScreen'
+import SavedTripScreen from './screens/SavedTripScreen'
+import DayDetailScreen from './screens/DayDetailScreen'
+
+// Redux Import
+import reduxStore from './store'
+import { Provider } from 'react-redux'
 
 const {width} = Dimensions.get('window')
 
 export default class App extends React.Component {
   render() {
     return (
-      <AppDrawNavigator />
+      <Provider store={reduxStore}>
+        <AppDrawNavigator />
+      </Provider>
     );
   }
 }
@@ -28,7 +36,9 @@ const CustomDrawComponent = (props) => (
 
 const AppDrawNavigator = createDrawerNavigator({
   Home: HomeScreen,
-  Setting: SettingScreen
+  Setting: SettingScreen,
+  DayDetail: DayDetailScreen,
+  SavedTrip: SavedTripScreen
 },{
   contentComponent: CustomDrawComponent,
   // drawerWidth: width

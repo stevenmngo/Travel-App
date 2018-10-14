@@ -1,0 +1,3 @@
+export default {
+    SELECT_DESTINATION: 'SELECT_DESTINATION'
+}
