@@ -34,7 +34,7 @@ class Home extends Component{
 
     render(){
         return (
-            <View style = {styles.container}>
+            <View style = {{flex :1}}>
                 <Header>
                     <Left>
                         <Icon name = "menu" onPress={()=> this.props.navigation.openDrawer()}></Icon>
@@ -64,9 +64,3 @@ const mapDispatchToProps = dispatch => ({
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home)
-
-const styles = StyleSheet.create({
-    container:{
-        flex:1
-    }
-})

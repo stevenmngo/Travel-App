@@ -10,7 +10,7 @@ class DayDetailScreen extends Component {
     // }
     render() {
         return (
-            <View style={styles.container}>
+            <View style={{flex:1}}>
                 <Header>
                     <Left>
                         <Icon name="menu" onPress={() => this.props.navigation.openDrawer()}></Icon>
@@ -25,9 +25,3 @@ class DayDetailScreen extends Component {
 }
 
 export default DayDetailScreen
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1
-    }
-})

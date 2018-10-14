@@ -10,7 +10,7 @@ class SavedTripScreen extends Component {
     // }
     render() {
         return (
-            <View style={styles.container}>
+            <View style={{flex:1}}>
                 <Header>
                     <Left>
                         <Icon name="menu" onPress={() => this.props.navigation.openDrawer()}></Icon>
@@ -25,9 +25,3 @@ class SavedTripScreen extends Component {
 }
 
 export default SavedTripScreen
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1
-    }
-})
