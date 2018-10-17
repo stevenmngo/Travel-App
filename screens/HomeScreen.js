@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, Text, StyleSheet, FlatList } from 'react-native'
+import { View, Text, StyleSheet, FlatList, TextInput } from 'react-native'
 import {Header, Left, Right, Icon, Item} from 'native-base'
 
 // Redux Import
@@ -10,7 +10,7 @@ class Home extends Component{
     constructor(props) {
         super(props)
         this.state = { 
-            selectedCiti: '',
+            stateCity: '',
             Cities: [
                 { key: "San Jose" },
                 { key: "San Francisco" },
@@ -23,7 +23,6 @@ class Home extends Component{
     }
 
     setSelected = (selectedCiti) =>{
-        // this.setState(Object.assign(this.state, { selectedCiti: selectedCiti}))
         this.props.selectCiti(selectedCiti)
     }
     static navigationOptions = {
@@ -41,6 +40,12 @@ class Home extends Component{
                     </Left>
                 </Header>
                 <View style = {{flex:1, alignItems:'center', justifyContent:'center'}}>
+                    <TextInput
+                        placeholder = 'Search Places...'
+                        style={{ width: '50%', height: 40, alignItems: 'center', justifyContent: 'center'}}
+                        onChangeText={(stateCity) => this.setState({ stateCity })}
+                        value={this.state.stateCity}
+                    />
                     <Text>Current Selected City</Text>
                     <Text>{this.props.selectedCiti}</Text>
                 </View>
