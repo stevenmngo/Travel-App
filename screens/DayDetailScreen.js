@@ -1,13 +1,8 @@
 import React, { Component } from 'react'
-import { View, Text, StyleSheet } from 'react-native'
-import { Header, Left, Right, Icon } from 'native-base'
+import { View, Text, StyleSheet, SafeAreaView } from 'react-native'
+import { Header, Left, Right, Icon, Container, Tab, Tabs, ScrollableTab, Button } from 'native-base'
 
 class DayDetailScreen extends Component {
-    // static navigationOptions = {
-    //     drawerIcon: ({ tintColor }) => (
-    //         <Icon name="home" style={{ fontSize: 24, color: tintColor }}></Icon>
-    //     )
-    // }
     render() {
         return (
             <View style={{flex:1}}>
@@ -16,9 +11,24 @@ class DayDetailScreen extends Component {
                         <Icon name="menu" onPress={() => this.props.navigation.openDrawer()}></Icon>
                     </Left>
                 </Header>
-                <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-                    <Text>DayDetailScreen</Text>
-                </View>
+                {/*<Header hasTabs/>*/}
+                <Tabs renderTabBar = {()=> <ScrollableTab/>} >
+                    <Tab heading = "Tab1"> 
+                        <Text>Tab 1</Text>
+                    </Tab>
+                    <Tab heading = "Tab2"> 
+                        <Text>Tab 2</Text>
+                    </Tab>
+                    <Tab heading = "Tab3"> 
+                        <Text>Tab 3</Text>
+                    </Tab>
+                    <Tab heading = "Tab4"> 
+                        <Text>Tab 4</Text>
+                    </Tab>
+                    <Tab heading = "Tab5"> 
+                        <Text>Tab 5</Text>
+                    </Tab>
+                </Tabs>
             </View>
         )
     }
