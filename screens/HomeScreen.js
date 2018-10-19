@@ -17,9 +17,38 @@ class Home extends Component{
                 { key: "San Diego" },
                 { key: "San Mateo" },
                 { key: "San Bernanio" },
-            ]
+            ],
+            APIResult: []
         }
         this.setSelected = this.setSelected.bind(this)
+        this.realTimeSearch = this.realTimeSearch.bind(this)
+    }
+
+    realTimeSearch = (stateCity) => {
+
+        // Set the current state value
+        this.setState({ stateCity })
+
+        // Set get suggested places from API
+        APItoFectch = 'https://maps.googleapis.com/maps/api/place/autocomplete/json?input=' + this.state.stateCity + '&inputtype=textquery&key=AIzaSyD7Oa99Y264n7KesaO7LWB-OGmSUntkPHI'
+        fetch(APItoFectch, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        })
+            .then((response) => response.json())
+            .then((responseJson) => {
+                result = responseJson.predictions
+                APIResult = []
+                for (thing of result){
+                    APIResult.push(thing.structured_formatting.main_text)
+                }
+                this.setState({ APIResult })
+            })
+            .catch((error) => {
+                console.error(error);
+            });
     }
 
     setSelected = (selectedCiti) =>{
@@ -43,16 +72,16 @@ class Home extends Component{
                     <TextInput
                         placeholder = 'Search Places...'
                         style={{ width: '50%', height: 40, alignItems: 'center', justifyContent: 'center'}}
-                        onChangeText={(stateCity) => this.setState({ stateCity })}
+                        onChangeText={(stateCity) => this.realTimeSearch(stateCity)}
                         value={this.state.stateCity}
                     />
-                    <Text>Current Selected City</Text>
+                    <Text style={{marginTop:0, marginBottom: 10}}>Current Selected City</Text>
                     <Text>{this.props.selectedCiti}</Text>
                 </View>
                 <View style = {{flex:1, alignItems:'center', justifyContent:'center'}}>
                     <FlatList
-                        data={this.state.Cities}
-                        renderItem={({ item }) => <Text onPress={() => this.setSelected(item.key)} style={{ padding: 10, fontSize: 18, height: 44 }}>{item.key}</Text>}
+                        data={this.state.APIResult}
+                        renderItem={({ item }) => <Text id={item} onPress={() => this.setSelected(item)} style={{ padding: 10, fontSize: 18, height: 44 }}>{item}</Text>}
                     />
                 </View>
             </View>
