@@ -1,0 +1,5 @@
+extends: kensho
+
+rules:
+  no-use-before-define: 0
+  react/destructuring-assignment: 0
