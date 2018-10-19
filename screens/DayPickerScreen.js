@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
-import { View, Text, StyleSheet, DatePickerIOS, TouchableOpacity } from 'react-native'
-import { Header, Left, Right, Icon } from 'native-base'
+import { View, Text, StyleSheet, FlatList, TextInput, TouchableOpacity } from 'react-native'
+import { Button, Header, Left, Right, Icon, Item, Body, Title, Thumbnail } from 'native-base'
+
 import DateTimePicker from 'react-native-modal-datetime-picker';
 
 class DayPickerScreen extends Component {
@@ -65,11 +66,19 @@ class DayPickerScreen extends Component {
     render() {
         return (
             <View style={{ flex: 1 }}>
-                <Header>
-                    <Left>
-                        <Icon name="menu" onPress={() => this.props.navigation.openDrawer()}></Icon>
-                    </Left>
-                </Header>
+                    <Header>
+                        <Left>
+                            <Button transparent>
+                                <Icon name="menu" onPress={() => this.props.navigation.openDrawer()}></Icon>
+                            </Button>
+                        </Left>
+                        <Body>
+                            <Title>Pick Date</Title>
+                        </Body>
+                        <Right>
+                            <Thumbnail small source={require('../assets/group.png')} />
+                        </Right>
+                    </Header>
                 <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
                     <Text>Total Days</Text>
                     <Text>{this.state.totalDays}</Text>

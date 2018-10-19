@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { View, Text, StyleSheet, FlatList, TextInput } from 'react-native'
-import {Header, Left, Right, Icon, Item} from 'native-base'
+import { Button, Header, Left, Right, Icon, Item, Body, Title, Thumbnail} from 'native-base'
 
 // Redux Import
 import { connect } from 'react-redux'
@@ -53,6 +53,7 @@ class Home extends Component{
 
     setSelected = (selectedCiti) =>{
         this.props.selectCiti(selectedCiti)
+        this.props.navigation.navigate('DayPicker')
     }
     static navigationOptions = {
         drawerIcon: ({tintColor}) =>(
@@ -61,12 +62,21 @@ class Home extends Component{
         }
 
     render(){
+        const uri = "../assets/IMG_4640.JPG";
         return (
             <View style = {{flex :1}}>
                 <Header>
                     <Left>
-                        <Icon name = "menu" onPress={()=> this.props.navigation.openDrawer()}></Icon>
+                        <Button transparent>
+                            <Icon name = "menu" onPress={()=> this.props.navigation.openDrawer()}></Icon>
+                        </Button>
                     </Left>
+                    <Body>
+                        <Title>Destination</Title>
+                    </Body>
+                    <Right>
+                        <Thumbnail small source={require('../assets/group.png')} />
+                    </Right>
                 </Header>
                 <View style = {{flex:1, alignItems:'center', justifyContent:'center'}}>
                     <TextInput
