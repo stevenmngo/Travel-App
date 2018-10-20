@@ -16,7 +16,7 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     color: '#FF1493',
-    fontFamily: 'Comic Sans MS',
+    fontFamily: 'Arial',
     fontSize: 22,
     letterSpacing: 0.5,
   },

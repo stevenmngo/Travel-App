@@ -41,7 +41,7 @@ const routeConfig = {
     inactiveTintColor: '#b9b9b9',
     indicatorStyle: {backgroundColor: '#b9b9b9'},
     labelStyle: {
-      fontFamily: 'Comic Sans MS',
+      fontFamily: 'Arial',
       fontSize: 12,
     },
     style: {

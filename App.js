@@ -3,7 +3,6 @@ import {View, SafeAreaView, ScrollView, Dimensions, Image} from 'react-native'
 import {createDrawerNavigator, createSwitchNavigator, DrawerItems} from 'react-navigation'
 import {createMaterialBottomTabNavigator} from 'react-navigation-material-bottom-tabs'
 import {Provider} from 'react-redux'
-import * as firebase from 'firebase'
 
 import HomeScreen from './screens/HomeScreen'
 import SettingScreen from './screens/SettingScreen'
@@ -15,18 +14,11 @@ import RegisterScreen from './screens/RegisterScreen'
 import reduxStore from './store'
 import Tab from './Auth/Tab'
 import loading from './Auth/loading'
+import SignIn from './Auth/signin'
 
 const {width} = Dimensions.get('window')
 
 export default class App extends React.Component {
-  componentDidMount() {
-    const firebaseConfig = {
-      apiKey: 'AIzaSyBSQZ8KSFpRMyd9BRFP6clRbrS5KlkzRgI',
-      authDomain: 'travelapp-1cc73.firebaseapp.com',
-    }
-    firebase.initializeApp(firebaseConfig)
-  }
-
   render() {
     return (
       <Provider store={reduxStore}>
@@ -86,6 +78,7 @@ const AppSwitchNavigator = createSwitchNavigator(
     drawer: AppDrawNavigator,
     tab: Tab,
     load: loading,
+    signin: SignIn,
   },
   {
     initialRouteName: 'load',

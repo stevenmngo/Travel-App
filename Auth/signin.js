@@ -1,9 +1,10 @@
 import React from 'react'
 import {Text, View, StyleSheet, Image, Alert} from 'react-native'
-import firebase from 'react-native-firebase'
 
 import Input from '../dummyComponents/input'
 import Button from '../dummyComponents/Button'
+
+import firebaseApp from './firebase'
 
 export default class SignIn extends React.Component {
   constructor(props) {
@@ -15,8 +16,7 @@ export default class SignIn extends React.Component {
   }
 
   handleLogin = () => {
-    const {email, password} = this.state
-    firebase
+    firebaseApp
       .auth()
       .signInWithEmailAndPassword(this.state.email, this.state.password)
       .then(() => this.props.navigation.navigate('drawer'))
