@@ -1,9 +1,10 @@
 import React from 'react'
 import {StyleSheet, Text, Image, View, Alert} from 'react-native'
-import firebase from 'react-native-firebase'
 
 import Input from '../dummyComponents/input'
 import Button from '../dummyComponents/Button'
+
+import firebaseApp from './firebase'
 
 export default class SignUp extends React.Component {
   constructor(props) {
@@ -12,14 +13,14 @@ export default class SignUp extends React.Component {
   }
 
   handleSignUp = () => {
-    if (this.state.password !== this.state.passwordConfirm) {
+    if (this.state.password !== this.state.confirmedPassword) {
       Alert.alert('Passwords do not match')
       return
     }
-    firebase
+    firebaseApp
       .auth()
       .createUserWithEmailAndPassword(this.state.email, this.state.password)
-      .then(() => this.props.navigation.navigate('tab'))
+      .then(() => this.props.navigation.navigate('signin'))
       .catch(error => {
         Alert.alert(error.message)
       })
@@ -40,7 +41,11 @@ export default class SignUp extends React.Component {
         <View style={styles.inputContainer}>
           <Input
             placeholder="Email"
-            onChangeText={email => this.setState({email})}
+            onChangeText={email =>
+              this.setState({
+                email,
+              })
+            }
             value={this.state.email}
           />
           <Input
@@ -56,7 +61,7 @@ export default class SignUp extends React.Component {
             secureTextEntry
           />
         </View>
-        <Button title="Sign In" onPress={this.handleLogin} />
+        <Button title="Sign Up" onPress={this.handleSignUp} />
       </View>
     )
   }

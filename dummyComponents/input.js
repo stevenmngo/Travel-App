@@ -22,7 +22,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1.5,
     fontSize: 16,
     borderBottomColor: '#FF1493',
-    fontFamily: 'Comic Sans MS',
+    fontFamily: 'Arial',
   },
 })
 
