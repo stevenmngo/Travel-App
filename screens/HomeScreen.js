@@ -100,7 +100,7 @@ class Home extends Component{
 }
 
 const mapStateToProps = state => ({
-    selectedCiti: state.HomeReducer.SelectedDestination
+    selectedCiti: state.home.SelectedDestination
 })
 
 const mapDispatchToProps = dispatch => ({

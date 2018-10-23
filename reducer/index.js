@@ -6,7 +6,8 @@ import SettingReducer from './SettingReducer'
 import { combineReducers } from 'redux'
 
 const combinedReducers = combineReducers({
-    HomeReducer
+    home: HomeReducer, 
+    savedTrips: SavedTripReducer
 })
 
 export default combinedReducers
