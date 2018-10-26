@@ -9,8 +9,6 @@ import SettingScreen from './screens/SettingScreen'
 import SavedTripScreen from './screens/SavedTripScreen'
 import DayDetailScreen from './screens/DayDetailScreen'
 import DayPickerScreen from './screens/DayPickerScreen'
-import SignInScreen from './screens/SignInScreen'
-import RegisterScreen from './screens/RegisterScreen'
 import reduxStore from './store'
 import Tab from './Auth/Tab'
 import loading from './Auth/loading'
@@ -22,7 +20,7 @@ export default class App extends React.Component {
   render() {
     return (
       <Provider store={reduxStore}>
-        <AppSwitchNavigator />
+        <AppDrawNavigator />
       </Provider>
     )
   }
@@ -59,8 +57,7 @@ const AppDrawNavigator = createDrawerNavigator(
   {
     Home: HomeScreen,
     Setting: SettingScreen,
-    Register: RegisterScreen,
-    SignIn: SignInScreen,
+    SignIn: Tab,
     SavedTrip: SavedTripScreen,
     NewTrip: TabNavigation,
   },
@@ -73,14 +70,14 @@ const AppDrawNavigator = createDrawerNavigator(
     },
   }
 )
-const AppSwitchNavigator = createSwitchNavigator(
-  {
-    drawer: AppDrawNavigator,
-    tab: Tab,
-    load: loading,
-    signin: SignIn,
-  },
-  {
-    initialRouteName: 'load',
-  }
-)
+// const AppSwitchNavigator = createSwitchNavigator(
+//   {
+//     drawer: AppDrawNavigator,
+//     tab: Tab,
+//     load: loading,
+//     signin: SignIn,
+//   },
+//   {
+//     initialRouteName: 'drawer',
+//   }
+// )
