@@ -1,30 +1,14 @@
-import React, { Component } from 'react'
-import { StyleSheet } from 'react-native'
-import { Image } from 'react-native';
-import { Container, Header, View, DeckSwiper, Card, CardItem, Thumbnail, Text, Left, Body, Icon } from 'native-base';
-const cards = [
-    {
-        text: 'Card One',
-        name: 'One',
-        image: require('../assets/passanger.png')
-    },
-    {
-        text: 'Card 2',
-        name: 'One',
-        image: require('../assets/passanger.png')
-    },
-    {
-        text: 'Card 3',
-        name: 'One',
-        image: require('../assets/passanger.png')
-    },
-];
+import React, { Component } from 'react';
+import { ScrollView, Image, TouchableHighlight} from 'react-native';
+import allReducers from '../reducer';
+import { createStore } from 'redux';
+import { connect } from 'react-redux';
+import { Container, Header, View, Card, CardItem, Text, Left, Right, Body, Icon } from 'native-base';
+
+const store = createStore(allReducers);
+
 class SavedTripScreen extends Component {
-    // static navigationOptions = {
-    //     drawerIcon: ({ tintColor }) => (
-    //         <Icon name="home" style={{ fontSize: 24, color: tintColor }}></Icon>
-    //     )
-    // }
+    
     render() {
         return (
             <View style={{flex:1}}>
@@ -32,40 +16,43 @@ class SavedTripScreen extends Component {
                     <Left>
                         <Icon name="menu" onPress={() => this.props.navigation.openDrawer()}></Icon>
                     </Left>
+                    <Right>
+                        <Icon name="add" onPress={() => this.props.navigation.navigate('Home')}></Icon>
+                    </Right>
                 </Header>
-                {/* <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-                    <Text>SavedTripScreen</Text>
-                </View> */}
                 <Container>
-                    <View>
-                        <DeckSwiper
-                            dataSource={cards}
-                            renderItem={item =>
-                                <Card style={{ elevation: 3 }}>
-                                    <CardItem>
-                                        <Left>
-                                            <Thumbnail source={item.image} />
-                                            <Body>
-                                                <Text>{item.text}</Text>
-                                                <Text note>NativeBase</Text>
-                                            </Body>
-                                        </Left>
-                                    </CardItem>
-                                    <CardItem cardBody>
-                                        <Image style={{ height: 300, flex: 1 }} source={item.image} />
-                                    </CardItem>
-                                    <CardItem>
-                                        <Icon name="heart" style={{ color: '#ED4A6A' }} />
-                                        <Text>{item.name}</Text>
-                                    </CardItem>
-                                </Card>
-                            }
-                        />
-                    </View>
+                    <ScrollView>
+                        {this.props.savedTrips.map(item => (
+                            <Card style={{ elevation: 3 }}>
+                                <CardItem>
+                                    <Left>
+                                        <Body>
+                                            <Text>{item.trip_name}</Text>
+                                        </Body>
+                                    </Left>
+                                </CardItem>
+                                <CardItem cardBody>
+                             
+                                <TouchableHighlight onPress={() => this.props.navigation.navigate('DayDetail')}>
+                                    <Image style={{ height: 300, flex: 1 }} source={item.image}/>
+                                    </TouchableHighlight>
+                                    
+                                </CardItem>
+                                <CardItem>
+                                    <Icon name="heart" style={{ color: '#ED4A6A' }} />
+                                    <Text>{item.destination}</Text>
+                                </CardItem>
+                            </Card>
+                        ))}
+                    </ScrollView>
                 </Container>
             </View>
         )
     }
 }
 
-export default SavedTripScreen
+const mapStateToProps = state => ({
+    savedTrips: state.savedTrips
+})
+
+export default connect(mapStateToProps)(SavedTripScreen)
