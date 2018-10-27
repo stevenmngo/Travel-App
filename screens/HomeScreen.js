@@ -29,26 +29,28 @@ class Home extends Component{
         // Set the current state value
         this.setState({ stateCity })
 
-        // Set get suggested places from API
-        APItoFectch = 'https://maps.googleapis.com/maps/api/place/autocomplete/json?input=' + this.state.stateCity + '&inputtype=textquery&key=AIzaSyD7Oa99Y264n7KesaO7LWB-OGmSUntkPHI'
-        fetch(APItoFectch, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-            }
-        })
-            .then((response) => response.json())
-            .then((responseJson) => {
-                result = responseJson.predictions
-                APIResult = []
-                for (thing of result){
-                    APIResult.push(thing.structured_formatting.main_text)
-                }
-                this.setState({ APIResult })
-            })
-            .catch((error) => {
-                console.error(error);
-            });
+        this.props.requestResult(stateCity)
+
+        // // Set get suggested places from API
+        // APItoFectch = 'https://maps.googleapis.com/maps/api/place/autocomplete/json?input=' + this.state.stateCity + '&inputtype=textquery&key=AIzaSyD7Oa99Y264n7KesaO7LWB-OGmSUntkPHI'
+        // fetch(APItoFectch, {
+        //     method: 'GET',
+        //     headers: {
+        //         'Content-Type': 'application/json',
+        //     }
+        // })
+        //     .then((response) => response.json())
+        //     .then((responseJson) => {
+        //         result = responseJson.predictions
+        //         APIResult = []
+        //         for (thing of result){
+        //             APIResult.push(thing.structured_formatting.main_text)
+        //         }
+        //         this.setState({ APIResult })
+        //     })
+        //     .catch((error) => {
+        //         console.error(error);
+        //     });
     }
 
     setSelected = (selectedCiti) =>{
@@ -90,7 +92,7 @@ class Home extends Component{
                 </View>
                 <View style = {{flex:1, alignItems:'center', justifyContent:'center'}}>
                     <FlatList
-                        data={this.state.APIResult}
+                        data={this.props.searchResult}
                         renderItem={({ item }) => <Text id={item} onPress={() => this.setSelected(item)} style={{ padding: 10, fontSize: 18, height: 44 }}>{item}</Text>}
                     />
                 </View>
@@ -100,11 +102,13 @@ class Home extends Component{
 }
 
 const mapStateToProps = state => ({
-    selectedCiti: state.home.SelectedDestination
+    selectedCiti: state.home.SelectedDestination,
+    searchResult: state.home.searchResult
 })
 
 const mapDispatchToProps = dispatch => ({
-    selectCiti: citi => dispatch(action.HomeAction.selectDestination(citi))
+    selectCiti: citi => dispatch(action.HomeAction.selectDestination(citi)),
+    requestResult: input => dispatch(action.HomeAction.fetchSuggestionDestination(input))
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home)
