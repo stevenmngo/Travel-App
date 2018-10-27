@@ -26,7 +26,7 @@ class DayDetailScreen extends Component {
                     <Tab heading = "All POI">
                         <Text style={{textAlign: "center"}}>ALL POI</Text>
                         <Content padder>
-                        <Button success onPress={() => ActionSheet.show({
+                        <Button onPress={() => ActionSheet.show({
                             options: BUTTONS,
                             cancelButtonIndex: CANCEL_INDEX,
                             destructiveButtonIndex: DESTRUCTIVE_INDEX,
