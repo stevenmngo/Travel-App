@@ -1,8 +1,9 @@
 import React from 'react'
 import {StyleSheet, Text, Image, View, Alert} from 'react-native'
+import {Button, Header, Left, Right, Icon, Body, Title, Thumbnail} from 'native-base'
 
 import Input from '../dummyComponents/input'
-import Button from '../dummyComponents/Button'
+import Buttons from '../dummyComponents/Buttons'
 
 import firebaseApp from './firebase'
 
@@ -20,7 +21,7 @@ export default class SignUp extends React.Component {
     firebaseApp
       .auth()
       .createUserWithEmailAndPassword(this.state.email, this.state.password)
-      .then(() => this.props.navigation.navigate('signin'))
+      .then(() => this.props.navigation.navigate('SignIn'))
       .catch(error => {
         Alert.alert(error.message)
       })
@@ -28,40 +29,55 @@ export default class SignUp extends React.Component {
 
   render() {
     return (
-      <View style={styles.container}>
-        <View style={styles.heading}>
-          <Image
-            source={require('../assets/boomboxcropped.png')}
-            style={styles.headingImage}
-            resizeMode="contain"
-          />
+      <View style={{flex: 1}}>
+        <Header>
+          <Left>
+            <Button transparent>
+              <Icon name="menu" onPress={() => this.props.navigation.openDrawer()} />
+            </Button>
+          </Left>
+          <Body>
+            <Title> Sign Up </Title>
+          </Body>
+          <Right>
+            <Thumbnail small source={require('../assets/group.png')} />
+          </Right>
+        </Header>
+        <View style={styles.container}>
+          <View style={styles.heading}>
+            <Image
+              source={require('../assets/boomboxcropped.png')}
+              style={styles.headingImage}
+              resizeMode="contain"
+            />
+          </View>
+          <Text style={styles.greeting}>Welcome,</Text>
+          <Text style={styles.greeting2}>sign up to continue</Text>
+          <View style={styles.inputContainer}>
+            <Input
+              placeholder="Email"
+              onChangeText={email =>
+                this.setState({
+                  email,
+                })
+              }
+              value={this.state.email}
+            />
+            <Input
+              placeholder="Password"
+              onChangeText={password => this.setState({password})}
+              value={this.state.password}
+              secureTextEntry
+            />
+            <Input
+              placeholder="Confirmed Password"
+              onChangeText={confirmedPassword => this.setState({confirmedPassword})}
+              value={this.state.confirmedPassword}
+              secureTextEntry
+            />
+          </View>
+          <Buttons title="Sign Up" onPress={this.handleSignUp} />
         </View>
-        <Text style={styles.greeting}>Welcome,</Text>
-        <Text style={styles.greeting2}>sign up to continue</Text>
-        <View style={styles.inputContainer}>
-          <Input
-            placeholder="Email"
-            onChangeText={email =>
-              this.setState({
-                email,
-              })
-            }
-            value={this.state.email}
-          />
-          <Input
-            placeholder="Password"
-            onChangeText={password => this.setState({password})}
-            value={this.state.password}
-            secureTextEntry
-          />
-          <Input
-            placeholder="Confirmed Password"
-            onChangeText={confirmedPassword => this.setState({confirmedPassword})}
-            value={this.state.confirmedPassword}
-            secureTextEntry
-          />
-        </View>
-        <Button title="Sign Up" onPress={this.handleSignUp} />
       </View>
     )
   }

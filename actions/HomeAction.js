@@ -1,11 +1,9 @@
 import constant from '../contants'
 
-const selectDestination = (destination) => {
-    return {
-        type: constant.HOME.SELECT_DESTINATION,
-        payload: destination
-    }
-}
+const selectDestination = destination => ({
+  type: constant.HOME.SELECT_DESTINATION,
+  payload: destination,
+})
 
 const requestSuggestionDestination = (input) => {
     return {

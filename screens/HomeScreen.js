@@ -1,67 +1,39 @@
-import React, { Component } from 'react'
-import { View, Text, StyleSheet, FlatList, TextInput } from 'react-native'
-import { Button, Header, Left, Right, Icon, Item, Body, Title, Thumbnail} from 'native-base'
+import React, {Component} from 'react'
+import {View, Text, StyleSheet, FlatList, TextInput} from 'react-native'
+import {Button, Header, Left, Right, Icon, Item, Body, Title, Thumbnail} from 'native-base'
 
 // Redux Import
-import { connect } from 'react-redux'
+import {connect} from 'react-redux'
+
 import action from '../actions'
 
-class Home extends Component{
-    constructor(props) {
-        super(props)
-        this.state = { 
-            stateCity: '',
-            Cities: [
-                { key: "San Jose" },
-                { key: "San Francisco" },
-                { key: "San Diego" },
-                { key: "San Mateo" },
-                { key: "San Bernanio" },
-            ],
-            APIResult: []
-        }
-        this.setSelected = this.setSelected.bind(this)
-        this.realTimeSearch = this.realTimeSearch.bind(this)
+class Home extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      stateCity: '',
+      Cities: [
+        {key: 'San Jose'},
+        {key: 'San Francisco'},
+        {key: 'San Diego'},
+        {key: 'San Mateo'},
+        {key: 'San Bernanio'},
+      ],
+      APIResult: [],
     }
+    this.setSelected = this.setSelected.bind(this)
+    this.realTimeSearch = this.realTimeSearch.bind(this)
+  }
 
-    realTimeSearch = (stateCity) => {
+  realTimeSearch = stateCity => {
+    // Set the current state value
+    this.setState({stateCity})
+    this.props.requestResult(stateCity)
+  }
 
-        // Set the current state value
-        this.setState({ stateCity })
-
-        this.props.requestResult(stateCity)
-
-        // // Set get suggested places from API
-        // APItoFectch = 'https://maps.googleapis.com/maps/api/place/autocomplete/json?input=' + this.state.stateCity + '&inputtype=textquery&key=AIzaSyD7Oa99Y264n7KesaO7LWB-OGmSUntkPHI'
-        // fetch(APItoFectch, {
-        //     method: 'GET',
-        //     headers: {
-        //         'Content-Type': 'application/json',
-        //     }
-        // })
-        //     .then((response) => response.json())
-        //     .then((responseJson) => {
-        //         result = responseJson.predictions
-        //         APIResult = []
-        //         for (thing of result){
-        //             APIResult.push(thing.structured_formatting.main_text)
-        //         }
-        //         this.setState({ APIResult })
-        //     })
-        //     .catch((error) => {
-        //         console.error(error);
-        //     });
-    }
-
-    setSelected = (selectedCiti) =>{
-        this.props.selectCiti(selectedCiti)
-        this.props.navigation.navigate('DayPicker')
-    }
-    static navigationOptions = {
-        drawerIcon: ({tintColor}) =>(
-            <Icon name="home" style={{fontSize: 24, color: tintColor}}></Icon>
-            )
-        }
+  static navigationOptions = {
+    drawerIcon: ({tintColor}) => <Icon name="home" style={{fontSize: 24, color: tintColor}} />,
+  }
 
     render(){
         const uri = "../assets/IMG_4640.JPG";
@@ -111,4 +83,7 @@ const mapDispatchToProps = dispatch => ({
     requestResult: input => dispatch(action.HomeAction.fetchSuggestionDestination(input))
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(Home)
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Home)
