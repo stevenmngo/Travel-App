@@ -3,6 +3,8 @@ import {View, SafeAreaView, ScrollView, Dimensions, Image} from 'react-native'
 import {createDrawerNavigator, createSwitchNavigator, DrawerItems} from 'react-navigation'
 import {createMaterialBottomTabNavigator} from 'react-navigation-material-bottom-tabs'
 import {Provider} from 'react-redux'
+import { Root } from "native-base";
+import { StackNavigator } from "react-navigation";
 
 import HomeScreen from './screens/HomeScreen'
 import SettingScreen from './screens/SettingScreen'
@@ -22,7 +24,10 @@ export default class App extends React.Component {
   render() {
     return (
       <Provider store={reduxStore}>
-        <AppSwitchNavigator />
+      <Root>
+          <AppSwitchNavigator /> 
+             
+      </Root>
       </Provider>
     )
   }
