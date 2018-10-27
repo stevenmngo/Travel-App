@@ -26,7 +26,7 @@ class DayDetailScreen extends Component {
                     <Tab heading = "All POI">
                         <Text style={{textAlign: "center"}}>ALL POI</Text>
                         <Content padder>
-                        <Button onPress={() => ActionSheet.show({
+                        <Button success onPress={() => ActionSheet.show({
                             options: BUTTONS,
                             cancelButtonIndex: CANCEL_INDEX,
                             destructiveButtonIndex: DESTRUCTIVE_INDEX,
@@ -43,7 +43,7 @@ class DayDetailScreen extends Component {
                     <Tab heading = "Day1">
                         <Text style={{textAlign: "center"}}>DAY 1</Text>
                         <Content padder>
-                        <Button onPress={() => ActionSheet.show({
+                        <Button danger onPress={() => ActionSheet.show({
                             options: REMOVE,
                             title: "Remove POI"    
                         }, 
@@ -58,7 +58,7 @@ class DayDetailScreen extends Component {
                     <Tab heading = "Day2">
                         <Text style={{textAlign: "center"}}>DAY 2</Text>
                         <Content padder>
-                        <Button onPress={() => ActionSheet.show({
+                        <Button danger onPress={() => ActionSheet.show({
                             options: REMOVE,
                             title: "Remove POI"    
                         }, 
@@ -72,7 +72,7 @@ class DayDetailScreen extends Component {
                     </Tab>
                     <Tab heading = "Day3">
                         <Text style={{textAlign: "center"}}>DAY 3</Text><Content padder>
-                        <Button onPress={() => ActionSheet.show({
+                        <Button danger onPress={() => ActionSheet.show({
                             options: REMOVE,
                             title: "Remove POI"    
                         }, 
@@ -86,7 +86,7 @@ class DayDetailScreen extends Component {
                     </Tab>
                     <Tab heading = "Day4">
                         <Text style={{textAlign: "center"}}>DAY 4</Text><Content padder>
-                        <Button onPress={() => ActionSheet.show({
+                        <Button danger onPress={() => ActionSheet.show({
                             options: REMOVE,
                             title: "Remove POI"    
                         }, 
@@ -101,7 +101,7 @@ class DayDetailScreen extends Component {
                     <Tab heading = "Day5">
                         <Text style={{textAlign: "center"}}>DAY 5</Text>
                         <Content padder>
-                        <Button onPress={() => ActionSheet.show({
+                        <Button danger onPress={() => ActionSheet.show({
                             options: REMOVE,
                             title: "Remove POI"    
                         }, 
