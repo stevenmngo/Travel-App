@@ -25,6 +25,9 @@ class Home extends Component {
     this.realTimeSearch = this.realTimeSearch.bind(this)
   }
 
+  setSelected = stateCity =>{
+      this.props.selectCiti(stateCity)
+  }
   realTimeSearch = stateCity => {
     // Set the current state value
     this.setState({stateCity})
