@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
     marginBottom: 15,
     borderBottomWidth: 1.5,
     fontSize: 16,
-    borderBottomColor: '#FF1493',
+    borderBottomColor: '#3e98fa',
     fontFamily: 'Arial',
   },
 })

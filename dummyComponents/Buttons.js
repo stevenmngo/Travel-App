@@ -15,7 +15,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   buttonText: {
-    color: '#FF1493',
+    color: '#3e98fa',
     fontFamily: 'Arial',
     fontSize: 22,
     letterSpacing: 0.5,

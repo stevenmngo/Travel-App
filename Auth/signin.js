@@ -10,10 +10,7 @@ import firebaseApp from './firebase'
 export default class SignIn extends React.Component {
   constructor(props) {
     super(props)
-    this.state = {
-      email: '',
-      password: '',
-    }
+    this.state = {email: '', password: ''}
   }
 
   handleLogin = () => {
