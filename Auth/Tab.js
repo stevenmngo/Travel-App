@@ -37,7 +37,7 @@ const routeConfig = {
   tabBarPosition: 'bottom',
   tabBarOptions: {
     showLabel: true,
-    activeTintColor: '#FF1493',
+    activeTintColor: '#3e98fa',
     inactiveTintColor: '#b9b9b9',
     indicatorStyle: {backgroundColor: '#b9b9b9'},
     labelStyle: {

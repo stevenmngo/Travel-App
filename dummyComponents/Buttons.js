@@ -1,7 +1,7 @@
 import React from 'react'
 import {View, Text, StyleSheet, TouchableOpacity} from 'react-native'
 
-const Button = ({title, onPress}) => (
+const Buttons = ({title, onPress}) => (
   <TouchableOpacity onPress={onPress}>
     <View style={styles.button}>
       <Text style={[styles.buttonText]}>{title}</Text>
@@ -15,7 +15,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   buttonText: {
-    color: '#FF1493',
+    color: '#3e98fa',
     fontFamily: 'Arial',
     fontSize: 22,
     letterSpacing: 0.5,
@@ -27,4 +27,4 @@ const styles = StyleSheet.create({
   },
 })
 
-export default Button
+export default Buttons
