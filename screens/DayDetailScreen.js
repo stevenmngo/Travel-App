@@ -1,11 +1,11 @@
 import React, { Component } from 'react'
 import { View, Text, StyleSheet } from 'react-native'
-import { Header, Left, Right, Icon, Tab, Tabs, ScrollableTab, Button, ActionSheet, Content} from 'native-base'
+import { Header, Left, Right, Icon, Tab, Tabs, ScrollableTab, Button, ActionSheet, Content, ListItem, Body, Title,
+    Thumbnail} from 'native-base'
 
 
-var BUTTONS = ["Day 1", "Day 2", "Day 3", "Uncheck", "Cancel"];
+var BUTTONS = ["Day 1", "Day 2", "Day 3", "Day 4", "Cancel"];
 var REMOVE = ["Remove"];
-var DESTRUCTIVE_INDEX = 3;
 var CANCEL_INDEX = 4;
 
 class DayDetailScreen extends Component {
@@ -20,16 +20,23 @@ class DayDetailScreen extends Component {
                 <Header>
                     <Left>
                         <Icon name="menu" onPress={() => this.props.navigation.openDrawer()}></Icon>
-                    </Left>
+                    </Left> 
+                    <Body style={{}}>
+                        <Title> Planner </Title>
+                    </Body>
+                    <Right>
+                        <Thumbnail small source={require('../assets/group.png')} />
+                    </Right>
                 </Header>
+
                 <Tabs renderTabBar = {() => <ScrollableTab/>}>
                     <Tab heading = "All POI">
                         <Text style={{textAlign: "center"}}>ALL POI</Text>
-                        <Content padder>
+                        {/*<Content padder>*/}
+                        <ListItem>
                         <Button onPress={() => ActionSheet.show({
                             options: BUTTONS,
                             cancelButtonIndex: CANCEL_INDEX,
-                            destructiveButtonIndex: DESTRUCTIVE_INDEX,
                             title: "Select Day to be added"    
                         }, 
                         buttonIndex => {
@@ -37,82 +44,188 @@ class DayDetailScreen extends Component {
                         }
                         )}>
                             <Icon name='add'/>
-                        </Button>
-                        </Content>
+                        </Button> 
+                            <Text style={{ textAlign: "right" }}> San Jose State University </Text>
+                        </ListItem>
+                        <ListItem>
+                            <Button onPress={() => ActionSheet.show({
+                                options: BUTTONS,
+                                cancelButtonIndex: CANCEL_INDEX,
+                                title: "Select Day to be added"
+                            },
+                                buttonIndex => {
+                                    this.setState({ clicked: BUTTONS[buttonIndex] })
+                                }
+                            )}>
+                                <Icon name='add' />
+                            </Button>
+                            <Text style={{ textAlign: "right" }}> Winchester Mystery House </Text>
+                        </ListItem>         
+                        <ListItem>
+                            <Button onPress={() => ActionSheet.show({
+                                options: BUTTONS,
+                                cancelButtonIndex: CANCEL_INDEX,
+                                title: "Select Day to be added"
+                            },
+                                buttonIndex => {
+                                    this.setState({ clicked: BUTTONS[buttonIndex] })
+                                }
+                            )}>
+                                <Icon name='add' />
+                            </Button>
+                            <Text style={{ textAlign: "right" }}> Mission Peak </Text>
+                        </ListItem>         
+                        <ListItem>
+                            <Button onPress={() => ActionSheet.show({
+                                options: BUTTONS,
+                                cancelButtonIndex: CANCEL_INDEX,
+                                title: "Select Day to be added"
+                            },
+                                buttonIndex => {
+                                    this.setState({ clicked: BUTTONS[buttonIndex] })
+                                }
+                            )}>
+                                <Icon name='add' />
+                            </Button>
+                            <Text style={{ textAlign: "right" }}> The Tech Museum of Innovation </Text>
+                        </ListItem>
+
+                        <ListItem>
+                            <Button onPress={() => ActionSheet.show({
+                                options: BUTTONS,
+                                cancelButtonIndex: CANCEL_INDEX,
+                                title: "Select Day to be added"
+                            },
+                                buttonIndex => {
+                                    this.setState({ clicked: BUTTONS[buttonIndex] })
+                                }
+                            )}>
+                                <Icon name='add' />
+                            </Button>
+                            <Text style={{ textAlign: "right" }}> Rosicrucian Egyptian Museum </Text>
+                        </ListItem>                               
+                        {/*</Content>*/}
                     </Tab>
-                    <Tab heading = "Day1">
+
+                    <Tab heading = "Day 1">
                         <Text style={{textAlign: "center"}}>DAY 1</Text>
-                        <Content padder>
-                        <Button danger onPress={() => ActionSheet.show({
-                            options: REMOVE,
-                            title: "Remove POI"    
-                        }, 
-                        buttonIndex => {
-                            this.setState({clicked: BUTTONS[buttonIndex]}) 
-                        }
-                        )}>
-                            <Icon name='remove'/>
-                        </Button>
-                        </Content>
+                        <ListItem>
+                            <Button danger onPress={() => ActionSheet.show({
+                                options: REMOVE,
+                                title: "Remove POI"    
+                                }, 
+                                buttonIndex => {
+                                this.setState({clicked: BUTTONS[buttonIndex]}) 
+                                }
+                                )}>
+                                <Icon name='remove'/>
+                            </Button>
+                            <Text style={{ textAlign: "right" }}> San Jose State University </Text> 
+                        </ListItem>
+                        <ListItem>
+                            <Button danger onPress={() => ActionSheet.show({
+                                options: REMOVE,
+                                title: "Remove POI"
+                            },
+                                buttonIndex => {
+                                    this.setState({ clicked: BUTTONS[buttonIndex] })
+                                }
+                            )}>
+                                <Icon name='remove' />
+                            </Button>
+                            <Text style={{ textAlign: "right" }}> Mission Peak </Text>
+                        </ListItem>
                     </Tab>
-                    <Tab heading = "Day2">
-                        <Text style={{textAlign: "center"}}>DAY 2</Text>
-                        <Content padder>
-                        <Button danger onPress={() => ActionSheet.show({
-                            options: REMOVE,
-                            title: "Remove POI"    
-                        }, 
-                        buttonIndex => {
-                            this.setState({clicked: BUTTONS[buttonIndex]}) 
-                        }
-                        )}>
-                            <Icon name='remove'/>
-                        </Button>
-                        </Content>
-                    </Tab>
-                    <Tab heading = "Day3">
-                        <Text style={{textAlign: "center"}}>DAY 3</Text><Content padder>
-                        <Button danger onPress={() => ActionSheet.show({
-                            options: REMOVE,
-                            title: "Remove POI"    
-                        }, 
-                        buttonIndex => {
-                            this.setState({clicked: BUTTONS[buttonIndex]}) 
-                        }
-                        )}>
-                            <Icon name='remove'/>
-                        </Button>
-                        </Content>
-                    </Tab>
-                    <Tab heading = "Day4">
-                        <Text style={{textAlign: "center"}}>DAY 4</Text><Content padder>
-                        <Button danger onPress={() => ActionSheet.show({
-                            options: REMOVE,
-                            title: "Remove POI"    
-                        }, 
-                        buttonIndex => {
-                            this.setState({clicked: BUTTONS[buttonIndex]}) 
-                        }
-                        )}>
-                            <Icon name='remove'/>
-                        </Button>
-                        </Content>
-                    </Tab>
-                    <Tab heading = "Day5">
-                        <Text style={{textAlign: "center"}}>DAY 5</Text>
-                        <Content padder>
-                        <Button danger onPress={() => ActionSheet.show({
-                            options: REMOVE,
-                            title: "Remove POI"    
-                        }, 
-                        buttonIndex => {
-                            this.setState({clicked: BUTTONS[buttonIndex]}) 
-                        }
-                        )}>
-                            <Icon name='remove'/>
-                        </Button>
-                        </Content>
-                    </Tab>
+
+                    <Tab heading="Day 2">
+                        <Text style={{ textAlign: "center" }}>DAY 2</Text>
+                        <ListItem>
+                            <Button danger onPress={() => ActionSheet.show({
+                                options: REMOVE,
+                                title: "Remove POI"
+                            },
+                                buttonIndex => {
+                                    this.setState({ clicked: BUTTONS[buttonIndex] })
+                                }
+                            )}>
+                                <Icon name='remove' />
+                            </Button>
+                            <Text style={{ textAlign: "right" }}> Winchester Mystery House </Text>
+                        </ListItem>
+                        <ListItem>
+                            <Button danger onPress={() => ActionSheet.show({
+                                options: REMOVE,
+                                title: "Remove POI"
+                            },
+                                buttonIndex => {
+                                    this.setState({ clicked: BUTTONS[buttonIndex] })
+                                }
+                            )}>
+                                <Icon name='remove' />
+                            </Button>
+                            <Text style={{ textAlign: "right" }}> The Tech Museum of Innovation </Text>
+                        </ListItem>
+                    </Tab> 
+
+                    <Tab heading="Day 3">
+                        <Text style={{ textAlign: "center" }}>DAY 3</Text>
+                        <ListItem>
+                            <Button danger onPress={() => ActionSheet.show({
+                                options: REMOVE,
+                                title: "Remove POI"
+                            },
+                                buttonIndex => {
+                                    this.setState({ clicked: BUTTONS[buttonIndex] })
+                                }
+                            )}>
+                                <Icon name='remove' />
+                            </Button>
+                            <Text style={{ textAlign: "right" }}> San Jose State University </Text>
+                        </ListItem>
+                        <ListItem>
+                            <Button danger onPress={() => ActionSheet.show({
+                                options: REMOVE,
+                                title: "Remove POI"
+                            },
+                                buttonIndex => {
+                                    this.setState({ clicked: BUTTONS[buttonIndex] })
+                                }
+                            )}>
+                                <Icon name='remove' />
+                            </Button>
+                            <Text style={{ textAlign: "right" }}> Mission Peak </Text>
+                        </ListItem>
+                    </Tab> 
+
+                    <Tab heading="Day 4">
+                        <Text style={{ textAlign: "center" }}>DAY 4</Text>
+                        <ListItem>
+                            <Button danger onPress={() => ActionSheet.show({
+                                options: REMOVE,
+                                title: "Remove POI"
+                            },
+                                buttonIndex => {
+                                    this.setState({ clicked: BUTTONS[buttonIndex] })
+                                }
+                            )}>
+                                <Icon name='remove' />
+                            </Button>
+                            <Text style={{ textAlign: "right" }}> San Jose State University </Text>
+                        </ListItem>
+                        <ListItem>
+                            <Button danger onPress={() => ActionSheet.show({
+                                options: REMOVE,
+                                title: "Remove POI"
+                            },
+                                buttonIndex => {
+                                    this.setState({ clicked: BUTTONS[buttonIndex] })
+                                }
+                            )}>
+                                <Icon name='remove' />
+                            </Button>
+                            <Text style={{ textAlign: "right" }}> Mission Peak </Text>
+                        </ListItem>
+                    </Tab>              
                 </Tabs>   
             </View>
         )
