@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { ScrollView, Image, TouchableHighlight} from 'react-native';
+import { ScrollView, Image,Button, TouchableHighlight} from 'react-native';
 import allReducers from '../reducer';
 import { createStore } from 'redux';
 import { connect } from 'react-redux';
@@ -41,7 +41,12 @@ class SavedTripScreen extends Component {
                                 <CardItem>
                                     <Icon name="heart" style={{ color: '#ED4A6A' }} />
                                     <Text>{item.destination}</Text>
+                                    <Button
+                                    title="Delete"
+                                    color="#841584"
+                                    />
                                 </CardItem>
+                                
                             </Card>
                         ))}
                     </ScrollView>
