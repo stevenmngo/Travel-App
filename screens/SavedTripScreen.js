@@ -21,7 +21,7 @@ class SavedTripScreen extends Component {
                     </Right>
                 </Header>
                 <Container>
-                    <ScrollView>
+                    <ScrollView >
                         {this.props.savedTrips.map(item => (
                             <Card style={{ elevation: 3 }}>
                                 <CardItem>
@@ -32,11 +32,11 @@ class SavedTripScreen extends Component {
                                     </Left>
                                 </CardItem>
                                 <CardItem cardBody>
-                             
+                             <View>
                                 <TouchableHighlight onPress={() => this.props.navigation.navigate('DayDetail')}>
-                                    <Image style={{ height: 300, flex: 1 }} source={item.image}/>
-                                    </TouchableHighlight>
-                                    
+                                    <Image style={{flex: 1,height: 150, width: 390, resizeMode: 'contain'  }} source={item.image}/>
+                                </TouchableHighlight>
+                                </View>   
                                 </CardItem>
                                 <CardItem>
                                     <Icon name="heart" style={{ color: '#ED4A6A' }} />
