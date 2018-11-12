@@ -20,7 +20,8 @@ const receiveSuggestionDestination = (result) => {
 }
 
 const fetchSuggestionDestination = (input) => {
-    APItoFectch = 'https://maps.googleapis.com/maps/api/place/autocomplete/json?input=' + input + '&inputtype=textquery&key=AIzaSyD7Oa99Y264n7KesaO7LWB-OGmSUntkPHI'
+    // APItoFectch = 'https://maps.googleapis.com/maps/api/place/autocomplete/json?input=' + input + '&inputtype=textquery&key=AIzaSyD7Oa99Y264n7KesaO7LWB-OGmSUntkPHI'
+    APItoFectch = 'https://maps.googleapis.com/maps/api/place/autocomplete/json?input='+input+'&sensor=false&types=(regions)&key=AIzaSyD7Oa99Y264n7KesaO7LWB-OGmSUntkPHI'
     return (dispatch, input) => {
         dispatch(requestSuggestionDestination(input));
         return fetch(APItoFectch, {

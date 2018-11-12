@@ -137,7 +137,7 @@ class DayDetailScreen extends Component {
                         </ListItem>
                     </Tab>
 
-                    <Tab heading="Day 2">
+                    {/* <Tab heading="Day 2">
                         <Text style={{ textAlign: "center" }}>DAY 2</Text>
                         <ListItem>
                             <Button danger onPress={() => ActionSheet.show({
@@ -225,7 +225,7 @@ class DayDetailScreen extends Component {
                             </Button>
                             <Text style={{ textAlign: "right" }}> Mission Peak </Text>
                         </ListItem>
-                    </Tab>              
+                    </Tab>               */}
                 </Tabs>   
             </View>
         )
