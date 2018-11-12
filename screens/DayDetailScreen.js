@@ -14,6 +14,15 @@ class DayDetailScreen extends Component {
     {
         super(props);
         this.state = {
+            all: [
+                "MN Peak",
+                "MD Peak",
+                "MT Peak",
+                "MY Peak",
+                "MI Peak",
+                "MO Peak",
+                "MQ Peak",
+            ],
             day: [
                 {
                     day: 1,
@@ -32,10 +41,41 @@ class DayDetailScreen extends Component {
     }
 
     render() {
+        const renderAll = this.state.all.map(b => {
+            return (
+                <ListItem>
+                    <Button onPress={() => ActionSheet.show({
+                        options: BUTTONS,
+                        cancelButtonIndex: CANCEL_INDEX,
+                        title: "Select Day to be added"
+                    },
+                        buttonIndex => {
+                            this.setState({ clicked: BUTTONS[buttonIndex] })
+                        }
+                    )}>
+                        <Icon name='add' />
+                    </Button>
+                    <Text style={{ textAlign: "center" }}>{b}</Text>
+                </ListItem>
+            )
+        });
         const renderedTabs = this.state.day.map(b => {
             const renderedPOI = b.list.map(a =>{
                 return(
+                    <ListItem>
+                    <Button onPress={() => ActionSheet.show({
+                        options: BUTTONS,
+                        cancelButtonIndex: CANCEL_INDEX,
+                        title: "Select Day to be added"
+                    },
+                    buttonIndex => {
+                        this.setState({ clicked: BUTTONS[buttonIndex] })
+                    }
+                    )}>
+                        <Icon name='add' />
+                    </Button> 
                     <Text style={{ textAlign: "center" }}>{a}</Text>
+                    </ListItem>
                 )
             })
             return (<Tab heading={"Day " + b.day}>
@@ -59,6 +99,11 @@ class DayDetailScreen extends Component {
 
                 <Tabs renderTabBar = {() => <ScrollableTab/>}>
                     {renderedTabs}
+                </Tabs>   
+                <Tabs renderTabBar = {() => <ScrollableTab/>}>
+                    <Tab heading="ALL">
+                        {renderAll}
+                    </Tab>
                 </Tabs>   
             </View>
         )
