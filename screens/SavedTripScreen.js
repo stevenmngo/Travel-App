@@ -8,7 +8,14 @@ import { Container, Header, View, Card, CardItem, Text, Left, Right, Body, Icon 
 const store = createStore(allReducers);
 
 class SavedTripScreen extends Component {
-    
+    state = {ignore: []}
+    ignoreTrip(trip_name) {
+        var ignoreList = this.state.ignore;
+        ignoreList.push(trip_name);
+        this.setState({
+            ignore: ignoreList
+        })
+    }
     render() {
         return (
             <View style={{flex:1}}>
@@ -22,7 +29,7 @@ class SavedTripScreen extends Component {
                 </Header>
                 <Container>
                     <ScrollView>
-                        {this.props.savedTrips.map(item => (
+                        {this.props.savedTrips.filter(item => this.state.ignore.indexOf(item.trip_name) === -1).map(item => (
                             <Card style={{ elevation: 3 }}>
                                 <CardItem>
                                     <Left>
@@ -41,7 +48,7 @@ class SavedTripScreen extends Component {
                                 <CardItem>
                                     <Icon name="heart" style={{ color: '#ED4A6A' }} />
                                     <Text>{item.destination}</Text>
-                                    <Button
+                                    <Button onPress={() => this.ignoreTrip(item.trip_name)}
                                     title="Delete"
                                     color="#841584"
                                     />
