@@ -41,7 +41,7 @@ class SavedTripScreen extends Component {
                                 <CardItem cardBody>
                              
                                 <TouchableHighlight onPress={() => this.props.navigation.navigate('DayDetail')}>
-                                    <Image style={{ height: 300, flex: 1 }} source={item.image}/>
+                                    <Image style={{ height: 150, width: 390, resizeMode: 'contain',  flex: 1 }} source={item.image}/>
                                     </TouchableHighlight>
                                     
                                 </CardItem>
