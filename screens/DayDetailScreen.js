@@ -1,8 +1,10 @@
 import React, { Component } from 'react'
 import { View, Text, StyleSheet } from 'react-native'
 import { Header, Left, Right, Icon, Tab, Tabs, ScrollableTab, Button, ActionSheet, Content, ListItem, Body, Title,
-    Thumbnail} from 'native-base'
+    Thumbnail, TextInput, FlatList} from 'native-base'
+import { connect } from 'react-redux'
 
+import action from '../actions'
 
 var BUTTONS = ["Day 1", "Day 2", "Day 3", "Day 4", "Cancel"];
 var REMOVE = ["Remove"];
@@ -15,33 +17,46 @@ class DayDetailScreen extends Component {
         super(props);
         this.state = {
             all: [
-                "MN Peak",
-                "MD Peak",
-                "MT Peak",
-                "MY Peak",
-                "MI Peak",
-                "MO Peak",
-                "MQ Peak",
+                " MN Peak",
+                " MD Peak",
+                " MT Peak",
+                " MY Peak",
+                " MI Peak",
+                " MO Peak",
+                " MQ Peak",
             ],
             day: [
                 {
                     day: 1,
-                    list: ["Mission Peak", "Mission Peak2", "Mission Peak3"]
+                    list: [" Mission Peak", " Mission Peak2", " Mission Peak3"]
                 },
                 {
                     day: 2,
-                    list: ["Mission Peak", "Mission Peak2", "Mission Peak3"]
+                    list: [" Mission Peak", " Mission Peak2", " Mission Peak3"]
                 },
                 {
                     day: 3,
-                    list: ["Mission Peak", "Mission Peak2", "Mission Peak3"]
+                    list: [" Mission Peak", " Mission Peak2", " Mission Peak3"]
                 },
-            ]
-        };
+            ],
+            stateCity: ' ',
+            APIResult: [],
+        }
+        this.setSelected = this.setSelected.bind(this)
+        this.realTimeSearch = this.realTimeSearch.bind(this)
+    }
+
+    setSelected = stateCity => {
+        this.props.selectCiti(stateCity)
+    }
+
+    realTimeSearch = stateCity => {
+        this.setState({stateCity})
+        this.props.requestResult(stateCity)
     }
 
     render() {
-        const renderAll = this.state.all.map(b => {
+        const renderAll = this.state.all.map(b => {  
             return (
                 <ListItem>
                     <Button onPress={() => ActionSheet.show({
@@ -96,18 +111,56 @@ class DayDetailScreen extends Component {
                         <Thumbnail small source={require('../assets/group.png')} />
                     </Right>
                 </Header>
-
+                
+                {/* render day tab  */}
                 <Tabs renderTabBar = {() => <ScrollableTab/>}>
                     {renderedTabs}
                 </Tabs>   
+
+                {/* render All POI  */}
                 <Tabs renderTabBar = {() => <ScrollableTab/>}>
                     <Tab heading="ALL">
+                        {/* Search tab bar */}
+                        {/*<TextInput
+                            placeholder='Search Places...'
+                            style={{ width: '50%', height: 40, alignItems: 'center', justifyContent: 'center' }}
+                            onChangeText={(stateCity) => this.realTimeSearch(stateCity)}
+                            value={this.state.stateCity}
+                        />
+                        <Text style={{ marginTop: 0, marginBottom: 10 }}>Current Selected City</Text>
+                        <Text>{this.props.selectedCiti}</Text>*/}
+                        <View>
+                            {/* Search tab bar */}
+                            <TextInput
+                                placeholder='Search Places...'
+                                style={{ width: '50%', height: 40, alignItems: 'center', justifyContent: 'center' }}
+                                onChangeText={(stateCity) => this.realTimeSearch(stateCity)}
+                                value={this.state.stateCity}
+                            />
+                            <Text style={{ marginTop: 0, marginBottom: 10 }}>Current Selected City</Text>
+                            <Text>{this.props.selectedCiti}</Text>
+                        </View>
                         {renderAll}
                     </Tab>
-                </Tabs>   
+                </Tabs>  
             </View>
         )
     }
 }
+
+const mapStateToProps = state => ({
+    selectedCiti: state.DayDetailReducer.SelectedDestination,
+    searchResult: state.DayDetailReducer.searchResult
+})
+
+const mapDispatchToProps = dispatch => ({
+    selectCiti: citi => dispatch(action.DayDetailAction.selectDestination(citi)),
+    requestResult: input => dispatch(action.DayDetailAction.fetchSuggestionDestination(input))
+})
+
+{/*export default connect (
+    mapStateToProps,
+    mapDispatchToProps
+) (DayDetailScreen)*/}
 
 export default DayDetailScreen

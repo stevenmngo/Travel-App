@@ -8,6 +8,7 @@ import SettingReducer from './SettingReducer'
 const combinedReducers = combineReducers({
   home: HomeReducer,
   savedTrips: SavedTripReducer,
+  DayDetailReducer: DayDetailReducer
 })
 
 export default combinedReducers
