@@ -1,13 +1,13 @@
 import React from 'react'
 import {StyleSheet, Text, Image, View, Alert} from 'react-native'
 import {Button, Header, Left, Right, Icon, Body, Title, Thumbnail} from 'native-base'
+import {connect} from 'react-redux'
 
+import {createUser} from '../actions/AuthAction'
 import Input from '../dummyComponents/input'
 import Buttons from '../dummyComponents/Buttons'
 
-import firebaseApp from './firebase'
-
-export default class SignUp extends React.Component {
+class SignUp extends React.Component {
   constructor(props) {
     super(props)
     this.state = {email: '', password: '', confirmedPassword: ''}
@@ -18,16 +18,13 @@ export default class SignUp extends React.Component {
       Alert.alert('Passwords do not match')
       return
     }
-    firebaseApp
-      .auth()
-      .createUserWithEmailAndPassword(this.state.email, this.state.password)
-      .then(() => this.props.navigation.navigate('SignIn'))
-      .catch(error => {
-        Alert.alert(error.message)
-      })
+    this.props.dispatchCreateUser(this.state.email, this.state.password)
   }
 
   render() {
+    const {
+      auth: {isAuthenticating, signUpError, signUpErrorMessage},
+    } = this.props
     return (
       <View style={{flex: 1}}>
         <Header>
@@ -76,12 +73,32 @@ export default class SignUp extends React.Component {
               secureTextEntry
             />
           </View>
-          <Buttons title="Sign Up" onPress={this.handleSignUp} />
+          <Buttons title="Sign Up" onPress={this.handleSignUp} isLoading={isAuthenticating} />
+
+          <Text style={[styles.errorMessage, signUpError && {color: 'orange'}]}>
+            Error logging in. Please try again.
+          </Text>
+          <Text style={[styles.errorMessage, signUpError && {color: 'orange'}]}>
+            {signUpErrorMessage}
+          </Text>
         </View>
       </View>
     )
   }
 }
+
+const mapStateToProps = state => ({
+  auth: state.auth,
+})
+
+const mapDispatchToProps = {
+  dispatchCreateUser: (email, password) => createUser(email, password),
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(SignUp)
 
 const styles = StyleSheet.create({
   inputContainer: {
@@ -102,6 +119,12 @@ const styles = StyleSheet.create({
     fontSize: 24,
     marginTop: 5,
     fontFamily: 'Courier New',
+  },
+  errorMessage: {
+    fontFamily: 'Arial',
+    fontSize: 12,
+    marginTop: 10,
+    color: 'transparent',
   },
   heading: {
     flexDirection: 'row',

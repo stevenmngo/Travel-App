@@ -9,24 +9,23 @@ import {authenticate} from '../actions/AuthAction'
 
 import firebase from './firebase'
 
-const user = firebase.auth().currentUser
-class SignIn extends React.Component {
+class signOut extends React.Component {
   constructor(props) {
     super(props)
     this.state = {email: '', password: ''}
   }
 
-  handleLogin = () => {
-    this.props.dispatchAuthenticate(this.state.email, this.state.password)
-    if (user) {
-      this.props.navigation.navigate('Home')
-    }
+  handleSignOut = () => {
+    firebase
+      .auth()
+      .signOut()
+      .then(() => {})
+      .catch(error => {
+        // An error happened.
+      })
   }
 
   render() {
-    const {
-      auth: {signInErrorMessage, isAuthenticating, signInError},
-    } = this.props
     return (
       <View style={{flex: 1}}>
         <Header>
@@ -36,37 +35,24 @@ class SignIn extends React.Component {
             </Button>
           </Left>
           <Body>
-            <Title>Sign In </Title>
+            <Title>Sign Out </Title>
           </Body>
           <Right>
             <Thumbnail small source={require('../assets/group.png')} />
           </Right>
         </Header>
         <View style={styles.container}>
-          {this.state.errorMessage && <Text style={{color: 'red'}}>{this.state.errorMessage}</Text>}
           <View style={styles.heading}>
             <Image
-              source={require('../assets/shape.png')}
+              source={require('../assets/signOut.png')}
               style={styles.headingImage}
               resizeMode="contain"
             />
           </View>
-          <Text style={[styles.greeting]}>Welcome back,</Text>
-          <Text style={[styles.greeting2]}>sign in to continue</Text>
-          <View style={styles.inputContainer}>
-            <Input
-              placeholder="Email"
-              onChangeText={email => this.setState({email})}
-              value={this.state.email}
-            />
-            <Input
-              placeholder="Password"
-              onChangeText={password => this.setState({password})}
-              value={this.state.password}
-              secureTextEntry
-            />
-          </View>
-          <Buttons isLoading={isAuthenticating} title="Sign In" onPress={this.handleLogin} />
+          <Text style={[styles.greeting2]}>Are you sure you want to sign out?</Text>
+
+          <Buttons title="No" onPress={this.handleLogin} />
+          <Buttons title="Yes" onPress={this.handleLogin} />
           <Text style={[styles.errorMessage, signInError && {color: 'orange'}]}>
             Error logging in. Please try again.
           </Text>
@@ -90,7 +76,7 @@ const mapStateToProps = state => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(SignIn)
+)(signOut)
 
 const styles = StyleSheet.create({
   heading: {

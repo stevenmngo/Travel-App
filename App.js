@@ -5,6 +5,7 @@ import {createMaterialBottomTabNavigator} from 'react-navigation-material-bottom
 import {Provider} from 'react-redux'
 import {Root} from 'native-base'
 import {StackNavigator} from 'react-navigation'
+import {connect} from 'react-redux'
 
 import HomeScreen from './screens/HomeScreen'
 import SettingScreen from './screens/SettingScreen'
@@ -15,16 +16,36 @@ import reduxStore from './store'
 import Tab from './Auth/Tab'
 import loading from './Auth/loading'
 import SignIn from './Auth/signin'
+import firebase from './Auth/firebase'
+import signOut from './Auth/signout'
 
 const {width} = Dimensions.get('window')
 
 export default class App extends React.Component {
   render() {
+    let ss
+    firebase.auth().onAuthStateChanged(user => {
+      if (user) {
+        ss = true
+      } else {
+        ss = false
+      }
+    })
+    if (ss) {
+      return (
+        <Provider store={reduxStore}>
+          <Root>
+            <AppDrawNavigator02 />
+          </Root>
+        </Provider>
+      )
+    }
+
     return (
       <Provider store={reduxStore}>
-      <Root>
-        <AppDrawNavigator />
-      </Root>
+        <Root>
+          <AppDrawNavigator01 />
+        </Root>
       </Provider>
     )
   }
@@ -57,7 +78,7 @@ const TabNavigation = createMaterialBottomTabNavigator({
 })
 
 // This is the main Navigator for the app
-const AppDrawNavigator = createDrawerNavigator(
+const AppDrawNavigator01 = createDrawerNavigator(
   {
     Home: HomeScreen,
     Setting: SettingScreen,
@@ -74,14 +95,21 @@ const AppDrawNavigator = createDrawerNavigator(
     },
   }
 )
-// const AppSwitchNavigator = createSwitchNavigator(
-//   {
-//     drawer: AppDrawNavigator,
-//     tab: Tab,
-//     load: loading,
-//     signin: SignIn,
-//   },
-//   {
-//     initialRouteName: 'drawer',
-//   }
-// )
+
+const AppDrawNavigator02 = createDrawerNavigator(
+  {
+    Home: HomeScreen,
+    Setting: SettingScreen,
+    Signout: signOut,
+    SavedTrip: SavedTripScreen,
+    NewTrip: TabNavigation,
+  },
+
+  {
+    contentComponent: CustomDrawComponent,
+    // drawerWidth: width
+    contentOptions: {
+      activeTintColor: 'orange',
+    },
+  }
+)

@@ -25,10 +25,11 @@ class Home extends Component {
     this.realTimeSearch = this.realTimeSearch.bind(this)
   }
 
-  setSelected = stateCity =>{
-      this.props.selectCiti(stateCity)
-      this.props.navigation.navigate('DayPicker')
+  setSelected = stateCity => {
+    this.props.selectCiti(stateCity)
+    this.props.navigation.navigate('DayPicker')
   }
+
   realTimeSearch = stateCity => {
     // Set the current state value
     this.setState({stateCity})
@@ -39,52 +40,60 @@ class Home extends Component {
     drawerIcon: ({tintColor}) => <Icon name="home" style={{fontSize: 24, color: tintColor}} />,
   }
 
-    render(){
-        const uri = "../assets/IMG_4640.JPG";
-        return (
-            <View style = {{flex :1}}>
-                <Header>
-                    <Left>
-                        <Button transparent>
-                            <Icon name = "menu" onPress={()=> this.props.navigation.openDrawer()}></Icon>
-                        </Button>
-                    </Left>
-                    <Body>
-                        <Title>Destination</Title>
-                    </Body>
-                    <Right>
-                        <Thumbnail small source={require('../assets/group.png')} />
-                    </Right>
-                </Header>
-                <View style = {{flex:1, alignItems:'center', justifyContent:'center'}}>
-                    <TextInput
-                        placeholder = 'Search Places...'
-                        style={{ width: '50%', height: 40, alignItems: 'center', justifyContent: 'center'}}
-                        onChangeText={(stateCity) => this.realTimeSearch(stateCity)}
-                        value={this.state.stateCity}
-                    />
-                    <Text style={{marginTop:0, marginBottom: 10}}>Current Selected City</Text>
-                    <Text>{this.props.selectedCiti}</Text>
-                </View>
-                <View style = {{flex:1, alignItems:'center', justifyContent:'center'}}>
-                    <FlatList
-                        data={this.props.searchResult}
-                        renderItem={({ item }) => <Text id={item} onPress={() => this.setSelected(item)} style={{ padding: 10, fontSize: 18, height: 44 }}>{item}</Text>}
-                    />
-                </View>
-            </View>
-        )
-    }
+  render() {
+    const uri = '../assets/IMG_4640.JPG'
+    return (
+      <View style={{flex: 1}}>
+        <Header>
+          <Left>
+            <Button transparent>
+              <Icon name="menu" onPress={() => this.props.navigation.openDrawer()} />
+            </Button>
+          </Left>
+          <Body>
+            <Title>Destination</Title>
+          </Body>
+          <Right>
+            <Thumbnail small source={require('../assets/group.png')} />
+          </Right>
+        </Header>
+        <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+          <TextInput
+            placeholder="Search Places..."
+            style={{width: '50%', height: 40, alignItems: 'center', justifyContent: 'center'}}
+            onChangeText={stateCity => this.realTimeSearch(stateCity)}
+            value={this.state.stateCity}
+          />
+          <Text style={{marginTop: 0, marginBottom: 10}}>Current Selected City</Text>
+          <Text>{this.props.selectedCiti}</Text>
+        </View>
+        <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+          <FlatList
+            data={this.props.searchResult}
+            renderItem={({item}) => (
+              <Text
+                id={item}
+                onPress={() => this.setSelected(item)}
+                style={{padding: 10, fontSize: 18, height: 44}}
+              >
+                {item}
+              </Text>
+            )}
+          />
+        </View>
+      </View>
+    )
+  }
 }
 
 const mapStateToProps = state => ({
-    selectedCiti: state.home.SelectedDestination,
-    searchResult: state.home.searchResult
+  selectedCiti: state.home.SelectedDestination,
+  searchResult: state.home.searchResult,
 })
 
 const mapDispatchToProps = dispatch => ({
-    selectCiti: citi => dispatch(action.HomeAction.selectDestination(citi)),
-    requestResult: input => dispatch(action.HomeAction.fetchSuggestionDestination(input))
+  selectCiti: citi => dispatch(action.HomeAction.selectDestination(citi)),
+  requestResult: input => dispatch(action.HomeAction.fetchSuggestionDestination(input)),
 })
 
 export default connect(
