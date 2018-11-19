@@ -56,7 +56,8 @@ class Home extends Component {
                         <Thumbnail small source={require('../assets/group.png')} />
                     </Right>
                 </Header>
-                <View style = {{flex:1, alignItems:'center', justifyContent:'center'}}>
+
+                <View style = {styles.container}>
                     <Item searchBar rounded>
                         <Icon name = "ios-search" /> 
                         <TextInput
@@ -66,11 +67,6 @@ class Home extends Component {
                             value={this.state.stateCity}
                         />
                     </Item>
-
-                    <Text style={{marginTop:0, marginBottom: 10}}>
-                        Selected City
-                    </Text>
-                    <Text>{this.props.selectedCiti}</Text>
                 </View>
 
                 <View style = {{flex:1, alignItems:'center', justifyContent:'center'}}>
@@ -78,6 +74,15 @@ class Home extends Component {
                         data={this.props.searchResult}
                         renderItem={({ item }) => <Text id={item} onPress={() => this.setSelected(item)} style={{ padding: 10, fontSize: 18, height: 44 }}>{item}</Text>}
                     />
+                </View>
+
+                <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+                    <Text style={{ marginTop: 10, marginBottom: 10, textAlign: 'center' }}>
+                        Selected City
+                    </Text>
+                    <Text style={{ marginTop: 0, marginBottom: 10, textAlign: 'center' }}>
+                        {this.props.selectedCiti}
+                    </Text>
                 </View>
             </View>
         )
@@ -94,7 +99,19 @@ const mapDispatchToProps = dispatch => ({
     requestResult: input => dispatch(action.HomeAction.fetchSuggestionDestination(input))
 })
 
+const styles = StyleSheet.create({
+    container: {
+        justifyContent: 'center',
+        marginTop: 40,
+        marginLeft: 20,
+        marginRight: 20,
+        padding: 20,
+    }
+});
+
 export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(Home)
+
+//style = {{flex:1, alignItems:'center', justifyContent:'center'}}
