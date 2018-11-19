@@ -7,7 +7,7 @@ import {Root} from 'native-base'
 import {StackNavigator} from 'react-navigation'
 
 import HomeScreen from './screens/HomeScreen'
-import SettingScreen from './screens/SettingScreen'
+import AboutScreen from './screens/AboutScreen'
 import SavedTripScreen from './screens/SavedTripScreen'
 import DayDetailScreen from './screens/DayDetailScreen'
 import DayPickerScreen from './screens/DayPickerScreen'
@@ -60,10 +60,10 @@ const TabNavigation = createMaterialBottomTabNavigator({
 const AppDrawNavigator = createDrawerNavigator(
   {
     Home: HomeScreen,
-    Setting: SettingScreen,
     SignIn: Tab,
     SavedTrip: SavedTripScreen,
     NewTrip: TabNavigation,
+    About: AboutScreen,
   },
 
   {
