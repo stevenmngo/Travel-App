@@ -57,15 +57,22 @@ class Home extends Component {
                     </Right>
                 </Header>
                 <View style = {{flex:1, alignItems:'center', justifyContent:'center'}}>
-                    <TextInput
-                        placeholder = 'Search Places...'
-                        style={{ width: '50%', height: 40, alignItems: 'center', justifyContent: 'center'}}
-                        onChangeText={(stateCity) => this.realTimeSearch(stateCity)}
-                        value={this.state.stateCity}
-                    />
-                    <Text style={{marginTop:0, marginBottom: 10}}>Current Selected City</Text>
+                    <Item searchBar rounded>
+                        <Icon name = "ios-search" /> 
+                        <TextInput
+                            placeholder = 'Search Places'
+                            style={{ width: '50%', height: 40, alignItems: 'center', justifyContent: 'center'}}
+                            onChangeText={(stateCity) => this.realTimeSearch(stateCity)}
+                            value={this.state.stateCity}
+                        />
+                    </Item>
+
+                    <Text style={{marginTop:0, marginBottom: 10}}>
+                        Selected City
+                    </Text>
                     <Text>{this.props.selectedCiti}</Text>
                 </View>
+
                 <View style = {{flex:1, alignItems:'center', justifyContent:'center'}}>
                     <FlatList
                         data={this.props.searchResult}
