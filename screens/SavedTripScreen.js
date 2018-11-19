@@ -3,7 +3,7 @@ import { ScrollView, Image,Button, TouchableHighlight} from 'react-native';
 import allReducers from '../reducer';
 import { createStore } from 'redux';
 import { connect } from 'react-redux';
-import { Container, Header, View, Card, CardItem, Text, Left, Right, Body, Icon } from 'native-base';
+import { Container, Header, View, Card, CardItem, Text, Left, Right, Body, Icon, Title, Thumbnail } from 'native-base';
 
 const store = createStore(allReducers);
 
@@ -23,8 +23,12 @@ class SavedTripScreen extends Component {
                     <Left>
                         <Icon name="menu" onPress={() => this.props.navigation.openDrawer()}></Icon>
                     </Left>
+                    <Body>
+                        <Title> My Trips </Title>
+                    </Body>
                     <Right>
-                        <Icon name="add" onPress={() => this.props.navigation.navigate('Home')}></Icon>
+                        <Icon name="add" onPress={() => this.props.navigation.navigate('Home')} style ={{marginRight: 20}}></Icon>
+                        <Thumbnail small source={require('../assets/group.png')} />
                     </Right>
                 </Header>
                 <Container>
