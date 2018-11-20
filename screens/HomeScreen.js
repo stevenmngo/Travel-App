@@ -66,6 +66,10 @@ class Home extends Component {
                     </Right>
                 </Header>
 
+                <View style={{alignItems: 'center', justifyContent: 'center', marginTop: 20, marginBottom: 20 }}>
+                    <Text> Trip Name: </Text>
+                    <TextInput placeholder='Enter Trip Name' />
+                </View>
 
                 <Image
                     resizeMode={'cover'}

@@ -1,15 +1,15 @@
 import React, { Component } from 'react'
-import { View, Text, StyleSheet } from 'react-native'
+import { View, Text, StyleSheet, ScrollView } from 'react-native'
 import { Header, Left, Right, Icon, Tab, Tabs, ScrollableTab, Button, ActionSheet, Content, ListItem, Body, Title,
     Thumbnail, TextInput, FlatList} from 'native-base'
 import { connect } from 'react-redux'
 
 import action from '../actions'
 
-var BUTTONS = ["Day 1", "Day 2", "Day 3", "Day 4", "Cancel"];
+//var BUTTONS = ["Day 1", "Day 2", "Day 3", "Day 4", "Cancel"];
 var REMOVE = ["Remove"];
 var CANCEL_INDEX = 4;
-const days = [1, 2, 3, 4, 5, 6]
+//const days = [1, 2, 3, 4, 5, 6]
 
 class DayDetailScreen extends Component {
     constructor(props)
@@ -31,6 +31,15 @@ class DayDetailScreen extends Component {
                 },
             ],
             tags: 'restaurant',
+            buttons:[ 
+                        // {
+                        //     buttons: "Day 1"
+                        // },
+                        // {
+                        //     buttons: "Day 2"
+                        // }
+                "Day 1", "Day 2", "Day 3", "Day 4", "Cancel"
+                    ]
         }
 
         this.fetchPlaces = this.fetchPlaces.bind(this)
@@ -47,12 +56,21 @@ class DayDetailScreen extends Component {
     componentDidMount(){
         let totalDays = 10
         day = []
-        for (let count = 1; count < totalDays; count++){
+        for (let count = 1; count <= totalDays; count++){
             day.push({ day: count, list: []})
         }
-        console.log(day)
+        //console.log(day)
         this.setState({day})
+
+        // buttons = []
+        // for (let count = 1; count <= totalDays; count++)
+        // {
+        //     buttons.push({ buttons: "Day " + count})
+        // }
+        // buttons.push({buttons: "Cancel"})
+        // this.setState({buttons})
     }
+
     componentDidUpdate(prevProps) {
         if (prevProps.Destination.name !== this.props.Destination.name) {
             this.fetchPlaces();
@@ -64,12 +82,12 @@ class DayDetailScreen extends Component {
             return (
                 <ListItem key={b.id}>
                     <Button onPress={() => ActionSheet.show({
-                        options: BUTTONS,
+                        options: this.state.buttons,
                         cancelButtonIndex: CANCEL_INDEX,
                         title: "Select Day to be added"
                     },
                         buttonIndex => {
-                            this.setState({ clicked: BUTTONS[buttonIndex] })
+                            this.setState({ clicked: this.state.buttons[buttonIndex] })
                         }
                     )}>
                         <Icon name='add' />
@@ -78,17 +96,18 @@ class DayDetailScreen extends Component {
                 </ListItem>
             )
         });
+
         const renderedTabs = this.state.day.map(b => {
             const renderedPOI = b.list.map(a =>{
                 return(
                     <ListItem key={a}>
                     <Button onPress={() => ActionSheet.show({
-                        options: BUTTONS,
+                        options: this.state.buttons,
                         cancelButtonIndex: CANCEL_INDEX,
                         title: "Select Day to be added"
                     },
                     buttonIndex => {
-                        this.setState({ clicked: BUTTONS[buttonIndex] })
+                        this.setState({ clicked: this.state.buttons[buttonIndex] })
                     }
                     )}>
                         <Icon name='add' />
@@ -98,8 +117,10 @@ class DayDetailScreen extends Component {
                 )
             })
             return (<Tab heading={"Day " + b.day} key={b.day}>
+                    <ScrollView> 
                         <Text style={{textAlign: "center"}}>DAY {b.day}</Text>
                         {renderedPOI}
+                    </ScrollView> 
                     </Tab>)
         });
         return (
@@ -124,7 +145,9 @@ class DayDetailScreen extends Component {
                 {/* render All POI  */}
                 <Tabs renderTabBar = {() => <ScrollableTab/>}>
                     <Tab heading="ALL">
-                        {renderAll}
+                        <ScrollView> 
+                            {renderAll}
+                        </ScrollView>
                     </Tab>
                 </Tabs>  
             </View>
