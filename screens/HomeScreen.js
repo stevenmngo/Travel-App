@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {View, Text, StyleSheet, FlatList, TextInput} from 'react-native'
+import {View, Text, StyleSheet, FlatList, TextInput, Image} from 'react-native'
 import {Button, Header, Left, Right, Icon, Item, Body, Title, Thumbnail} from 'native-base'
 
 // Redux Import
@@ -23,6 +23,7 @@ class Home extends Component {
     }
     this.setSelected = this.setSelected.bind(this)
     this.realTimeSearch = this.realTimeSearch.bind(this)
+    this._keyExtractor = this._keyExtractor.bind(this)
   }
 
   setSelected = stateCity => {
@@ -36,12 +37,24 @@ class Home extends Component {
     this.props.requestResult(stateCity)
   }
 
+  _keyExtractor = (item, index) => item.place_id
+
   static navigationOptions = {
     drawerIcon: ({tintColor}) => <Icon name="home" style={{fontSize: 24, color: tintColor}} />,
   }
 
   render() {
-    const uri = '../assets/IMG_4640.JPG'
+    let uri_ = ''
+    if (this.props.Destination.photos) {
+      uri_ =
+        'https://maps.googleapis.com/maps/api/place/photo?maxwidth=1000&photoreference=' +
+        this.props.Destination.photos[0].photo_reference +
+        '&key=AIzaSyD7Oa99Y264n7KesaO7LWB-OGmSUntkPHI'
+    } else {
+      uri_ =
+        'https://images.unsplash.com/photo-1496568816309-51d7c20e3b21?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=9f4033e517acff897a1536ed69fc9dab&auto=format&fit=crop&w=3289&q=80'
+    }
+    // const photo = this.props.Destination.photos[0].html_attributions[0] || "../assets/lasvegas.jpg"
     return (
       <View style={{flex: 1}}>
         <Header>
@@ -57,26 +70,43 @@ class Home extends Component {
             <Thumbnail small source={require('../assets/group.png')} />
           </Right>
         </Header>
-        <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-          <TextInput
-            placeholder="Search Places..."
-            style={{width: '50%', height: 40, alignItems: 'center', justifyContent: 'center'}}
-            onChangeText={stateCity => this.realTimeSearch(stateCity)}
-            value={this.state.stateCity}
-          />
-          <Text style={{marginTop: 0, marginBottom: 10}}>Current Selected City</Text>
-          <Text>{this.props.selectedCiti}</Text>
+
+        <Image
+          resizeMode="cover"
+          style={{width: '100%', height: 200, marginTop: 0, marginBottom: 0}}
+          source={{uri: uri_}}
+        />
+        <Text style={{marginTop: 0, marginBottom: 0, textAlign: 'center'}}>
+          {this.props.selectedCiti.structured_formatting.main_text}
+        </Text>
+        {/* <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+                    <Text style={{ marginTop: 0, marginBottom: 0, textAlign: 'center' }}>
+                        Selected City
+                    </Text>
+                </View> */}
+        <View style={styles.container}>
+          <Item searchBar rounded>
+            <Icon name="ios-search" />
+            <TextInput
+              placeholder="Search Places"
+              style={{width: '100%', height: 40, alignItems: 'center', justifyContent: 'center'}}
+              onChangeText={stateCity => this.realTimeSearch(stateCity)}
+              value={this.state.stateCity}
+            />
+          </Item>
         </View>
+
         <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
           <FlatList
+            keyExtractor={this._keyExtractor}
             data={this.props.searchResult}
             renderItem={({item}) => (
               <Text
-                id={item}
+                id={item.structured_formatting.main_text}
                 onPress={() => this.setSelected(item)}
-                style={{padding: 10, fontSize: 18, height: 44}}
+                style={{padding: 2, fontSize: 12, height: 20}}
               >
-                {item}
+                {item.structured_formatting.main_text}
               </Text>
             )}
           />
@@ -89,14 +119,30 @@ class Home extends Component {
 const mapStateToProps = state => ({
   selectedCiti: state.home.SelectedDestination,
   searchResult: state.home.searchResult,
+  Destination: state.home.Destination,
 })
 
 const mapDispatchToProps = dispatch => ({
-  selectCiti: citi => dispatch(action.HomeAction.selectDestination(citi)),
+  selectCiti: citi => {
+    dispatch(action.HomeAction.selectDestination(citi)),
+      dispatch(action.HomeAction.fetchDestination(citi))
+  },
   requestResult: input => dispatch(action.HomeAction.fetchSuggestionDestination(input)),
+})
+
+const styles = StyleSheet.create({
+  container: {
+    justifyContent: 'center',
+    marginTop: 0,
+    marginLeft: 0,
+    marginRight: 0,
+    padding: 2,
+  },
 })
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(Home)
+
+// style = {{flex:1, alignItems:'center', justifyContent:'center'}}

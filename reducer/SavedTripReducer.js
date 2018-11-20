@@ -19,7 +19,7 @@ export default function() {
             starting_date: "2018-11-25",
             ending_date: "2018-11-28",
             destination: "Jacksonville, Florida",
-            image: require("../assets/florida.jpg"),
+            image: require("../assets/florida-holidays.jpg"),
         }
     ]
 }

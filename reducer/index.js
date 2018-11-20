@@ -10,6 +10,7 @@ const combinedReducers = combineReducers({
   home: HomeReducer,
   savedTrips: SavedTripReducer,
   auth: AuthReducer,
+  DayDetailReducer,
 })
 
 export default combinedReducers

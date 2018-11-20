@@ -1,0 +1,5 @@
+export default {
+    SELECT_POI: 'SELECT_POI',
+    REQUEST_POI: 'REQUEST_POI',
+    RECEIVE_POI: 'RECEIVE_POI',
+}

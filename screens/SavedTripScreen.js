@@ -1,14 +1,21 @@
 import React, { Component } from 'react';
-import { ScrollView, Image, TouchableHighlight} from 'react-native';
+import { ScrollView, Image,Button, TouchableHighlight} from 'react-native';
 import allReducers from '../reducer';
 import { createStore } from 'redux';
 import { connect } from 'react-redux';
-import { Container, Header, View, Card, CardItem, Text, Left, Right, Body, Icon } from 'native-base';
+import { Container, Header, View, Card, CardItem, Text, Left, Right, Body, Icon, Title, Thumbnail } from 'native-base';
 
 const store = createStore(allReducers);
 
 class SavedTripScreen extends Component {
-    
+    state = {ignore: []}
+    ignoreTrip(trip_name) {
+        var ignoreList = this.state.ignore;
+        ignoreList.push(trip_name);
+        this.setState({
+            ignore: ignoreList
+        })
+    }
     render() {
         return (
             <View style={{flex:1}}>
@@ -16,13 +23,17 @@ class SavedTripScreen extends Component {
                     <Left>
                         <Icon name="menu" onPress={() => this.props.navigation.openDrawer()}></Icon>
                     </Left>
+                    <Body>
+                        <Title> My Trips </Title>
+                    </Body>
                     <Right>
-                        <Icon name="add" onPress={() => this.props.navigation.navigate('Home')}></Icon>
+                        <Icon name="add" onPress={() => this.props.navigation.navigate('Home')} style ={{marginRight: 20}}></Icon>
+                        <Thumbnail small source={require('../assets/group.png')} />
                     </Right>
                 </Header>
                 <Container>
                     <ScrollView>
-                        {this.props.savedTrips.map(item => (
+                        {this.props.savedTrips.filter(item => this.state.ignore.indexOf(item.trip_name) === -1).map(item => (
                             <Card style={{ elevation: 3 }}>
                                 <CardItem>
                                     <Left>
@@ -34,14 +45,19 @@ class SavedTripScreen extends Component {
                                 <CardItem cardBody>
                              
                                 <TouchableHighlight onPress={() => this.props.navigation.navigate('DayDetail')}>
-                                    <Image style={{ height: 300, flex: 1 }} source={item.image}/>
+                                    <Image style={{ height: 150, width: 390, resizeMode: 'contain',  flex: 1 }} source={item.image}/>
                                     </TouchableHighlight>
                                     
                                 </CardItem>
                                 <CardItem>
                                     <Icon name="heart" style={{ color: '#ED4A6A' }} />
                                     <Text>{item.destination}</Text>
+                                    <Button onPress={() => this.ignoreTrip(item.trip_name)}
+                                    title="Delete"
+                                    color="#841584"
+                                    />
                                 </CardItem>
+                                
                             </Card>
                         ))}
                     </ScrollView>

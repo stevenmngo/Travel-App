@@ -1,7 +1,14 @@
 import constant from '../contants'
 
 const initialState = { 
-                    SelectedDestination: '',
+                        SelectedDestination: 
+                        { 
+                            structured_formatting: 
+                            {
+                                main_text:''
+                            }
+                        },
+                    Destination: {},
                     fetching: false,
                     searchResult: []
                     }
@@ -13,6 +20,17 @@ export default (state = initialState, action) => {
                 ...state,
                 SelectedDestination: action.payload,
             }
+        case constant.HOME.REQUEST_SUGGESTION_DESTINATION:
+            return {
+                ...state,
+                fetching: true,
+            }
+        case constant.HOME.RECEIVE_SUGGESTION_DESTINATION:
+            return {
+                ...state,
+                fetching: false,
+                searchResult: action.payload
+            }
         case constant.HOME.REQUEST_DESTINATION:
             return {
                 ...state,
@@ -22,7 +40,7 @@ export default (state = initialState, action) => {
             return {
                 ...state,
                 fetching: false,
-                searchResult: action.payload
+                Destination: action.payload
             }
         default:
             return state
