@@ -70,7 +70,7 @@ const AppDrawNavigator = createDrawerNavigator(
     contentComponent: CustomDrawComponent,
     // drawerWidth: width
     contentOptions: {
-      activeTintColor: 'orange',
+      activeTintColor: '#2196f3',
     },
   }
 )
