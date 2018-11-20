@@ -42,7 +42,6 @@ class DayDetailScreen extends Component {
 
     componentWillMount(){
         this.fetchPlaces()
-
     }
 
     componentDidUpdate(prevProps) {
@@ -50,7 +49,6 @@ class DayDetailScreen extends Component {
             this.fetchPlaces();
         }
     }
-
 
     render() {
         const renderAll = this.props.fetchedPOI.map(b => {  
@@ -117,9 +115,6 @@ class DayDetailScreen extends Component {
                 {/* render All POI  */}
                 <Tabs renderTabBar = {() => <ScrollableTab/>}>
                     <Tab heading="ALL">
-                        <View>
-                            <Text>Hello</Text>
-                        </View>
                         {renderAll}
                     </Tab>
                 </Tabs>  

@@ -5,16 +5,6 @@ const selectDestination = destination => ({
   payload: destination,
 })
 
-// const selectDestination = (destination) => {
-//     return (dispatch, destination) => {
-//         dispatch(fetchDestination(destination.place_id))
-//         return ({
-//             type: constant.HOME.SELECT_DESTINATION,
-//             payload: destination,
-//         })
-//     }
-// }
-
 const requestSuggestionDestination = (input) => {
     return {
         type: constant.HOME.REQUEST_SUGGESTION_DESTINATION,
@@ -43,10 +33,6 @@ const fetchSuggestionDestination = (input) => {
             .then((response) => response.json())
             .then((responseJson) => {
                 result = responseJson.predictions
-                // APIResult = []
-                // for (thing of result) {
-                //     APIResult.push(thing.structured_formatting.main_text)
-                // }
                 console.log(result)
                 dispatch(receiveSuggestionDestination(result))
             })
@@ -85,16 +71,7 @@ const fetchDestination = (place) => {
         })
             .then((response) => response.json())
             .then((responseJson) => {
-
-                // console.log("HERERERERERERE")
                 console.log(responseJson.result)
-
-                // result = responseJson.predictions
-                // APIResult = []
-                // for (thing of result) {
-                //     APIResult.push(thing.structured_formatting.main_text)
-                // }
-                // console.log(APIResult)
                 dispatch(receiveDestination(responseJson.result))
             })
             .catch((error) => {

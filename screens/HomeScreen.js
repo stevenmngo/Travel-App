@@ -27,7 +27,7 @@ class Home extends Component {
 
   setSelected = stateCity =>{
       this.props.selectCiti(stateCity)
-    //   this.props.navigation.navigate('DayPicker')
+      this.props.navigation.navigate('DayPicker')
   }
   realTimeSearch = stateCity => {
     // Set the current state value
