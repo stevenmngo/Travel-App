@@ -16,15 +16,6 @@ class DayDetailScreen extends Component {
     {
         super(props);
         this.state = {
-            all: [
-                " MN Peak",
-                " MD Peak",
-                " MT Peak",
-                " MY Peak",
-                " MI Peak",
-                " MO Peak",
-                " MQ Peak",
-            ],
             day: [
                 {
                     day: 1,
@@ -39,22 +30,19 @@ class DayDetailScreen extends Component {
                     list: [" Mission Peak", " Mission Peak2", " Mission Peak3"]
                 },
             ],
-            stateCity: ' ',
-            APIResult: [],
             tags: 'restaurant',
-            location: '-33.8670522,151.1957362'
         }
 
         this.fetchPlaces = this.fetchPlaces.bind(this)
     }
 
     fetchPlaces = () => {
-        // this.props.fetchSuggestionPOI(this.state.tags, this.state.location)
         this.props.fetchSuggestionPOI(this.state.tags, this.props.Destination.geometry.location)
     }
 
     componentWillMount(){
         this.fetchPlaces()
+
     }
 
     componentDidUpdate(prevProps) {
@@ -142,7 +130,7 @@ class DayDetailScreen extends Component {
 
 const mapStateToProps = state => ({
     fetchedPOI: state.DayDetailReducer.fetchedPOI,
-    Destination: state.home.Destination
+    Destination: state.home.Destination,
 })
 
 const mapDispatchToProps = dispatch => ({

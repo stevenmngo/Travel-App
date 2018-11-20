@@ -64,19 +64,19 @@ class Home extends Component {
                 </Header>
 
 
-                <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+                <Image
+                    resizeMode={'cover'}
+                    style={{ width: '100%', height: 200, marginTop: 0, marginBottom: 0 }}
+                    source={{ uri: uri_ }}
+                />
+                <Text style={{ marginTop: 0, marginBottom: 0, textAlign: 'center' }}>
+                    {this.props.selectedCiti.structured_formatting.main_text}
+                </Text>
+                {/* <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
                     <Text style={{ marginTop: 0, marginBottom: 0, textAlign: 'center' }}>
                         Selected City
                     </Text>
-                    <Text style={{ marginTop: 0, marginBottom: 0, textAlign: 'center' }}>
-                        {this.props.selectedCiti.structured_formatting.main_text}
-                    </Text>
-                    <Image
-                        resizeMode={'cover'}
-                        style={{ width: '100%', height: 200 }}
-                        source={{ uri: uri_ }}
-                    />
-                </View>
+                </View> */}
                 <View style = {styles.container}>
                     <Item searchBar rounded>
                         <Icon name = "ios-search" /> 
