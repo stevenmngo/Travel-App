@@ -57,6 +57,13 @@ class DayDetailScreen extends Component {
         this.fetchPlaces()
     }
 
+    componentDidUpdate(prevProps) {
+        if (prevProps.Destination.name !== this.props.Destination.name) {
+            this.fetchPlaces();
+        }
+    }
+
+
     render() {
         const renderAll = this.props.fetchedPOI.map(b => {  
             return (
