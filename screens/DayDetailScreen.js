@@ -44,6 +44,15 @@ class DayDetailScreen extends Component {
         this.fetchPlaces()
     }
 
+    componentDidMount(){
+        let totalDays = 10
+        day = []
+        for (let count = 1; count < totalDays; count++){
+            day.push({ day: count, list: []})
+        }
+        console.log(day)
+        this.setState({day})
+    }
     componentDidUpdate(prevProps) {
         if (prevProps.Destination.name !== this.props.Destination.name) {
             this.fetchPlaces();
@@ -53,7 +62,7 @@ class DayDetailScreen extends Component {
     render() {
         const renderAll = this.props.fetchedPOI.map(b => {  
             return (
-                <ListItem key = {b.name}>
+                <ListItem key={b.id}>
                     <Button onPress={() => ActionSheet.show({
                         options: BUTTONS,
                         cancelButtonIndex: CANCEL_INDEX,
