@@ -63,6 +63,20 @@ class Home extends Component {
                     </Right>
                 </Header>
 
+
+                <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+                    <Text style={{ marginTop: 0, marginBottom: 0, textAlign: 'center' }}>
+                        Selected City
+                    </Text>
+                    <Text style={{ marginTop: 0, marginBottom: 0, textAlign: 'center' }}>
+                        {this.props.selectedCiti.structured_formatting.main_text}
+                    </Text>
+                    <Image
+                        resizeMode={'cover'}
+                        style={{ width: '100%', height: 200 }}
+                        source={{ uri: uri_ }}
+                    />
+                </View>
                 <View style = {styles.container}>
                     <Item searchBar rounded>
                         <Icon name = "ios-search" /> 
@@ -75,31 +89,11 @@ class Home extends Component {
                     </Item>
                 </View>
 
-                <View style = {{flex:1, alignItems:'center', justifyContent:'center', height: 5}}>
+                <View style = {{flex:1, alignItems:'center', justifyContent:'center'}}>
                     <FlatList
                         data={this.props.searchResult}
-                        renderItem={({ item }) => <Text id={item.structured_formatting.main_text} onPress={() => this.setSelected(item)} style={{ padding: 10, fontSize: 18, height: 44 }}>{item.structured_formatting.main_text}</Text>}
+                        renderItem={({ item }) => <Text id={item.structured_formatting.main_text} onPress={() => this.setSelected(item)} style={{ padding: 2, fontSize: 12, height: 20 }}>{item.structured_formatting.main_text}</Text>}
                     />
-                </View>
-
-                <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-                    <Text style={{ marginTop: 0, marginBottom: 0, textAlign: 'center' }}>
-                        Selected City
-                    </Text>
-                    <Text style={{ marginTop: 0, marginBottom: 0, textAlign: 'center' }}>
-                        {this.props.selectedCiti.structured_formatting.main_text}
-                    </Text>
-                    <Image
-                        // style={{ width: 50, height: 50 }}
-                        resizeMode={'cover'}
-                        style={{ width: '100%', height: 200 }}
-                        // source={{ uri: temp }}
-                        // source={require("../assets/lasvegas.jpg")}
-                        source={{ uri: uri_ }}
-                    />
-                    {/* <Text style={{ marginTop: 0, marginBottom: 10, textAlign: 'center' }}>
-                        {this.props.Destination.photos[0].html_attributions[0] || "hello"}
-                    </Text> */}
                 </View>
             </View>
         )
