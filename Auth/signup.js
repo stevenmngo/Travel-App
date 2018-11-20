@@ -19,6 +19,12 @@ class SignUp extends React.Component {
       return
     }
     this.props.dispatchCreateUser(this.state.email, this.state.password)
+
+    setTimeout(() => {
+      if (!this.props.auth.signUpError) {
+        this.props.navigation.navigate('SignIn')
+      }
+    }, 1300)
   }
 
   render() {

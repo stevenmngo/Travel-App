@@ -1,7 +1,10 @@
 export const LOG_IN = 'LOG_IN'
 export const LOG_IN_SUCCESS = 'LOG_IN_SUCCESS'
 export const LOG_IN_FAILURE = 'LOG_IN_FAILURE'
+
 export const LOG_OUT = 'LOG_OUT'
+export const LOG_OUT_SUCCESS = 'LOG_OUT_SUCCESS'
+export const LOG_OUT_FAILURE = 'LOG_OUT_FAILURE'
 
 export const SIGN_UP = 'SIGN_UP'
 export const SIGN_UP_SUCCESS = 'SIGN_UP_SUCCESS'
@@ -13,23 +16,21 @@ const initialState = {
 
   signUpError: false,
   signInError: false,
+  signOutError: false,
 
   signInErrorMessage: '',
   signUpErrorMessage: '',
+  signOutErrorMessage: '',
 }
 
 export default (state = initialState, action) => {
   switch (action.type) {
     case SIGN_UP:
-      return {
-        ...state,
-        isAuthenticating: true,
-      }
+      return {...state, isAuthenticating: true, signUpError: false}
+
     case SIGN_UP_SUCCESS:
-      return {
-        ...state,
-        isAuthenticating: false,
-      }
+      return {...state, isAuthenticating: false, signUpErrorMessage: '', signUpError: false}
+
     case SIGN_UP_FAILURE:
       return {
         ...state,
@@ -38,16 +39,11 @@ export default (state = initialState, action) => {
         signUpErrorMessage: action.error.message,
       }
     case LOG_IN:
-      return {
-        ...state,
-        isAuthenticating: true,
-        signInError: false,
-      }
+      return {...state, isAuthenticating: true, signInError: false}
+
     case LOG_IN_SUCCESS:
-      return {
-        isAuthenticating: false,
-        user: action.user,
-      }
+      return {...state, isAuthenticating: false, signInErrorMessage: '', user: action.user}
+
     case LOG_IN_FAILURE:
       return {
         ...state,
@@ -57,8 +53,29 @@ export default (state = initialState, action) => {
       }
 
     case LOG_OUT:
+      return {...state, isAuthenticating: true, signOutError: false}
+
+    case LOG_OUT_SUCCESS:
       return {
-        ...initialState,
+        ...state,
+        isAuthenticating: false,
+        user: {},
+
+        signUpError: false,
+        signInError: false,
+        signOutError: false,
+
+        signInErrorMessage: '',
+        signUpErrorMessage: '',
+        signOutErrorMessage: '',
+      }
+
+    case LOG_OUT_FAILURE:
+      return {
+        ...state,
+        isAuthenticating: false,
+        signOutError: true,
+        signOutErrorMessage: action.error.message,
       }
 
     default:

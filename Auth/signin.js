@@ -9,7 +9,6 @@ import {authenticate} from '../actions/AuthAction'
 
 import firebase from './firebase'
 
-const user = firebase.auth().currentUser
 class SignIn extends React.Component {
   constructor(props) {
     super(props)
@@ -18,9 +17,11 @@ class SignIn extends React.Component {
 
   handleLogin = () => {
     this.props.dispatchAuthenticate(this.state.email, this.state.password)
-    if (user) {
-      this.props.navigation.navigate('Home')
-    }
+    setTimeout(() => {
+      if (Object.keys(this.props.auth.user).length !== 0) {
+        this.props.navigation.navigate('Home')
+      }
+    }, 1300)
   }
 
   render() {
@@ -43,7 +44,7 @@ class SignIn extends React.Component {
           </Right>
         </Header>
         <View style={styles.container}>
-          {this.state.errorMessage && <Text style={{color: 'red'}}>{this.state.errorMessage}</Text>}
+          {/* {this.state.errorMessage && <Text style={{color: 'red'}}>{this.state.errorMessage}</Text>} */}
           <View style={styles.heading}>
             <Image
               source={require('../assets/shape.png')}

@@ -6,6 +6,8 @@ import {
   LOG_IN_SUCCESS,
   LOG_IN_FAILURE,
   LOG_OUT,
+  LOG_OUT_SUCCESS,
+  LOG_OUT_FAILURE,
   SIGN_UP,
   SIGN_UP_SUCCESS,
   SIGN_UP_FAILURE,
@@ -40,7 +42,7 @@ export function createUser(email, password) {
       .createUserWithEmailAndPassword(email, password)
       .then(data => {
         dispatch(signUpSuccess(data))
-        this.props.navigation.navigate('SignIn')
+        //  this.props.navigation.navigate('SignIn')
       })
       .catch(error => {
         dispatch(signUpFailure(error))
@@ -52,12 +54,6 @@ export function createUser(email, password) {
 function logIn() {
   return {
     type: LOG_IN,
-  }
-}
-
-export function logOut() {
-  return {
-    type: LOG_OUT,
   }
 }
 
@@ -89,6 +85,41 @@ export function authenticate(email, password) {
       .catch(error => {
         dispatch(logInFailure(error))
         // Alert.alert(error.message)
+      })
+  }
+}
+
+function logOut() {
+  return {
+    type: LOG_OUT,
+  }
+}
+
+function logOutSuccess() {
+  return {
+    type: LOG_OUT_SUCCESS,
+  }
+}
+
+function logOutFailure(err) {
+  return {
+    type: LOG_OUT_FAILURE,
+    error: err,
+  }
+}
+
+export function signingOut() {
+  return dispatch => {
+    dispatch(logOut())
+
+    firebaseApp
+      .auth()
+      .signOut()
+      .then(() => {
+        dispatch(logOutSuccess())
+      })
+      .catch(error => {
+        dispatch(logOutFailure(error))
       })
   }
 }

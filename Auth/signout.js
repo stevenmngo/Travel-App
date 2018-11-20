@@ -5,27 +5,27 @@ import {connect} from 'react-redux'
 
 import Input from '../dummyComponents/input'
 import Buttons from '../dummyComponents/Buttons'
-import {authenticate} from '../actions/AuthAction'
+import {signingOut} from '../actions/AuthAction'
 
 import firebase from './firebase'
 
 class signOut extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = {email: '', password: ''}
+  handleSignOut = () => {
+    this.props.dispatchSignOut()
+
+    if (!this.props.auth.user.Object) {
+      this.props.navigation.navigate('Home')
+    }
   }
 
-  handleSignOut = () => {
-    firebase
-      .auth()
-      .signOut()
-      .then(() => {})
-      .catch(error => {
-        // An error happened.
-      })
+  noSignOut = () => {
+    this.props.navigation.navigate('Home')
   }
 
   render() {
+    const {
+      auth: {signOutErrorMessage, isAuthenticating, signOutError},
+    } = this.props
     return (
       <View style={{flex: 1}}>
         <Header>
@@ -51,13 +51,13 @@ class signOut extends React.Component {
           </View>
           <Text style={[styles.greeting2]}>Are you sure you want to sign out?</Text>
 
-          <Buttons title="No" onPress={this.handleLogin} />
-          <Buttons title="Yes" onPress={this.handleLogin} />
-          <Text style={[styles.errorMessage, signInError && {color: 'orange'}]}>
-            Error logging in. Please try again.
+          <Buttons isLoading={isAuthenticating} title="NO" onPress={this.noSignOut} />
+          <Buttons isLoading={isAuthenticating} title="YES" onPress={this.handleSignOut} />
+          <Text style={[styles.errorMessage, signOutError && {color: 'orange'}]}>
+            Error Logging Out. Please Try Again.
           </Text>
-          <Text style={[styles.errorMessage, signInError && {color: 'orange'}]}>
-            {signInErrorMessage}
+          <Text style={[styles.errorMessage, signOutError && {color: 'orange'}]}>
+            {signOutErrorMessage}
           </Text>
         </View>
       </View>
@@ -66,7 +66,7 @@ class signOut extends React.Component {
 }
 
 const mapDispatchToProps = {
-  dispatchAuthenticate: (username, password) => authenticate(username, password),
+  dispatchSignOut: () => signingOut(),
 }
 
 const mapStateToProps = state => ({

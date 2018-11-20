@@ -23,24 +23,15 @@ const {width} = Dimensions.get('window')
 
 export default class App extends React.Component {
   render() {
-    let ss
-    firebase.auth().onAuthStateChanged(user => {
-      if (user) {
-        ss = true
-      } else {
-        ss = false
-      }
-    })
-    if (ss) {
-      return (
-        <Provider store={reduxStore}>
-          <Root>
-            <AppDrawNavigator02 />
-          </Root>
-        </Provider>
-      )
-    }
-
+    // let ss
+    // firebase.auth().onAuthStateChanged(user => {
+    //   if (user) {
+    //     ss = true
+    //   } else {
+    //     ss = false
+    //   }
+    // })
+    // if (ss) {
     return (
       <Provider store={reduxStore}>
         <Root>
@@ -49,6 +40,15 @@ export default class App extends React.Component {
       </Provider>
     )
   }
+
+  //   return (
+  //     <Provider store={reduxStore}>
+  //       <Root>
+  //         <AppDrawNavigator01 />
+  //       </Root>
+  //     </Provider>
+  //   )
+  // }
 }
 
 // This is the Drawer Navigator
@@ -82,6 +82,7 @@ const AppDrawNavigator01 = createDrawerNavigator(
   {
     Home: HomeScreen,
     SignIn: Tab,
+    SignOut: signOut,
     SavedTrip: SavedTripScreen,
     NewTrip: TabNavigation,
     About: AboutScreen,
@@ -96,20 +97,20 @@ const AppDrawNavigator01 = createDrawerNavigator(
   }
 )
 
-const AppDrawNavigator02 = createDrawerNavigator(
-  {
-    Home: HomeScreen,
-    Setting: SettingScreen,
-    Signout: signOut,
-    SavedTrip: SavedTripScreen,
-    NewTrip: TabNavigation,
-  },
+// const AppDrawNavigator02 = createDrawerNavigator(
+//   {
+//     Home: HomeScreen,
+//     Setting: SettingScreen,
+//     Signout: signOut,
+//     SavedTrip: SavedTripScreen,
+//     NewTrip: TabNavigation,
+//   },
 
-  {
-    contentComponent: CustomDrawComponent,
-    // drawerWidth: width
-    contentOptions: {
-      activeTintColor: 'orange',
-    },
-  }
-)
+//   {
+//     contentComponent: CustomDrawComponent,
+//     // drawerWidth: width
+//     contentOptions: {
+//       activeTintColor: 'orange',
+//     },
+//   }
+// )
