@@ -45,10 +45,10 @@ class DayPickerScreen extends Component {
                     <Text>Total Days</Text>
                     <Text>{this.state.totalDays}</Text>
                     <DatepickerRange
-                        selectedBackgroundColor= 'red'
+                        selectedBackgroundColor= '#2196f3'
                         selectedTextColor= 'white'
                         todayColor= 'red'
-                        buttonColor= 'red'
+                        buttonColor= '#2196f3'
                         startDate = '13052017'
                         untilDate = '26062017'
                         onConfirm = {(startDate, untilDate) => this.onSubmmit(startDate, untilDate)}
