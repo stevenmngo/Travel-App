@@ -23,6 +23,7 @@ class Home extends Component {
     }
     this.setSelected = this.setSelected.bind(this)
     this.realTimeSearch = this.realTimeSearch.bind(this)
+    this._keyExtractor = this._keyExtractor.bind(this)
   }
 
   setSelected = stateCity =>{
@@ -34,6 +35,8 @@ class Home extends Component {
     this.setState({stateCity})
     this.props.requestResult(stateCity)
   }
+
+    _keyExtractor = (item, index) => item.place_id;
 
   static navigationOptions = {
     drawerIcon: ({tintColor}) => <Icon name="home" style={{fontSize: 24, color: tintColor}} />,
@@ -91,6 +94,7 @@ class Home extends Component {
 
                 <View style = {{flex:1, alignItems:'center', justifyContent:'center'}}>
                     <FlatList
+                        keyExtractor= {this._keyExtractor}
                         data={this.props.searchResult}
                         renderItem={({ item }) => <Text id={item.structured_formatting.main_text} onPress={() => this.setSelected(item)} style={{ padding: 2, fontSize: 12, height: 20 }}>{item.structured_formatting.main_text}</Text>}
                     />

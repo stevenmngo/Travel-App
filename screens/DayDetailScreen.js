@@ -88,7 +88,7 @@ class DayDetailScreen extends Component {
                     </ListItem>
                 )
             })
-            return (<Tab heading={"Day " + b.day}>
+            return (<Tab heading={"Day " + b.day} key={b.day}>
                         <Text style={{textAlign: "center"}}>DAY {b.day}</Text>
                         {renderedPOI}
                     </Tab>)
