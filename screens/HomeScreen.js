@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {View, Text, StyleSheet, FlatList, TextInput} from 'react-native'
+import { View, Text, StyleSheet, FlatList, TextInput, Image} from 'react-native'
 import {Button, Header, Left, Right, Icon, Item, Body, Title, Thumbnail} from 'native-base'
 
 // Redux Import
@@ -40,7 +40,8 @@ class Home extends Component {
   }
 
     render(){
-        const uri = "../assets/IMG_4640.JPG";
+        // const uri = "../assets/IMG_4640.JPG";
+        // const photo = this.props.Destination.photos[0].html_attributions[0] || "../assets/lasvegas.jpg" 
         return (
             <View style = {{flex :1}}>
                 <Header>
@@ -62,17 +63,17 @@ class Home extends Component {
                         <Icon name = "ios-search" /> 
                         <TextInput
                             placeholder = 'Search Places'
-                            style={{ width: '50%', height: 40, alignItems: 'center', justifyContent: 'center'}}
+                            style={{ width: '100%', height: 40, alignItems: 'center', justifyContent: 'center'}}
                             onChangeText={(stateCity) => this.realTimeSearch(stateCity)}
                             value={this.state.stateCity}
                         />
                     </Item>
                 </View>
 
-                <View style = {{flex:1, alignItems:'center', justifyContent:'center'}}>
+                <View style = {{flex:1, alignItems:'center', justifyContent:'center', height: 5}}>
                     <FlatList
                         data={this.props.searchResult}
-                        renderItem={({ item }) => <Text id={item} onPress={() => this.setSelected(item)} style={{ padding: 10, fontSize: 18, height: 44 }}>{item}</Text>}
+                        renderItem={({ item }) => <Text id={item.structured_formatting.main_text} onPress={() => this.setSelected(item)} style={{ padding: 10, fontSize: 18, height: 44 }}>{item.structured_formatting.main_text}</Text>}
                     />
                 </View>
 
@@ -81,8 +82,16 @@ class Home extends Component {
                         Selected City
                     </Text>
                     <Text style={{ marginTop: 0, marginBottom: 10, textAlign: 'center' }}>
-                        {this.props.selectedCiti}
+                        {this.props.selectedCiti.structured_formatting.main_text}
                     </Text>
+                    {/* <Image
+                        style={{ width: 50, height: 50 }}
+                        // source={require("../assets/lasvegas.jpg")}
+                        source={{ uri: photo }}
+                    /> */}
+                    {/* <Text style={{ marginTop: 0, marginBottom: 10, textAlign: 'center' }}>
+                        {this.props.Destination.photos[0].html_attributions[0] || "hello"}
+                    </Text> */}
                 </View>
             </View>
         )
@@ -91,21 +100,22 @@ class Home extends Component {
 
 const mapStateToProps = state => ({
     selectedCiti: state.home.SelectedDestination,
-    searchResult: state.home.searchResult
+    searchResult: state.home.searchResult,
+    Destination: state.home.Destination
 })
 
 const mapDispatchToProps = dispatch => ({
-    selectCiti: citi => dispatch(action.HomeAction.selectDestination(citi)),
+    selectCiti: citi => { dispatch(action.HomeAction.selectDestination(citi)), dispatch(action.HomeAction.fetchDestination(citi)) },
     requestResult: input => dispatch(action.HomeAction.fetchSuggestionDestination(input))
 })
 
 const styles = StyleSheet.create({
     container: {
         justifyContent: 'center',
-        marginTop: 40,
-        marginLeft: 20,
-        marginRight: 20,
-        padding: 20,
+        marginTop: 0,
+        marginLeft: 0,
+        marginRight: 0,
+        padding: 2,
     }
 });
 

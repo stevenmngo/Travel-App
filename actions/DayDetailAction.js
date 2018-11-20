@@ -1,29 +1,26 @@
 import constant from '../contants'
 
-const selectDestination = destination => ({
-    type: constant.DAYDETAIL.SELECT_DESTINATION,
-    payload: destination,
-})
-
-const requestSuggestionDestination = (input) => {
+const requestSuggestionPOI = (input) => {
     return {
-        type: constant.DAYDETAIL.REQUEST_DESTINATION,
+        type: constant.DAYDETAIL.REQUEST_POI,
         payload: input
     }
 }
 
-const receiveSuggestionDestination = (result) => {
+const receiveSuggestionPOI = (result) => {
     return {
-        type: constant.DAYDETAIL.RECEIVE_DESTINATION,
+        type: constant.DAYDETAIL.RECEIVE_POI,
         payload: result
     }
 }
 
-const fetchSuggestionDestination = (input) => {
+const fetchSuggestionPOI = (tags, location) => {
+    locationText = String(location.lat +','+ location.lng)
     // APItoFectch = 'https://maps.googleapis.com/maps/api/place/autocomplete/json?input=' + input + '&inputtype=textquery&key=AIzaSyD7Oa99Y264n7KesaO7LWB-OGmSUntkPHI'
-    APItoFectch = 'https://maps.googleapis.com/maps/api/place/autocomplete/json?input=' + input + '&sensor=false&types=(regions)&key=AIzaSyATOfwkFBactzHfiPhkvW9jmcXb-L5pP-4'
+    // https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=-33.8670522,151.1957362&radius=1500&type=restaurant&key=YOUR_API_KEY
+    APItoFectch = 'https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=' + locationText + '&radius=1500&type=' + tags +'&key=AIzaSyD7Oa99Y264n7KesaO7LWB-OGmSUntkPHI'
     return (dispatch, input) => {
-        dispatch(requestSuggestionDestination(input));
+        dispatch(requestSuggestionPOI(input));
         return fetch(APItoFectch, {
             method: 'GET',
             headers: {
@@ -32,13 +29,14 @@ const fetchSuggestionDestination = (input) => {
         })
             .then((response) => response.json())
             .then((responseJson) => {
-                result = responseJson.predictions
-                APIResult = []
-                for (thing of result) {
-                    APIResult.push(thing.structured_formatting.main_text)
-                }
-                console.log(APIResult)
-                dispatch(receiveSuggestionDestination(APIResult))
+                result = responseJson.results
+
+                // APIResult = []
+                // for (thing of result) {
+                //     APIResult.push(thing.structured_formatting.main_text)
+                // }
+                console.log(result)
+                dispatch(receiveSuggestionPOI(result))
             })
             .catch((error) => {
                 console.error(error);
@@ -47,4 +45,4 @@ const fetchSuggestionDestination = (input) => {
 }
 
 
-export default { selectDestination, requestSuggestionDestination, receiveSuggestionDestination, fetchSuggestionDestination }
+export default {requestSuggestionPOI, receiveSuggestionPOI, fetchSuggestionPOI }

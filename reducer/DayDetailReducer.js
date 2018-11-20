@@ -1,28 +1,22 @@
 import constant from '../contants'
 
 const initialState = {
-    SelectedDestination: '',
     fetching: false,
-    searchResult: []
+    fetchedPOI: [{name: ""}]
 }
 
 export default (state = initialState, action) => {
     switch (action.type) {
-        case constant.DAYDETAIL.SELECT_DESTINATION:
-            return {
-                ...state,
-                SelectedDestination: action.payload,
-            }
-        case constant.DAYDETAIL.REQUEST_DESTINATION:
+        case constant.DAYDETAIL.REQUEST_POI:
             return {
                 ...state,
                 fetching: true,
             }
-        case constant.DAYDETAIL.RECEIVE_DESTINATION:
+        case constant.DAYDETAIL.RECEIVE_POI:
             return {
                 ...state,
                 fetching: false,
-                searchResult: action.payload
+                fetchedPOI: action.payload
             }
         default:
             return state

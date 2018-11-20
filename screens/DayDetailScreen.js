@@ -41,24 +41,26 @@ class DayDetailScreen extends Component {
             ],
             stateCity: ' ',
             APIResult: [],
+            tags: 'restaurant',
+            location: '-33.8670522,151.1957362'
         }
-        this.setSelected = this.setSelected.bind(this)
-        this.realTimeSearch = this.realTimeSearch.bind(this)
+
+        this.fetchPlaces = this.fetchPlaces.bind(this)
     }
 
-    setSelected = stateCity => {
-        this.props.selectCiti(stateCity)
+    fetchPlaces = () => {
+        // this.props.fetchSuggestionPOI(this.state.tags, this.state.location)
+        this.props.fetchSuggestionPOI(this.state.tags, this.props.Destination.geometry.location)
     }
 
-    realTimeSearch = stateCity => {
-        this.setState({stateCity})
-        this.props.requestResult(stateCity)
+    componentWillMount(){
+        this.fetchPlaces()
     }
 
     render() {
-        const renderAll = this.state.all.map(b => {  
+        const renderAll = this.props.fetchedPOI.map(b => {  
             return (
-                <ListItem>
+                <ListItem key = {b.name}>
                     <Button onPress={() => ActionSheet.show({
                         options: BUTTONS,
                         cancelButtonIndex: CANCEL_INDEX,
@@ -70,14 +72,14 @@ class DayDetailScreen extends Component {
                     )}>
                         <Icon name='add' />
                     </Button>
-                    <Text style={{ textAlign: "center" }}>{b}</Text>
+                    <Text style={{ textAlign: "center" }}>{b.name}</Text>
                 </ListItem>
             )
         });
         const renderedTabs = this.state.day.map(b => {
             const renderedPOI = b.list.map(a =>{
                 return(
-                    <ListItem>
+                    <ListItem key={a}>
                     <Button onPress={() => ActionSheet.show({
                         options: BUTTONS,
                         cancelButtonIndex: CANCEL_INDEX,
@@ -120,25 +122,8 @@ class DayDetailScreen extends Component {
                 {/* render All POI  */}
                 <Tabs renderTabBar = {() => <ScrollableTab/>}>
                     <Tab heading="ALL">
-                        {/* Search tab bar */}
-                        {/*<TextInput
-                            placeholder='Search Places...'
-                            style={{ width: '50%', height: 40, alignItems: 'center', justifyContent: 'center' }}
-                            onChangeText={(stateCity) => this.realTimeSearch(stateCity)}
-                            value={this.state.stateCity}
-                        />
-                        <Text style={{ marginTop: 0, marginBottom: 10 }}>Current Selected City</Text>
-                        <Text>{this.props.selectedCiti}</Text>*/}
                         <View>
-                            {/* Search tab bar */}
-                            <TextInput
-                                placeholder='Search Places...'
-                                style={{ width: '50%', height: 40, alignItems: 'center', justifyContent: 'center' }}
-                                onChangeText={(stateCity) => this.realTimeSearch(stateCity)}
-                                value={this.state.stateCity}
-                            />
-                            <Text style={{ marginTop: 0, marginBottom: 10 }}>Current Selected City</Text>
-                            <Text>{this.props.selectedCiti}</Text>
+                            <Text>Hello</Text>
                         </View>
                         {renderAll}
                     </Tab>
@@ -149,18 +134,17 @@ class DayDetailScreen extends Component {
 }
 
 const mapStateToProps = state => ({
-    selectedCiti: state.DayDetailReducer.SelectedDestination,
-    searchResult: state.DayDetailReducer.searchResult
+    fetchedPOI: state.DayDetailReducer.fetchedPOI,
+    Destination: state.home.Destination
 })
 
 const mapDispatchToProps = dispatch => ({
-    selectCiti: citi => dispatch(action.DayDetailAction.selectDestination(citi)),
-    requestResult: input => dispatch(action.DayDetailAction.fetchSuggestionDestination(input))
+    fetchSuggestionPOI: (tags, location) => dispatch(action.DayDetailAction.fetchSuggestionPOI(tags, location))
 })
 
-{/*export default connect (
+export default connect (
     mapStateToProps,
     mapDispatchToProps
-) (DayDetailScreen)*/}
+) (DayDetailScreen)
 
-export default DayDetailScreen
+// export default DayDetailScreen
