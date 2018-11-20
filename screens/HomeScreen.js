@@ -27,7 +27,7 @@ class Home extends Component {
 
   setSelected = stateCity =>{
       this.props.selectCiti(stateCity)
-      this.props.navigation.navigate('DayPicker')
+    //   this.props.navigation.navigate('DayPicker')
   }
   realTimeSearch = stateCity => {
     // Set the current state value
@@ -40,7 +40,12 @@ class Home extends Component {
   }
 
     render(){
-        // const uri = "../assets/IMG_4640.JPG";
+        let uri_ = ''
+        if (this.props.Destination.photos) {
+            uri_ = 'https://maps.googleapis.com/maps/api/place/photo?maxwidth=1000&photoreference=' + this.props.Destination.photos[0].photo_reference + '&key=AIzaSyD7Oa99Y264n7KesaO7LWB-OGmSUntkPHI'
+        } else{
+            uri_ = 'https://images.unsplash.com/photo-1496568816309-51d7c20e3b21?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=9f4033e517acff897a1536ed69fc9dab&auto=format&fit=crop&w=3289&q=80'
+        }
         // const photo = this.props.Destination.photos[0].html_attributions[0] || "../assets/lasvegas.jpg" 
         return (
             <View style = {{flex :1}}>
@@ -78,17 +83,20 @@ class Home extends Component {
                 </View>
 
                 <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-                    <Text style={{ marginTop: 10, marginBottom: 10, textAlign: 'center' }}>
+                    <Text style={{ marginTop: 0, marginBottom: 0, textAlign: 'center' }}>
                         Selected City
                     </Text>
-                    <Text style={{ marginTop: 0, marginBottom: 10, textAlign: 'center' }}>
+                    <Text style={{ marginTop: 0, marginBottom: 0, textAlign: 'center' }}>
                         {this.props.selectedCiti.structured_formatting.main_text}
                     </Text>
-                    {/* <Image
-                        style={{ width: 50, height: 50 }}
+                    <Image
+                        // style={{ width: 50, height: 50 }}
+                        resizeMode={'cover'}
+                        style={{ width: '100%', height: 200 }}
+                        // source={{ uri: temp }}
                         // source={require("../assets/lasvegas.jpg")}
-                        source={{ uri: photo }}
-                    /> */}
+                        source={{ uri: uri_ }}
+                    />
                     {/* <Text style={{ marginTop: 0, marginBottom: 10, textAlign: 'center' }}>
                         {this.props.Destination.photos[0].html_attributions[0] || "hello"}
                     </Text> */}
