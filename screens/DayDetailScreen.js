@@ -3,9 +3,10 @@ import { View, Text, StyleSheet } from 'react-native'
 import { Header, Left, Right, Icon, Tab, Tabs, ScrollableTab, Button, ActionSheet, Content, ListItem, Body, Title,
     Thumbnail, TextInput, FlatList} from 'native-base'
 import { connect } from 'react-redux'
-
+import DropdownMenu from 'react-native-dropdown-menu';
 import action from '../actions'
 
+var data = [["restaurant", "museum", "Bar", "Club"]];
 var BUTTONS = ["Day 1", "Day 2", "Day 3", "Day 4", "Cancel"];
 var REMOVE = ["Remove"];
 var CANCEL_INDEX = 4;
@@ -114,7 +115,18 @@ class DayDetailScreen extends Component {
 
                 {/* render All POI  */}
                 <Tabs renderTabBar = {() => <ScrollableTab/>}>
-                    <Tab heading="ALL">
+                    <Tab heading="All point of interest"  >
+                    <View style={{flex: 1}}>
+        <View style={{height: 64}} />
+                    <DropdownMenu
+          style={{flex:1}}
+          bgColor={'white'}
+          tintColor={'#666666'}
+          activityTintColor={'green'}
+          handler={(selection, row) => this.setState({text: data[selection][row]})}
+          data={data}
+        ></DropdownMenu> 
+        </View>
                         {renderAll}
                     </Tab>
                 </Tabs>  
