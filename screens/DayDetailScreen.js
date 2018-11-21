@@ -29,6 +29,25 @@ class DayDetailScreen extends Component {
         }
         this.fetchPlaces = this.fetchPlaces.bind(this)
         this.addPOI = this.addPOI.bind(this)
+        this.removePOI = this.removePOI.bind(this)
+    }
+
+    removePOI = (buttonIndex, poi) =>
+    {
+        days = this.state.days 
+        for (thing of days){
+            if (thing.day == buttonIndex+1){
+                for (let i = 0; i<= thing.list.length; i++){ 
+                    if (thing.list[i].name == poi.name)
+                    {
+                        //newList = thing.list
+                       newList = thing.list.slice(0, i).concat(thing.list.slice(i + 1))
+                       thing.list = newList
+                    }
+                }
+            }
+        }
+        this.setState({days})
     }
 
     addPOI = (buttonIndex, poi) => {
@@ -112,15 +131,15 @@ class DayDetailScreen extends Component {
                 return(
                     <ListItem key={a.id}>
                     <Button onPress={() => ActionSheet.show({
-                        options: this.state.buttons,
-                        cancelButtonIndex: CANCEL_INDEX,
-                        title: "Select Day to be added"
+                        options: REMOVE,
+                        title: "Remove POI"
                     },
                     buttonIndex => {
-                        this.setState({ clicked: this.state.buttons[buttonIndex] })
+                        //this.setState({ clicked: this.state.buttons[buttonIndex] })
+                        this.removePOI(buttonIndex, a)
                     }
                     )}>
-                        <Icon name='add' />
+                        <Icon name='remove' />
                     </Button> 
                     <Text style={{ textAlign: "center", marginLeft: 10 }}>{a.name}</Text>
                     </ListItem>
