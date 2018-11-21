@@ -8,7 +8,7 @@ import action from '../actions'
 
 //var BUTTONS = ["Day 1", "Day 2", "Day 3", "Day 4", "Cancel"];
 var REMOVE = ["Remove"];
-var CANCEL_INDEX = 4;
+// var CANCEL_INDEX = 4;
 //const days = [1, 2, 3, 4, 5, 6]
 
 class DayDetailScreen extends Component {
@@ -16,33 +16,38 @@ class DayDetailScreen extends Component {
     {
         super(props);
         this.state = {
-            day: [
+            days: [
                 {
                     day: 1,
-                    list: [" Mission Peak", " Mission Peak2", " Mission Peak3"]
-                },
-                {
-                    day: 2,
-                    list: [" Mission Peak", " Mission Peak2", " Mission Peak3"]
-                },
-                {
-                    day: 3,
-                    list: [" Mission Peak", " Mission Peak2", " Mission Peak3"]
-                },
+                    list: ["Something"] 
+                }
             ],
             tags: 'restaurant',
             buttons:[ 
-                        // {
-                        //     buttons: "Day 1"
-                        // },
-                        // {
-                        //     buttons: "Day 2"
-                        // }
                 "Day 1", "Day 2", "Day 3", "Day 4", "Cancel"
                     ]
         }
-
         this.fetchPlaces = this.fetchPlaces.bind(this)
+        this.addPOI = this.addPOI.bind(this)
+    }
+
+    addPOI = (buttonIndex, poi) => {
+        days = this.state.days
+        for (thing of days){
+            console.log(thing.day)
+            console.log(buttonIndex + 1)
+            if (thing.day == buttonIndex+1){
+                thing.list.push(poi)
+                // console.log(thing)
+                console.log(poi)
+            }
+        }
+
+        // select = currentDay[buttonIndex]
+        // select.push(poi)
+        // day = [...currentDay.slice(0, buttonIndex - 1), select, ...currentDay.slice(buttonIndex + 1, currentDay.length-1) ]
+        console.log(days)
+        this.setState({days})
     }
 
     fetchPlaces = () => {
@@ -55,20 +60,22 @@ class DayDetailScreen extends Component {
 
     componentDidMount(){
         let totalDays = 10
-        day = []
+        days = []
         for (let count = 1; count <= totalDays; count++){
-            day.push({ day: count, list: []})
+            days.push({day: count, list: []})
         }
         //console.log(day)
-        this.setState({day})
+        // this.setState({day})
 
-        // buttons = []
-        // for (let count = 1; count <= totalDays; count++)
-        // {
-        //     buttons.push({ buttons: "Day " + count})
-        // }
-        // buttons.push({buttons: "Cancel"})
-        // this.setState({buttons})
+        buttons = []
+        for (let count = 1; count <= totalDays + 1; count++)
+        {
+            // buttons.push({ buttons: "Day " + count})
+            buttonday = String("Day " + String(count) )
+            buttons.push(buttonday)
+        }
+        buttons.push("Cancel")
+        this.setState({days, buttons})
     }
 
     componentDidUpdate(prevProps) {
@@ -83,24 +90,27 @@ class DayDetailScreen extends Component {
                 <ListItem key={b.id}>
                     <Button onPress={() => ActionSheet.show({
                         options: this.state.buttons,
-                        cancelButtonIndex: CANCEL_INDEX,
+                        cancelButtonIndex: this.state.days.length+1,
                         title: "Select Day to be added"
                     },
                         buttonIndex => {
-                            this.setState({ clicked: this.state.buttons[buttonIndex] })
+                            // this.setState({ clicked: this.state.buttons[buttonIndex] })
+                            this.addPOI(buttonIndex, b)
+                            // console.log(buttonIndex)
+                            // console.log(b)
                         }
                     )}>
                         <Icon name='add' />
                     </Button>
-                    <Text style={{ textAlign: "center" }}>{b.name}</Text>
+                    <Text style={{ textAlign: "center", margin: 10 }}>{b.name}</Text>
                 </ListItem>
             )
         });
 
-        const renderedTabs = this.state.day.map(b => {
+        const renderedTabs = this.state.days.map((b,i) => {
             const renderedPOI = b.list.map(a =>{
                 return(
-                    <ListItem key={a}>
+                    <ListItem key={a.id}>
                     <Button onPress={() => ActionSheet.show({
                         options: this.state.buttons,
                         cancelButtonIndex: CANCEL_INDEX,
@@ -112,13 +122,13 @@ class DayDetailScreen extends Component {
                     )}>
                         <Icon name='add' />
                     </Button> 
-                    <Text style={{ textAlign: "center" }}>{a}</Text>
+                    <Text style={{ textAlign: "center", marginLeft: 10 }}>{a.name}</Text>
                     </ListItem>
                 )
             })
-            return (<Tab heading={"Day " + b.day} key={b.day}>
+            return (<Tab heading={"Day " + String(i+1)} key={i}>
                     <ScrollView> 
-                        <Text style={{textAlign: "center"}}>DAY {b.day}</Text>
+                        {/* <Text style={{textAlign: "center"}}>DAY {i+1}</Text> */}
                         {renderedPOI}
                     </ScrollView> 
                     </Tab>)
