@@ -72,10 +72,10 @@ class Home extends Component {
         </Header>
 
         <View
-          style={{alignItems: 'center', justifyContent: 'center', marginTop: 20, marginBottom: 20}}
+          style={{alignItems: 'center', justifyContent: 'center', marginTop: 20, marginBottom: 20, backgroundColor: '#E7EEF4'}}
         >
           <Text> Trip Name: </Text>
-          <TextInput placeholder="Enter Trip Name" />
+          <TextInput placeholder="Enter Trip Name" placeholderTextColor = "#333D46" />
         </View>
 
         <Image
