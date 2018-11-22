@@ -176,14 +176,7 @@ class DayDetailScreen extends Component {
                     <Tab heading="All point of interest"  >
                     <View style={{flex: 1}}>
         <View style={{height: 64}} />
-                    <DropdownMenu
-          style={{flex:1}}
-          bgColor={'white'}
-          tintColor={'#666666'}
-          activityTintColor={'green'}
-          handler={(selection, row) => this.setState({text: data[selection][row]})}
-          data={data}
-        ></DropdownMenu>
+                    
         </View>
                         {renderAll}
                     </Tab>
