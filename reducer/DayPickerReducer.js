@@ -1,9 +1,11 @@
 import constant from '../contants'
 
 const initialState = {
-    start: '',
-    end: '',
-    total: 0
+    dayInfo: {
+        start: '',
+        end: '',
+        total: 0
+    }
 }
 
 export default (state = initialState, action) => {
@@ -11,9 +13,7 @@ export default (state = initialState, action) => {
         case constant.DAYPICKER.SET_DATE:
             return {
                 ...state,
-                start: action.payload.start,
-                end: action.payload.end,
-                total: action.payload.total,
+                dayInfo: action.payload
             }
         default:
             return state
