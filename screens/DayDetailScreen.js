@@ -1,40 +1,72 @@
 import React, { Component } from 'react'
-import { View, Text, StyleSheet } from 'react-native'
+import { View, Text, StyleSheet, ScrollView } from 'react-native'
 import { Header, Left, Right, Icon, Tab, Tabs, ScrollableTab, Button, ActionSheet, Content, ListItem, Body, Title,
     Thumbnail, TextInput, FlatList} from 'native-base'
 import { connect } from 'react-redux'
 import DropdownMenu from 'react-native-dropdown-menu';
 import action from '../actions'
 
-var data = [["restaurant", "museum", "Bar", "Club"]];
-var BUTTONS = ["Day 1", "Day 2", "Day 3", "Day 4", "Cancel"];
+//var BUTTONS = ["Day 1", "Day 2", "Day 3", "Day 4", "Cancel"];
 var REMOVE = ["Remove"];
-var CANCEL_INDEX = 4;
-const days = [1, 2, 3, 4, 5, 6]
+// var CANCEL_INDEX = 4;
+//const days = [1, 2, 3, 4, 5, 6]
 
 class DayDetailScreen extends Component {
     constructor(props)
     {
         super(props);
         this.state = {
-            day: [
+            days: [
                 {
                     day: 1,
-                    list: [" Mission Peak", " Mission Peak2", " Mission Peak3"]
-                },
-                {
-                    day: 2,
-                    list: [" Mission Peak", " Mission Peak2", " Mission Peak3"]
-                },
-                {
-                    day: 3,
-                    list: [" Mission Peak", " Mission Peak2", " Mission Peak3"]
-                },
+                    list: ["Something"]
+                }
             ],
             tags: 'restaurant',
+            buttons:[
+                "Day 1", "Day 2", "Day 3", "Day 4", "Cancel"
+                    ]
+        }
+        this.fetchPlaces = this.fetchPlaces.bind(this)
+        this.addPOI = this.addPOI.bind(this)
+        this.removePOI = this.removePOI.bind(this)
+    }
+
+    removePOI = (buttonIndex, poi) =>
+    {
+        days = this.state.days
+        for (thing of days){
+            if (thing.day == buttonIndex+1){
+                for (let i = 0; i<= thing.list.length; i++){
+                    if (thing.list[i].name == poi.name)
+                    {
+                        //newList = thing.list
+                       newList = thing.list.slice(0, i).concat(thing.list.slice(i + 1))
+                       thing.list = newList
+                    }
+                }
+            }
+        }
+        this.setState({days})
+    }
+
+    addPOI = (buttonIndex, poi) => {
+        days = this.state.days
+        for (thing of days){
+            console.log(thing.day)
+            console.log(buttonIndex + 1)
+            if (thing.day == buttonIndex+1){
+                thing.list.push(poi)
+                // console.log(thing)
+                console.log(poi)
+            }
         }
 
-        this.fetchPlaces = this.fetchPlaces.bind(this)
+        // select = currentDay[buttonIndex]
+        // select.push(poi)
+        // day = [...currentDay.slice(0, buttonIndex - 1), select, ...currentDay.slice(buttonIndex + 1, currentDay.length-1) ]
+        console.log(days)
+        this.setState({days})
     }
 
     fetchPlaces = () => {
@@ -45,6 +77,26 @@ class DayDetailScreen extends Component {
         this.fetchPlaces()
     }
 
+    componentDidMount(){
+        let totalDays = 10
+        days = []
+        for (let count = 1; count <= totalDays; count++){
+            days.push({day: count, list: []})
+        }
+        //console.log(day)
+        // this.setState({day})
+
+        buttons = []
+        for (let count = 1; count <= totalDays + 1; count++)
+        {
+            // buttons.push({ buttons: "Day " + count})
+            buttonday = String("Day " + String(count) )
+            buttons.push(buttonday)
+        }
+        buttons.push("Cancel")
+        this.setState({days, buttons})
+    }
+
     componentDidUpdate(prevProps) {
         if (prevProps.Destination.name !== this.props.Destination.name) {
             this.fetchPlaces();
@@ -52,46 +104,52 @@ class DayDetailScreen extends Component {
     }
 
     render() {
-        const renderAll = this.props.fetchedPOI.map(b => {  
+        const renderAll = this.props.fetchedPOI.map(b => {
             return (
-                <ListItem key = {b.name}>
+                <ListItem key={b.id}>
                     <Button onPress={() => ActionSheet.show({
-                        options: BUTTONS,
-                        cancelButtonIndex: CANCEL_INDEX,
+                        options: this.state.buttons,
+                        cancelButtonIndex: this.state.days.length+1,
                         title: "Select Day to be added"
                     },
                         buttonIndex => {
-                            this.setState({ clicked: BUTTONS[buttonIndex] })
+                            // this.setState({ clicked: this.state.buttons[buttonIndex] })
+                            this.addPOI(buttonIndex, b)
+                            // console.log(buttonIndex)
+                            // console.log(b)
                         }
                     )}>
                         <Icon name='add' />
                     </Button>
-                    <Text style={{ textAlign: "center" }}>{b.name}</Text>
+                    <Text style={{ textAlign: "center", margin: 10 }}>{b.name}</Text>
                 </ListItem>
             )
         });
-        const renderedTabs = this.state.day.map(b => {
+
+        const renderedTabs = this.state.days.map((b,i) => {
             const renderedPOI = b.list.map(a =>{
                 return(
-                    <ListItem key={a}>
+                    <ListItem key={a.id}>
                     <Button onPress={() => ActionSheet.show({
-                        options: BUTTONS,
-                        cancelButtonIndex: CANCEL_INDEX,
-                        title: "Select Day to be added"
+                        options: REMOVE,
+                        title: "Remove POI"
                     },
                     buttonIndex => {
-                        this.setState({ clicked: BUTTONS[buttonIndex] })
+                        //this.setState({ clicked: this.state.buttons[buttonIndex] })
+                        this.removePOI(buttonIndex, a)
                     }
                     )}>
-                        <Icon name='add' />
-                    </Button> 
-                    <Text style={{ textAlign: "center" }}>{a}</Text>
+                        <Icon name='remove' />
+                    </Button>
+                    <Text style={{ textAlign: "center", marginLeft: 10 }}>{a.name}</Text>
                     </ListItem>
                 )
             })
-            return (<Tab heading={"Day " + b.day} key={b.day}>
-                        <Text style={{textAlign: "center"}}>DAY {b.day}</Text>
+            return (<Tab heading={"Day " + String(i+1)} key={i}>
+                    <ScrollView>
+                        {/* <Text style={{textAlign: "center"}}>DAY {i+1}</Text> */}
                         {renderedPOI}
+                    </ScrollView>
                     </Tab>)
         });
         return (
@@ -99,7 +157,7 @@ class DayDetailScreen extends Component {
                 <Header>
                     <Left>
                         <Icon name="menu" onPress={() => this.props.navigation.openDrawer()}></Icon>
-                    </Left> 
+                    </Left>
                     <Body style={{}}>
                         <Title> Planner </Title>
                     </Body>
@@ -107,11 +165,11 @@ class DayDetailScreen extends Component {
                         <Thumbnail small source={require('../assets/group.png')} />
                     </Right>
                 </Header>
-                
+
                 {/* render day tab  */}
                 <Tabs renderTabBar = {() => <ScrollableTab/>}>
                     {renderedTabs}
-                </Tabs>   
+                </Tabs>
 
                 {/* render All POI  */}
                 <Tabs renderTabBar = {() => <ScrollableTab/>}>
@@ -125,11 +183,11 @@ class DayDetailScreen extends Component {
           activityTintColor={'green'}
           handler={(selection, row) => this.setState({text: data[selection][row]})}
           data={data}
-        ></DropdownMenu> 
+        ></DropdownMenu>
         </View>
                         {renderAll}
                     </Tab>
-                </Tabs>  
+                </Tabs>
             </View>
         )
     }

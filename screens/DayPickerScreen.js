@@ -23,6 +23,7 @@ class DayPickerScreen extends Component {
         let totalDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
         console.log(totalDays)
         this.setState({ startDate, untilDate, totalDays})
+        this.props.navigation.navigate('DayDetail')
     }
 
     render() {
