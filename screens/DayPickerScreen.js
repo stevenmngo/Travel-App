@@ -8,6 +8,7 @@ import DatepickerRange from 'react-native-range-datepicker';
 import { connect } from 'react-redux'
 import action from '../actions'
 
+
 class DayPickerScreen extends Component {
     constructor(props) {
         super(props);
@@ -42,6 +43,8 @@ class DayPickerScreen extends Component {
             body: JSON.stringify({
                 tripName: "Cool Test Trip",
                 destination: this.props.Destination.name,
+                destinationImage: this.props.Destination.photos[0].photo_reference,
+                //destinationImage: this.props.Destination.photos[0].photo_reference,
                 totalDay: totalDays,
                 tripID: tripID,
                 userID: 12,
