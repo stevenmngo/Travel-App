@@ -78,7 +78,8 @@ class DayDetailScreen extends Component {
     }
 
     componentDidMount(){
-        let totalDays = 10
+        // let totalDays = 10
+        let totalDays = this.props.dayInfo.total
         days = []
         for (let count = 1; count <= totalDays; count++){
             days.push({day: count, list: []})
@@ -189,6 +190,7 @@ class DayDetailScreen extends Component {
 const mapStateToProps = state => ({
     fetchedPOI: state.DayDetailReducer.fetchedPOI,
     Destination: state.home.Destination,
+    dayInfo: state.DayPickerReducer.dayInfo,
 })
 
 const mapDispatchToProps = dispatch => ({

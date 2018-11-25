@@ -5,6 +5,9 @@ import { Button, Header, Left, Right, Icon, Item, Body, Title, Thumbnail } from 
 import DateTimePicker from 'react-native-modal-datetime-picker';
 import DatepickerRange from 'react-native-range-datepicker';
 
+import { connect } from 'react-redux'
+import action from '../actions'
+
 class DayPickerScreen extends Component {
     constructor(props) {
         super(props);
@@ -23,6 +26,32 @@ class DayPickerScreen extends Component {
         let totalDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
         console.log(totalDays)
         this.setState({ startDate, untilDate, totalDays})
+        this.props.setDate({
+            start: startDate,
+            end: untilDate,
+            total: totalDays
+        })
+        
+        const tripID = Math.floor(Math.random() * 1000000);
+        fetch("http://ec2-52-15-252-121.us-east-2.compute.amazonaws.com:3000/trip/savetrip", {
+            method: "POST",
+            headers: {
+              Accept: "application/json",
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                tripName: "Cool Test Trip",
+                destination: this.props.Destination.name,
+                totalDay: totalDays,
+                tripID: tripID,
+                userID: 12,
+                startDay: startDate,
+                endDay: untilDate,
+            })
+          }).then(response => {
+          });
+
+        
         this.props.navigation.navigate('DayDetail')
     }
 
@@ -44,7 +73,7 @@ class DayPickerScreen extends Component {
                     </Header>
                 <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
                     <Text>Total Days</Text>
-                    <Text>{this.state.totalDays}</Text>
+                    <Text>{this.props.dayInfo.total}</Text>
                     <DatepickerRange
                         selectedBackgroundColor= '#2196f3'
                         selectedTextColor= 'white'
@@ -61,4 +90,20 @@ class DayPickerScreen extends Component {
     }
 }
 
-export default DayPickerScreen
+const mapStateToProps = state => ({
+    dayInfo: state.DayPickerReducer.dayInfo,
+    Destination: state.home.Destination,
+})
+
+const mapDispatchToProps = dispatch => ({
+    // fetchSuggestionPOI: (tags, location) => dispatch(action.DayDetailAction.fetchSuggestionPOI(tags, location))
+    setDate: (dayInfo) => dispatch(action.DayPickerAction.setDate(dayInfo))
+})
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(DayPickerScreen)
+
+
+// export default DayPickerScreen
