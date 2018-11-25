@@ -31,6 +31,27 @@ class DayPickerScreen extends Component {
             end: untilDate,
             total: totalDays
         })
+        
+        const tripID = Math.floor(Math.random() * 1000000);
+        fetch("http://ec2-52-15-252-121.us-east-2.compute.amazonaws.com:3000/trip/savetrip", {
+            method: "POST",
+            headers: {
+              Accept: "application/json",
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                tripName: "Cool Test Trip",
+                destination: this.props.Destination.name,
+                totalDay: totalDays,
+                tripID: tripID,
+                userID: 12,
+                startDay: startDate,
+                endDay: untilDate,
+            })
+          }).then(response => {
+          });
+
+        
         this.props.navigation.navigate('DayDetail')
     }
 
@@ -71,6 +92,7 @@ class DayPickerScreen extends Component {
 
 const mapStateToProps = state => ({
     dayInfo: state.DayPickerReducer.dayInfo,
+    Destination: state.home.Destination,
 })
 
 const mapDispatchToProps = dispatch => ({
