@@ -44,5 +44,4 @@ const fetchSuggestionPOI = (tags, location) => {
     }
 }
 
-
 export default {requestSuggestionPOI, receiveSuggestionPOI, fetchSuggestionPOI }

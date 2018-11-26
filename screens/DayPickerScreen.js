@@ -71,7 +71,11 @@ class DayPickerScreen extends Component {
                             <Title>Pick Date</Title>
                         </Body>
                         <Right>
-                            <Thumbnail small source={require('../assets/group.png')} />
+                            {/* <Thumbnail small source={require('../assets/group.png')} /> */}
+                            <Button iconRight light onPress={() => { this.props.navigation.navigate('DayDetail') }}>
+                                <Text style={{ marginRight: 10 }}>  Next</Text>
+                                <Icon name='arrow-forward' />
+                            </Button>
                         </Right>
                     </Header>
                 <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>

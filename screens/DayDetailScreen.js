@@ -30,6 +30,24 @@ class DayDetailScreen extends Component {
         this.fetchPlaces = this.fetchPlaces.bind(this)
         this.addPOI = this.addPOI.bind(this)
         this.removePOI = this.removePOI.bind(this)
+        this.savesTrip = this.savesTrip.bind(this)
+    }
+
+    savesTrip = () =>{
+        if (this.props.user.email != null) {
+            if (this.props.Destination.name == null){
+                this.props.navigation.navigate('Destination')
+            } else{
+                if (this.props.dayInfo.start == '' ){
+                    this.props.navigation.navigate('DayPicker')
+                } else {
+                    // From Object then save
+                    
+                }
+            }
+        } else{
+            this.props.navigation.navigate('SignIn')
+        }
     }
 
     removePOI = (buttonIndex, poi) =>
@@ -163,7 +181,9 @@ class DayDetailScreen extends Component {
                         <Title> Planner </Title>
                     </Body>
                     <Right>
-                        <Thumbnail small source={require('../assets/group.png')} />
+                        <Button iconRight light onPress={() => { this.savesTrip}}>
+                            <Text style={{ marginRight: 10 }}>Save</Text>
+                        </Button>
                     </Right>
                 </Header>
                 
@@ -189,6 +209,7 @@ const mapStateToProps = state => ({
     fetchedPOI: state.DayDetailReducer.fetchedPOI,
     Destination: state.home.Destination,
     dayInfo: state.DayPickerReducer.dayInfo,
+    user: state.auth.user,
 })
 
 const mapDispatchToProps = dispatch => ({
