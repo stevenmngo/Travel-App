@@ -18,6 +18,12 @@ const receiveSuggestionDestination = (result) => {
         payload: result
     }
 }
+const setTripName = (name) => {
+    return {
+        type: constant.HOME.SELECT_TRIP_NAME,
+        payload: name
+    }
+}
 
 const fetchSuggestionDestination = (input) => {
     // APItoFectch = 'https://maps.googleapis.com/maps/api/place/autocomplete/json?input=' + input + '&inputtype=textquery&key=AIzaSyD7Oa99Y264n7KesaO7LWB-OGmSUntkPHI'
@@ -81,4 +87,4 @@ const fetchDestination = (place) => {
 }
 
 
-export default { selectDestination, requestSuggestionDestination, receiveSuggestionDestination, fetchSuggestionDestination, fetchDestination, receiveDestination, requestDestination }
+export default { selectDestination, requestSuggestionDestination, receiveSuggestionDestination, fetchSuggestionDestination, fetchDestination, receiveDestination, requestDestination, setTripName }

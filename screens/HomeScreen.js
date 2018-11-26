@@ -79,7 +79,13 @@ class Home extends Component {
           style={{alignItems: 'center', justifyContent: 'center', marginTop: 20, marginBottom: 20, backgroundColor: '#E7EEF4'}}
         >
           <Text> Trip Name: </Text>
-          <TextInput placeholder="Enter Trip Name" placeholderTextColor = "#333D46" />
+          <TextInput
+            placeholder="Enter Trip Name"
+            style={{ width: '100%', height: 40, alignItems: 'center', justifyContent: 'center' }}
+            onChangeText={tripName => this.props.setTripName(tripName)}
+            value={this.props.tripName}
+          />
+          {/* <TextInput placeholder="Enter Trip Name" placeholderTextColor = "#333D46" /> */}
         </View>
 
         <Image
@@ -131,14 +137,16 @@ const mapStateToProps = state => ({
   selectedCiti: state.home.SelectedDestination,
   searchResult: state.home.searchResult,
   Destination: state.home.Destination,
+  tripName: state.home.tripName,
 })
 
 const mapDispatchToProps = dispatch => ({
   selectCiti: citi => {
     dispatch(action.HomeAction.selectDestination(citi)),
-      dispatch(action.HomeAction.fetchDestination(citi))
+    dispatch(action.HomeAction.fetchDestination(citi))
   },
   requestResult: input => dispatch(action.HomeAction.fetchSuggestionDestination(input)),
+  setTripName: name => dispatch(action.HomeAction.setTripName(name)),
 })
 
 const styles = StyleSheet.create({

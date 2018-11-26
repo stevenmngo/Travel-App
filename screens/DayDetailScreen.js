@@ -34,15 +34,41 @@ class DayDetailScreen extends Component {
     }
 
     savesTrip = () =>{
-        if (this.props.user.email != null) {
+        console.log("USER:")
+        console.log(this.props.user.user)
+        if (this.props.user.user != null) {
             if (this.props.Destination.name == null){
                 this.props.navigation.navigate('Destination')
             } else{
                 if (this.props.dayInfo.start == '' ){
                     this.props.navigation.navigate('DayPicker')
                 } else {
+                    const tripID = Math.floor(Math.random() * 1000000);
+                    tripObject = {
+                        tripName: this.props.tripName,
+                        destination: this.props.Destination.name,
+                        destinationImage: this.props.Destination.photos[0].photo_reference,
+                        //destinationImage: this.props.Destination.photos[0].photo_reference,
+                        totalDay: this.props.dayInfo.total,
+                        tripID: tripID,
+                        userID: String(this.props.user.user.uid),
+                        startDay: this.props.dayInfo.start,
+                        endDay: this.props.dayInfo.end,
+                    }
+                    console.log("PHUC")
+                    console.log(tripObject)
                     // From Object then save
-                    
+                    fetch("http://ec2-52-15-252-121.us-east-2.compute.amazonaws.com:3000/trip/savetrip", {
+                        method: "POST",
+                        headers: {
+                            Accept: "application/json",
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify(tripObject)
+                    }).then(response => {
+                        console.log(response)
+                    });
+
                 }
             }
         } else{
@@ -181,7 +207,7 @@ class DayDetailScreen extends Component {
                         <Title> Planner </Title>
                     </Body>
                     <Right>
-                        <Button iconRight light onPress={() => { this.savesTrip}}>
+                        <Button iconRight light onPress={() => { this.savesTrip() }}>
                             <Text style={{ marginRight: 10 }}>Save</Text>
                         </Button>
                     </Right>
@@ -208,6 +234,7 @@ class DayDetailScreen extends Component {
 const mapStateToProps = state => ({
     fetchedPOI: state.DayDetailReducer.fetchedPOI,
     Destination: state.home.Destination,
+    tripName: state.home.tripName,
     dayInfo: state.DayPickerReducer.dayInfo,
     user: state.auth.user,
 })
