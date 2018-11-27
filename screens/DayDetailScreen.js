@@ -51,7 +51,7 @@ class DayDetailScreen extends Component {
                         //destinationImage: this.props.Destination.photos[0].photo_reference,
                         totalDay: this.props.dayInfo.total,
                         tripID: tripID,
-                        userID: String(this.props.user.user.uid),
+                        userID: this.props.user.user.uid,
                         startDay: this.props.dayInfo.start,
                         endDay: this.props.dayInfo.end,
                     }
