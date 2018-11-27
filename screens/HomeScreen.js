@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import {View, Text, StyleSheet, FlatList, TextInput, Image} from 'react-native'
-import {Button, Header, Left, Right, Icon, Item, Body, Title, Thumbnail} from 'native-base'
+import {Button, Header, Left, Right, Icon, Item, Body, Title, Thumbnail, Input} from 'native-base'
 
 // Redux Import
 import {connect} from 'react-redux'
@@ -56,7 +56,7 @@ class Home extends Component {
     }
     // const photo = this.props.Destination.photos[0].html_attributions[0] || "../assets/lasvegas.jpg"
     return (
-      <View style={{flex: 1}}>
+      <View style={{ flex: 1, backgroundColor: '#ffffff'}}>
         <Header>
           <Left>
             <Button transparent>
@@ -74,25 +74,52 @@ class Home extends Component {
             </Button>
           </Right>
         </Header>
-
-        <View
-          style={{alignItems: 'center', justifyContent: 'center', marginTop: 20, marginBottom: 20, backgroundColor: '#E7EEF4'}}
-        >
-          <Text> Trip Name: </Text>
+        
+        {/*Trip Name */}
+        {/*style={{ width: '90%', height: 40, alignItems: 'center', justifyContent: 'center' }}
+        <View style = {styles.container}>
+          <Item rounded> 
           <TextInput
+            style={{ width: '100%', height: 40, alignItems: 'center', justifyContent: 'center'}}
             placeholder="Enter Trip Name"
-            style={{ width: '100%', height: 40, alignItems: 'center', justifyContent: 'center' }}
             onChangeText={tripName => this.props.setTripName(tripName)}
             value={this.props.tripName}
           />
-          {/* <TextInput placeholder="Enter Trip Name" placeholderTextColor = "#333D46" /> */}
+          </Item>
+        </View>*/}
+
+        <View style={styles.container}>
+          <Item>
+            <Input 
+              style={{ width: '100%', height: 40, alignItems: 'center', justifyContent: 'center' }}
+              placeholder = " Enter Trip Name "
+              onChangeText={tripName => this.props.setTripName(tripName)}
+              value={this.props.tripName}
+            />
+          </Item>
+        </View>
+         
+
+        {/* search bar */} 
+        <View style={styles.container}>
+          <Item searchBar rounded>
+            <Icon name="ios-search" />
+            <TextInput
+              placeholder="Search Places"
+              style={{ width: '100%', height: 40, alignItems: 'center', justifyContent: 'center' }}
+              onChangeText={stateCity => this.realTimeSearch(stateCity)}
+              value={this.state.stateCity}
+            />
+          </Item>
         </View>
 
+        {/* Image of the place */}
         <Image
           resizeMode="cover"
-          style={{width: '100%', height: 200, marginTop: 0, marginBottom: 0}}
-          source={{uri: uri_}}
+          style={{ width: '100%', height: 200, marginTop: 0, marginBottom: 0 }}
+          source={{ uri: uri_ }}
         />
+
         <Text style={{marginTop: 0, marginBottom: 0, textAlign: 'center'}}>
           {this.props.selectedCiti.structured_formatting.main_text}
         </Text>
@@ -101,17 +128,6 @@ class Home extends Component {
                         Selected City
                     </Text>
                 </View> */}
-        <View style={styles.container}>
-          <Item searchBar rounded>
-            <Icon name="ios-search" />
-            <TextInput
-              placeholder="Search Places"
-              style={{width: '100%', height: 40, alignItems: 'center', justifyContent: 'center'}}
-              onChangeText={stateCity => this.realTimeSearch(stateCity)}
-              value={this.state.stateCity}
-            />
-          </Item>
-        </View>
 
         <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
           <FlatList
@@ -121,7 +137,7 @@ class Home extends Component {
               <Text
                 id={item.structured_formatting.main_text}
                 onPress={() => this.setSelected(item)}
-                style={{padding: 2, fontSize: 12, height: 20}}
+                style={{padding: 2, fontSize: 30, height: 50}}
               >
                 {item.structured_formatting.main_text}
               </Text>
@@ -155,9 +171,16 @@ const styles = StyleSheet.create({
     marginTop: 0,
     marginLeft: 0,
     marginRight: 0,
+    marginBottom: 10,
     padding: 2,
   },
+  input: {
+    margin: 15,
+    height: 40,
+    width: '90%',
+  },
 })
+
 
 export default connect(
   mapStateToProps,
