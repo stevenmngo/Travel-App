@@ -44,10 +44,14 @@ class DayDetailScreen extends Component {
                     this.props.navigation.navigate('DayPicker')
                 } else {
                     const tripID = Math.floor(Math.random() * 1000000);
+                    // console.log("PHUC")
+                    // console.log(tripObject)
+                    // // Form Object then save
                     tripObject = {
                         tripName: this.props.tripName,
                         destination: this.props.Destination.name,
                         destinationImage: this.props.Destination.photos[0].photo_reference,
+                        destinationID: this.props.Destination.place_id,
                         //destinationImage: this.props.Destination.photos[0].photo_reference,
                         totalDay: this.props.dayInfo.total,
                         tripID: tripID,
@@ -55,9 +59,6 @@ class DayDetailScreen extends Component {
                         startDay: this.props.dayInfo.start,
                         endDay: this.props.dayInfo.end,
                     }
-                    console.log("PHUC")
-                    console.log(tripObject)
-                    // From Object then save
                     fetch("http://ec2-52-15-252-121.us-east-2.compute.amazonaws.com:3000/trip/savetrip", {
                         method: "POST",
                         headers: {

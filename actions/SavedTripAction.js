@@ -34,5 +34,21 @@ const removeSavedTrip = (id) => {
 			}
 }
 
+const fetchChoosenTrip = (id) => {
+	let string = `http://ec2-52-15-252-121.us-east-2.compute.amazonaws.com:3000/trip/savedtrips?tripID='${id}'`
+	return (dispatch, uid) => {
+		return fetch(string)
+			.then(res => res.json())
+			.then(trips => {
+				console.log(trips)
+				dispatch({
+					type: constant.SAVETRIP.FETCH_CHOSEN_TRIP,
+					payload: trips
+				})
+			});
+	}
+}
+
+
 
 export default { fetchSavedTrip, removeSavedTrip }

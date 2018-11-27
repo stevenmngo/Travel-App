@@ -47,6 +47,16 @@ class SavedTripScreen extends Component {
     //       });
     // }
 
+    onTripClick = (tripID) =>{
+        // Fetch the choosen Trip and put all info into the store.
+        // Write route to the choosen trip set the "Edit" flag to true, 
+        // When hit newtrip then the "Edit" flag is false
+        // One more variable in store callled "currentTripID" contain the current edit tripID
+
+        // Navigation to DayDetail
+        this.props.navigation.navigate('DayDetail')
+    }
+
 
     render() {
         // console.log(this.state.savedTrips);
@@ -79,7 +89,7 @@ class SavedTripScreen extends Component {
                                 </CardItem>
                                 <CardItem cardBody>
                              
-                                <TouchableHighlight onPress={() => this.props.navigation.navigate('DayDetail')}>
+                                <TouchableHighlight onPress={}>
                                     <Image style={{ height: 150, width: 390, resizeMode: 'cover',  flex: 1 }} source={{uri: 
                                         'https://maps.googleapis.com/maps/api/place/photo?maxwidth=1000&photoreference=' +
                                         item.destinationImage +
