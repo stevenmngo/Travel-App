@@ -120,9 +120,6 @@ class Home extends Component {
           source={{ uri: uri_ }}
         />
 
-        <Text style={{marginTop: 0, marginBottom: 0, textAlign: 'center'}}>
-          {this.props.selectedCiti.structured_formatting.main_text}
-        </Text>
         {/* <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
                     <Text style={{ marginTop: 0, marginBottom: 0, textAlign: 'center' }}>
                         Selected City
@@ -144,6 +141,10 @@ class Home extends Component {
             )}
           />
         </View>
+
+        <Text style={{ marginTop: 0, marginBottom: 10, textAlign: 'center', fontSize: 20 }}>
+          {this.props.selectedCiti.structured_formatting.main_text}
+        </Text>
       </View>
     )
   }
