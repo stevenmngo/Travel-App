@@ -124,6 +124,8 @@ class DayDetailScreen extends Component {
     }
 
     componentWillMount(){
+        let days = this.props.savedDayPOI
+        this.setState(days)
         this.fetchPlaces()
     }
 
@@ -177,7 +179,7 @@ class DayDetailScreen extends Component {
             )
         });
 
-        const renderedTabs = this.state.days.map((b,i) => {
+        const renderedTabs = this.props.savedDayPOI.map((b,i) => {
             const renderedPOI = b.list.map(a =>{
                 return(
                     <ListItem key={a.id}>
