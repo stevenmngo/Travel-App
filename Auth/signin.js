@@ -15,27 +15,27 @@ class SignIn extends React.Component {
     this.state = {email: '', password: ''}
   }
 
-  createUserInDatabe = (id, email) => {
-    const userObject = {userID: id, userEmail: email}
-    fetch('http://ec2-52-15-252-121.us-east-2.compute.amazonaws.com:3000/user/createUser', {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(userObject),
-    })
-      .then(response => {
-        console.log('++++++++++++++++success from creteuser in databse++++++++++++++++')
-        console.log(response)
-      })
-      .catch(error => {
-        console.log(
-          '++++++++++++++++error from create user in database++++++++++++++++++++++++++++++++++++++++++++++++'
-        )
-        console.error(error)
-      })
-  }
+  // createUserInDatabe = (id, email) => {
+  //   const userObject = {userID: id, userEmail: email}
+  //   fetch('http://ec2-52-15-252-121.us-east-2.compute.amazonaws.com:3000/user/createUser', {
+  //     method: 'POST',
+  //     headers: {
+  //       Accept: 'application/json',
+  //       'Content-Type': 'application/json',
+  //     },
+  //     body: JSON.stringify(userObject),
+  //   })
+  //     .then(response => {
+  //       console.log('++++++++++++++++success from creteuser in databse++++++++++++++++')
+  //       console.log(response)
+  //     })
+  //     .catch(error => {
+  //       console.log(
+  //         '++++++++++++++++error from create user in database++++++++++++++++++++++++++++++++++++++++++++++++'
+  //       )
+  //       console.error(error)
+  //     })
+  // }
 
   handleLogin = () => {
     this.props.dispatchAuthenticate(this.state.email, this.state.password)
