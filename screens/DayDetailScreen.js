@@ -99,6 +99,7 @@ class DayDetailScreen extends Component {
         }
          
         this.setState({days})
+        this.props.saveDayPOI(days)
     }
 
     addPOI = (buttonIndex, poi) => {
@@ -118,6 +119,7 @@ class DayDetailScreen extends Component {
         // day = [...currentDay.slice(0, buttonIndex - 1), select, ...currentDay.slice(buttonIndex + 1, currentDay.length-1) ]
         console.log(days)
         this.setState({days})
+        this.props.saveDayPOI(days)
     }
 
     fetchPlaces = () => {
@@ -247,7 +249,8 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-    fetchSuggestionPOI: (tags, location) => dispatch(action.DayDetailAction.fetchSuggestionPOI(tags, location))
+    fetchSuggestionPOI: (tags, location) => dispatch(action.DayDetailAction.fetchSuggestionPOI(tags, location)),
+    saveDayPOI: (dayPOIInput) => dispatch(action.DayDetailAction.saveDayPOI(dayPOIInput)),
 })
 
 export default connect (

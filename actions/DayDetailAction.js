@@ -7,6 +7,13 @@ const requestSuggestionPOI = (input) => {
     }
 }
 
+const saveDayPOI = (input) => {
+    return {
+        type: constant.DAYDETAIL.SAVEDAY_POI,
+        payload: input
+    }
+}
+
 const receiveSuggestionPOI = (result) => {
     return {
         type: constant.DAYDETAIL.RECEIVE_POI,
@@ -44,4 +51,4 @@ const fetchSuggestionPOI = (tags, location) => {
     }
 }
 
-export default {requestSuggestionPOI, receiveSuggestionPOI, fetchSuggestionPOI }
+export default { requestSuggestionPOI, receiveSuggestionPOI, fetchSuggestionPOI, saveDayPOI }
