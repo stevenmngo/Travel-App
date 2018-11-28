@@ -78,23 +78,30 @@ class DayDetailScreen extends Component {
         }
     }
 
-    removePOI = (buttonIndex, poi) =>
+    removePOI = (buttonIndex, poi, day) =>
     {
+        console.log(poi.name)
+        console.log(buttonIndex)
         days = this.state.days 
         for (thing of days){
-            if (thing.day == buttonIndex+1){
-                for (let i = 0; i<= thing.list.length+1; i++){ 
-                
-                    if (thing.list[i].name == poi.name)
+            if (thing.day == day){
+                let newList = []
+                for (let i = 0; i< thing.list.length; i++){
+                    console.log(thing.list.length) 
+                    checkResult = thing.list[i] 
+                    console.log(checkResult.name)
+                    if (checkResult.name != poi.name)
                     {
                         //newList = thing.list
-                       newList = thing.list.slice(0, i).concat(thing.list.slice(i + 1))
-                       thing.list = newList
+                        newList.push(checkResult)
                     }
                 }
+                thing.list = newList
             }
         }
+         
         this.setState({days})
+        this.props.saveDayPOI(days)
     }
 
     addPOI = (buttonIndex, poi) => {
@@ -114,6 +121,7 @@ class DayDetailScreen extends Component {
         // day = [...currentDay.slice(0, buttonIndex - 1), select, ...currentDay.slice(buttonIndex + 1, currentDay.length-1) ]
         console.log(days)
         this.setState({days})
+        this.props.saveDayPOI(days)
     }
 
     fetchPlaces = () => {
@@ -128,7 +136,7 @@ class DayDetailScreen extends Component {
         // let totalDays = 10
         let totalDays = this.props.dayInfo.total
         days = []
-        for (let count = 1; count <= totalDays; count++){
+        for (let count = 1; count <= totalDays + 1; count++){
             days.push({day: count, list: []})
         }
         //console.log(day)
@@ -157,7 +165,7 @@ class DayDetailScreen extends Component {
                 <ListItem key={b.id}>
                     <Button onPress={() => ActionSheet.show({
                         options: this.state.buttons,
-                        cancelButtonIndex: this.state.days.length+1,
+                        cancelButtonIndex: this.state.days.length + 1,
                         title: "Select Day to be added"
                     },
                         buttonIndex => {
@@ -184,7 +192,7 @@ class DayDetailScreen extends Component {
                     },
                     buttonIndex => {
                         //this.setState({ clicked: this.state.buttons[buttonIndex] })
-                        this.removePOI(buttonIndex, a)
+                        this.removePOI(buttonIndex, a, b.day)
                     }
                     )}>
                         <Icon name='remove' />
@@ -244,7 +252,8 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-    fetchSuggestionPOI: (tags, location) => dispatch(action.DayDetailAction.fetchSuggestionPOI(tags, location))
+    fetchSuggestionPOI: (tags, location) => dispatch(action.DayDetailAction.fetchSuggestionPOI(tags, location)),
+    saveDayPOI: (dayPOIInput) => dispatch(action.DayDetailAction.saveDayPOI(dayPOIInput)),
 })
 
 export default connect (
