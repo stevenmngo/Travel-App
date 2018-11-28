@@ -82,7 +82,8 @@ class DayDetailScreen extends Component {
         days = this.state.days 
         for (thing of days){
             if (thing.day == buttonIndex+1){
-                for (let i = 0; i<= thing.list.length; i++){ 
+                for (let i = 0; i<= thing.list.length+1; i++){ 
+                
                     if (thing.list[i].name == poi.name)
                     {
                         //newList = thing.list
