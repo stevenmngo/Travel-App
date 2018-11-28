@@ -16,12 +16,7 @@ class DayDetailScreen extends Component {
     {
         super(props);
         this.state = {
-            days: [
-                {
-                    day: 1,
-                    list: ["Something"] 
-                }
-            ],
+            days: this.props.savedDayPOI,
             tags: 'restaurant',
             buttons:[ 
                 "Day 1", "Day 2", "Day 3", "Day 4", "Cancel"
@@ -246,6 +241,7 @@ const mapStateToProps = state => ({
     tripName: state.home.tripName,
     dayInfo: state.DayPickerReducer.dayInfo,
     user: state.auth.user,
+    savedDayPOI: state.DayDetailReducer.dayPOI,
 })
 
 const mapDispatchToProps = dispatch => ({
