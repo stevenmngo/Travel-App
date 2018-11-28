@@ -16,12 +16,7 @@ class DayDetailScreen extends Component {
     {
         super(props);
         this.state = {
-            days: [
-                {
-                    day: 1,
-                    list: ["Something"] 
-                }
-            ],
+            days: this.props.savedDayPOI,
             tags: 'restaurant',
             buttons:[ 
                 "Day 1", "Day 2", "Day 3", "Day 4", "Cancel"
@@ -136,14 +131,14 @@ class DayDetailScreen extends Component {
         // let totalDays = 10
         let totalDays = this.props.dayInfo.total
         days = []
-        for (let count = 1; count <= totalDays + 1; count++){
+        for (let count = 1; count <= totalDays; count++){
             days.push({day: count, list: []})
         }
         //console.log(day)
         // this.setState({day})
 
         buttons = []
-        for (let count = 1; count <= totalDays + 1; count++)
+        for (let count = 1; count <= totalDays; count++)
         {
             // buttons.push({ buttons: "Day " + count})
             buttonday = String("Day " + String(count) )
@@ -165,7 +160,7 @@ class DayDetailScreen extends Component {
                 <ListItem key={b.id}>
                     <Button onPress={() => ActionSheet.show({
                         options: this.state.buttons,
-                        cancelButtonIndex: this.state.days.length + 1,
+                        cancelButtonIndex: this.state.days.length,
                         title: "Select Day to be added"
                     },
                         buttonIndex => {
@@ -248,7 +243,8 @@ const mapStateToProps = state => ({
     tripName: state.home.tripName,
     dayInfo: state.DayPickerReducer.dayInfo,
     user: state.auth.user,
-    editting: state.savedTrips.editting
+    editting: state.savedTrips.editting,
+    savedDayPOI: state.DayDetailReducer.dayPOI,
 })
 
 const mapDispatchToProps = dispatch => ({

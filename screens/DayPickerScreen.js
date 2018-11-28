@@ -24,7 +24,7 @@ class DayPickerScreen extends Component {
         let startDay = Date.parse(startDate)
         let endDay = Date.parse(untilDate)
         let timeDiff = Math.abs(endDay - startDay);
-        let totalDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
+        let totalDays = Math.ceil(timeDiff / (1000 * 3600 * 24)) + 1;
         console.log(totalDays)
         this.setState({ startDate, untilDate, totalDays})
         this.props.setDate({
