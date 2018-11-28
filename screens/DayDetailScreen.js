@@ -248,7 +248,7 @@ const mapStateToProps = state => ({
     tripName: state.home.tripName,
     dayInfo: state.DayPickerReducer.dayInfo,
     user: state.auth.user,
-    editting: state.savesTrip.editting
+    editting: state.savedTrips.editting
 })
 
 const mapDispatchToProps = dispatch => ({
