@@ -11,6 +11,7 @@ import action from '../actions'
 class SavedTripScreen extends Component {
     constructor(props) {
         super(props);
+        this.onTripClick = this.onTripClick.bind(this)
     }
     // state = {savedTrips: [], ignore: []}
     componentWillMount() {
@@ -49,12 +50,15 @@ class SavedTripScreen extends Component {
 
     onTripClick = (tripID) =>{
         // Fetch the choosen Trip and put all info into the store.
+        console.log(tripID)
+        this.props.fetchChoosenTrip(String(tripID))
+
         // Write route to the choosen trip set the "Edit" flag to true, 
         // When hit newtrip then the "Edit" flag is false
         // One more variable in store callled "currentTripID" contain the current edit tripID
 
         // Navigation to DayDetail
-        this.props.navigation.navigate('DayDetail')
+        // this.props.navigation.navigate('DayDetail')
     }
 
 
@@ -88,8 +92,7 @@ class SavedTripScreen extends Component {
                                     </Left>
                                 </CardItem>
                                 <CardItem cardBody>
-                             
-                                <TouchableHighlight onPress={}>
+                                    <TouchableHighlight onPress={() => this.onTripClick(item.tripID)}>
                                     <Image style={{ height: 150, width: 390, resizeMode: 'cover',  flex: 1 }} source={{uri: 
                                         'https://maps.googleapis.com/maps/api/place/photo?maxwidth=1000&photoreference=' +
                                         item.destinationImage +
@@ -118,6 +121,7 @@ class SavedTripScreen extends Component {
 }
 const mapDispatchToProps = dispatch => ({
     fetchSavedTrip: uid => dispatch(action.SavedTripAction.fetchSavedTrip(uid)),
+    fetchChoosenTrip: tripID => dispatch(action.SavedTripAction.fetchChoosenTrip(tripID)),
     removeSavedTrip: (tripID, uid)  => { dispatch(action.SavedTripAction.removeSavedTrip(tripID)), dispatch(action.SavedTripAction.fetchSavedTrip(uid))}
 })
 

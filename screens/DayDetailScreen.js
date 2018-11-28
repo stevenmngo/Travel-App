@@ -59,6 +59,7 @@ class DayDetailScreen extends Component {
                         startDay: this.props.dayInfo.start,
                         endDay: this.props.dayInfo.end,
                     }
+                    // Check for the flag here and make an update instead of insert new
                     fetch("http://ec2-52-15-252-121.us-east-2.compute.amazonaws.com:3000/trip/savetrip", {
                         method: "POST",
                         headers: {
@@ -239,6 +240,7 @@ const mapStateToProps = state => ({
     tripName: state.home.tripName,
     dayInfo: state.DayPickerReducer.dayInfo,
     user: state.auth.user,
+    editting: state.savesTrip.editting
 })
 
 const mapDispatchToProps = dispatch => ({
