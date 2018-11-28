@@ -24,7 +24,7 @@ class DayPickerScreen extends Component {
         let startDay = Date.parse(startDate)
         let endDay = Date.parse(untilDate)
         let timeDiff = Math.abs(endDay - startDay);
-        let totalDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
+        let totalDays = Math.ceil(timeDiff / (1000 * 3600 * 24)) + 1;
         console.log(totalDays)
         this.setState({ startDate, untilDate, totalDays})
         this.props.setDate({
@@ -33,28 +33,27 @@ class DayPickerScreen extends Component {
             total: totalDays
         })
         
-        const tripID = Math.floor(Math.random() * 1000000);
-        fetch("http://ec2-52-15-252-121.us-east-2.compute.amazonaws.com:3000/trip/savetrip", {
-            method: "POST",
-            headers: {
-              Accept: "application/json",
-              "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                tripName: "Cool Test Trip",
-                destination: this.props.Destination.name,
-                destinationImage: this.props.Destination.photos[0].photo_reference,
-                //destinationImage: this.props.Destination.photos[0].photo_reference,
-                totalDay: totalDays,
-                tripID: tripID,
-                userID: 12,
-                startDay: startDate,
-                endDay: untilDate,
-            })
-          }).then(response => {
-          });
+        // const tripID = Math.floor(Math.random() * 1000000);
+        // fetch("http://ec2-52-15-252-121.us-east-2.compute.amazonaws.com:3000/trip/savetrip", {
+        //     method: "POST",
+        //     headers: {
+        //       Accept: "application/json",
+        //       "Content-Type": "application/json"
+        //     },
+        //     body: JSON.stringify({
+        //         tripName: "Cool Test Trip",
+        //         destination: this.props.Destination.name,
+        //         destinationImage: this.props.Destination.photos[0].photo_reference,
+        //         //destinationImage: this.props.Destination.photos[0].photo_reference,
+        //         totalDay: totalDays,
+        //         tripID: tripID,
+        //         userID: 12,
+        //         startDay: startDate,
+        //         endDay: untilDate,
+        //     })
+        //   }).then(response => {
+        //   });
 
-        
         this.props.navigation.navigate('DayDetail')
     }
 

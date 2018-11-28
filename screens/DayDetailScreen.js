@@ -16,12 +16,7 @@ class DayDetailScreen extends Component {
     {
         super(props);
         this.state = {
-            days: [
-                {
-                    day: 1,
-                    list: ["Something"] 
-                }
-            ],
+            days: this.props.savedDayPOI,
             tags: 'restaurant',
             buttons:[ 
                 "Day 1", "Day 2", "Day 3", "Day 4", "Cancel"
@@ -44,20 +39,22 @@ class DayDetailScreen extends Component {
                     this.props.navigation.navigate('DayPicker')
                 } else {
                     const tripID = Math.floor(Math.random() * 1000000);
+                    // console.log("PHUC")
+                    // console.log(tripObject)
+                    // // Form Object then save
                     tripObject = {
                         tripName: this.props.tripName,
                         destination: this.props.Destination.name,
                         destinationImage: this.props.Destination.photos[0].photo_reference,
+                        destinationID: this.props.Destination.place_id,
                         //destinationImage: this.props.Destination.photos[0].photo_reference,
                         totalDay: this.props.dayInfo.total,
                         tripID: tripID,
-                        userID: String(this.props.user.user.uid),
+                        userID: this.props.user.user.uid,
                         startDay: this.props.dayInfo.start,
                         endDay: this.props.dayInfo.end,
                     }
-                    console.log("PHUC")
-                    console.log(tripObject)
-                    // From Object then save
+                    // Check for the flag here and make an update instead of insert new
                     fetch("http://ec2-52-15-252-121.us-east-2.compute.amazonaws.com:3000/trip/savetrip", {
                         method: "POST",
                         headers: {
@@ -76,22 +73,30 @@ class DayDetailScreen extends Component {
         }
     }
 
-    removePOI = (buttonIndex, poi) =>
+    removePOI = (buttonIndex, poi, day) =>
     {
+        console.log(poi.name)
+        console.log(buttonIndex)
         days = this.state.days 
         for (thing of days){
-            if (thing.day == buttonIndex+1){
-                for (let i = 0; i<= thing.list.length; i++){ 
-                    if (thing.list[i].name == poi.name)
+            if (thing.day == day){
+                let newList = []
+                for (let i = 0; i< thing.list.length; i++){
+                    console.log(thing.list.length) 
+                    checkResult = thing.list[i] 
+                    console.log(checkResult.name)
+                    if (checkResult.name != poi.name)
                     {
                         //newList = thing.list
-                       newList = thing.list.slice(0, i).concat(thing.list.slice(i + 1))
-                       thing.list = newList
+                        newList.push(checkResult)
                     }
                 }
+                thing.list = newList
             }
         }
+         
         this.setState({days})
+        this.props.saveDayPOI(days)
     }
 
     addPOI = (buttonIndex, poi) => {
@@ -111,6 +116,7 @@ class DayDetailScreen extends Component {
         // day = [...currentDay.slice(0, buttonIndex - 1), select, ...currentDay.slice(buttonIndex + 1, currentDay.length-1) ]
         console.log(days)
         this.setState({days})
+        this.props.saveDayPOI(days)
     }
 
     fetchPlaces = () => {
@@ -118,6 +124,8 @@ class DayDetailScreen extends Component {
     }
 
     componentWillMount(){
+        let days = this.props.savedDayPOI
+        this.setState(days)
         this.fetchPlaces()
     }
 
@@ -132,7 +140,7 @@ class DayDetailScreen extends Component {
         // this.setState({day})
 
         buttons = []
-        for (let count = 1; count <= totalDays + 1; count++)
+        for (let count = 1; count <= totalDays; count++)
         {
             // buttons.push({ buttons: "Day " + count})
             buttonday = String("Day " + String(count) )
@@ -154,7 +162,7 @@ class DayDetailScreen extends Component {
                 <ListItem key={b.id}>
                     <Button onPress={() => ActionSheet.show({
                         options: this.state.buttons,
-                        cancelButtonIndex: this.state.days.length+1,
+                        cancelButtonIndex: this.state.days.length,
                         title: "Select Day to be added"
                     },
                         buttonIndex => {
@@ -171,7 +179,7 @@ class DayDetailScreen extends Component {
             )
         });
 
-        const renderedTabs = this.state.days.map((b,i) => {
+        const renderedTabs = this.props.savedDayPOI.map((b,i) => {
             const renderedPOI = b.list.map(a =>{
                 return(
                     <ListItem key={a.id}>
@@ -181,7 +189,7 @@ class DayDetailScreen extends Component {
                     },
                     buttonIndex => {
                         //this.setState({ clicked: this.state.buttons[buttonIndex] })
-                        this.removePOI(buttonIndex, a)
+                        this.removePOI(buttonIndex, a, b.day)
                     }
                     )}>
                         <Icon name='remove' />
@@ -237,10 +245,13 @@ const mapStateToProps = state => ({
     tripName: state.home.tripName,
     dayInfo: state.DayPickerReducer.dayInfo,
     user: state.auth.user,
+    editting: state.savedTrips.editting,
+    savedDayPOI: state.DayDetailReducer.dayPOI,
 })
 
 const mapDispatchToProps = dispatch => ({
-    fetchSuggestionPOI: (tags, location) => dispatch(action.DayDetailAction.fetchSuggestionPOI(tags, location))
+    fetchSuggestionPOI: (tags, location) => dispatch(action.DayDetailAction.fetchSuggestionPOI(tags, location)),
+    saveDayPOI: (dayPOIInput) => dispatch(action.DayDetailAction.saveDayPOI(dayPOIInput)),
 })
 
 export default connect (

@@ -1,46 +1,69 @@
 import React, { Component } from 'react';
 import { ScrollView, Image,Button, TouchableHighlight} from 'react-native';
 import allReducers from '../reducer';
-import { createStore } from 'redux';
+// import { createStore } from 'redux';
 import { connect } from 'react-redux';
 import { Container, Header, View, Card, CardItem, Text, Left, Right, Body, Icon, Title, Thumbnail } from 'native-base';
+import action from '../actions'
 
-const store = createStore(allReducers);
+// const store = createStore(allReducers);
 
 class SavedTripScreen extends Component {
-    state = {savedTrips: [], ignore: []}
-    componentDidMount() {
-        let userid = 12; // fix me!
-        fetch(`http://ec2-52-15-252-121.us-east-2.compute.amazonaws.com:3000/trip/savedtrips?userid=${userid}`)
-          .then(res => res.json())
-          .then(trips =>
-            this.setState({
-              savedTrips: trips
-            })
-          );
+    constructor(props) {
+        super(props);
+        this.onTripClick = this.onTripClick.bind(this)
+    }
+    // state = {savedTrips: [], ignore: []}
+    componentWillMount() {
+        if (this.props.user.user != null) {
+            this.props.fetchSavedTrip(this.props.user.user.uid)
+        }
+        // let userid = 12; // fix me!
+        // fetch(`http://ec2-52-15-252-121.us-east-2.compute.amazonaws.com:3000/trip/savedtrips?userid=${userid}`)
+        //   .then(res => res.json())
+        //   .then(trips =>
+        //     this.setState({
+        //       savedTrips: trips
+        //     })
+        //   );
       }
 
 
-    ignoreTrip(tripID) {
-        var ignoreList = this.state.ignore;
-        ignoreList.push(tripID);
-        this.setState({
-            ignore: ignoreList
-        });
-        fetch("http://ec2-52-15-252-121.us-east-2.compute.amazonaws.com:3000/trip/deletetrip", {
-            method: "POST",
-            headers: {
-              Accept: "application/json",
-              "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                tripID: tripID,
-            })
-          }).then(response => {
-          });
+    // ignoreTrip(tripID) {
+    //     var ignoreList = this.state.ignore;
+    //     ignoreList.push(tripID);
+    //     this.setState({
+    //         ignore: ignoreList
+    //     });
+    //     fetch("http://ec2-52-15-252-121.us-east-2.compute.amazonaws.com:3000/trip/deletetrip", {
+    //         method: "POST",
+    //         headers: {
+    //           Accept: "application/json",
+    //           "Content-Type": "application/json"
+    //         },
+    //         body: JSON.stringify({
+    //             tripID: tripID,
+    //         })
+    //       }).then(response => {
+    //       });
+    // }
+
+    onTripClick = (tripID) =>{
+        // Fetch the choosen Trip and put all info into the store.
+        console.log(tripID)
+        this.props.fetchChoosenTrip(String(tripID))
+
+        // Write route to the choosen trip set the "Edit" flag to true, 
+        // When hit newtrip then the "Edit" flag is false
+        // One more variable in store callled "currentTripID" contain the current edit tripID
+
+        // Navigation to DayDetail
+        // this.props.navigation.navigate('DayDetail')
     }
+
+
     render() {
-        console.log(this.state.savedTrips);
+        // console.log(this.state.savedTrips);
         return (
             <View style={{flex:1}}>
                 <Header>
@@ -57,7 +80,8 @@ class SavedTripScreen extends Component {
                 </Header>
                 <Container>
                     <ScrollView>
-                        {this.state.savedTrips.filter(item => this.state.ignore.indexOf(item.tripID) === -1).map(item => (
+                        {/* {this.state.savedTrips.filter(item => this.state.ignore.indexOf(item.tripID) === -1).map(item => ( */}
+                        {this.props.savedTrips.map(item => (
                             <Card style={{ elevation: 3 }}>
                                 <CardItem>
                                     <Left>
@@ -68,8 +92,7 @@ class SavedTripScreen extends Component {
                                     </Left>
                                 </CardItem>
                                 <CardItem cardBody>
-                             
-                                <TouchableHighlight onPress={() => this.props.navigation.navigate('DayDetail')}>
+                                    <TouchableHighlight onPress={() => this.onTripClick(item.tripID)}>
                                     <Image style={{ height: 150, width: 390, resizeMode: 'cover',  flex: 1 }} source={{uri: 
                                         'https://maps.googleapis.com/maps/api/place/photo?maxwidth=1000&photoreference=' +
                                         item.destinationImage +
@@ -81,7 +104,8 @@ class SavedTripScreen extends Component {
                                 <CardItem>
                                     <Icon name="heart" style={{ color: '#ED4A6A' }} />
                                     <Text>{item.destination}</Text>
-                                    <Button onPress={() => this.ignoreTrip(item.tripID)}
+                                    {/* <Button onPress={() => this.ignoreTrip(item.tripID)} */}
+                                    <Button onPress={() => this.props.removeSavedTrip(item.tripID, this.props.user.user.uid)}
                                     title="Delete"
                                     color="#841584"
                                     />
@@ -95,10 +119,15 @@ class SavedTripScreen extends Component {
         )
     }
 }
-
-
-const mapStateToProps = state => ({
-    oldSavedTrips: state.savedTrips
+const mapDispatchToProps = dispatch => ({
+    fetchSavedTrip: uid => dispatch(action.SavedTripAction.fetchSavedTrip(uid)),
+    fetchChoosenTrip: tripID => dispatch(action.SavedTripAction.fetchChoosenTrip(tripID)),
+    removeSavedTrip: (tripID, uid)  => { dispatch(action.SavedTripAction.removeSavedTrip(tripID)), dispatch(action.SavedTripAction.fetchSavedTrip(uid))}
 })
 
-export default connect(mapStateToProps)(SavedTripScreen)
+const mapStateToProps = state => ({
+    savedTrips: state.savedTrips.savedTrips,
+    user: state.auth.user,
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(SavedTripScreen)
