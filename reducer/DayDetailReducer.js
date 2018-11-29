@@ -2,7 +2,8 @@ import constant from '../contants'
 
 const initialState = {
     fetching: false,
-    fetchedPOI: [{name: ""}]
+    fetchedPOI: [{name: ""}],
+    dayPOI: []
 }
 
 export default (state = initialState, action) => {
@@ -17,6 +18,11 @@ export default (state = initialState, action) => {
                 ...state,
                 fetching: false,
                 fetchedPOI: action.payload
+            }
+        case constant.DAYDETAIL.SAVEDAY_POI:
+            return {
+                ...state,
+                dayPOI: action.payload
             }
         default:
             return state

@@ -10,11 +10,17 @@ const initialState = {
                         },
                     Destination: {},
                     fetching: false,
-                    searchResult: []
+                    searchResult: [],
+                    tripName: ''
                     }
 
 export default (state = initialState, action) => {
     switch (action.type) {
+        case constant.HOME.SELECT_TRIP_NAME:
+            return {
+                ...state,
+                tripName: action.payload,
+            }
         case constant.HOME.SELECT_DESTINATION:
             return {
                 ...state,
