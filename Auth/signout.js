@@ -37,9 +37,7 @@ class signOut extends React.Component {
           <Body>
             <Title>Sign Out </Title>
           </Body>
-          <Right>
-            <Thumbnail small source={require('../assets/group.png')} />
-          </Right>
+          <Right>{/* <Thumbnail small source={require('../assets/group.png')} /> */}</Right>
         </Header>
         <View style={styles.container}>
           <View style={styles.heading}>

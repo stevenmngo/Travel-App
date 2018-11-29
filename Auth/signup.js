@@ -42,9 +42,7 @@ class SignUp extends React.Component {
           <Body>
             <Title> Sign Up </Title>
           </Body>
-          <Right>
-            <Thumbnail small source={require('../assets/group.png')} />
-          </Right>
+          <Right>{/* <Thumbnail small source={require('../assets/group.png')} /> */}</Right>
         </Header>
         <View style={styles.container}>
           <View style={styles.heading}>
