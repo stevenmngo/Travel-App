@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, Text, StyleSheet, ScrollView } from 'react-native'
+import { View, Text, StyleSheet, ScrollView, Alert } from 'react-native'
 import { Header, Left, Right, Icon, Tab, Tabs, ScrollableTab, Button, ActionSheet, Content, ListItem, Body, Title,
     Thumbnail, TextInput, FlatList} from 'native-base'
 import { connect } from 'react-redux'
@@ -63,6 +63,17 @@ class DayDetailScreen extends Component {
                         },
                         body: JSON.stringify(tripObject)
                     }).then(response => {
+                        Alert.alert(
+                            "Successful",
+                            "Your trip has been saved",
+                            [
+                                {
+                                text: "OK",
+                                onPress: () => this.props.navigation.navigate("Saved Trip")
+                                }
+                            ],
+                            { cancelable: false }
+                            );
                         console.log(response)
                     });
 
