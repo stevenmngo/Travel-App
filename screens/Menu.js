@@ -70,9 +70,9 @@ const TabNavigation = createMaterialBottomTabNavigator({
 const AppDrawNavigator01 = createDrawerNavigator(
   {
     Home: HomeScreen,
-    "New Trip": TabNavigation,
-    "Saved Trip": SavedTripScreen,
-    "Sign In": Tab,
+    New_Trip: TabNavigation,
+    Saved_Trip: SavedTripScreen,
+    Sign_In: Tab,
     About: AboutScreen,
   },
 
