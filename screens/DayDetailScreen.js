@@ -223,7 +223,13 @@ class DayDetailScreen extends Component {
                 </ListItem>
             )
         });
-
+        if (this.props.savedDayPOI.length == 0) {
+            let totalDays = this.props.dayInfo.total
+            for (let count = 1; count <= totalDays; count++){
+                this.props.savedDayPOI.push({day: count, list: []})
+            }
+        }
+        console.log(this.props.savedDayPOI);
         const renderedTabs = this.props.savedDayPOI.map((b,i) => {
             const renderedPOI = b.list.map(a =>{
                 return(
