@@ -6,7 +6,7 @@ const fetchSavedTrip = (uid) => {
 		return fetch(string)
 				.then(res => res.json())
 				.then(trips => {
-					console.log(trips)
+					// console.log(trips)
 					dispatch({
 						type: constant.SAVETRIP.FETCH_SAVED_TRIP,
 						payload: trips
@@ -43,7 +43,7 @@ const fetchChoosenTrip = (id) => {
 		return fetch(string)
 			.then(res => res.json())
 			.then(trip => {
-				console.log(trip)
+				// console.log(trip)
 				dispatch({
 					type: constant.SAVETRIP.FETCH_CHOSEN_TRIP,
 					payload: trip

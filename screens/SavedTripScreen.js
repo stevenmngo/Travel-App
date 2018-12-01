@@ -13,45 +13,19 @@ class SavedTripScreen extends Component {
         super(props);
         this.onTripClick = this.onTripClick.bind(this)
     }
-    // state = {savedTrips: [], ignore: []}
     componentWillMount() {
         if (this.props.user.user != null) {
             this.props.fetchSavedTrip(this.props.user.user.uid)
         }
-        // let userid = 12; // fix me!
-        // fetch(`http://ec2-52-15-252-121.us-east-2.compute.amazonaws.com:3000/trip/savedtrips?userid=${userid}`)
-        //   .then(res => res.json())
-        //   .then(trips =>
-        //     this.setState({
-        //       savedTrips: trips
-        //     })
-        //   );
       }
-
-
-    // ignoreTrip(tripID) {
-    //     var ignoreList = this.state.ignore;
-    //     ignoreList.push(tripID);
-    //     this.setState({
-    //         ignore: ignoreList
-    //     });
-    //     fetch("http://ec2-52-15-252-121.us-east-2.compute.amazonaws.com:3000/trip/deletetrip", {
-    //         method: "POST",
-    //         headers: {
-    //           Accept: "application/json",
-    //           "Content-Type": "application/json"
-    //         },
-    //         body: JSON.stringify({
-    //             tripID: tripID,
-    //         })
-    //       }).then(response => {
-    //       });
-    // }
 
     onTripClick = (tripID) =>{
         // Fetch the choosen Trip and put all info into the store.
-        console.log(tripID)
+        // console.log(tripID)
         this.props.fetchChoosenTrip(String(tripID))
+
+        // this.props.setDate()
+        // this.props.saveDayPOI()
 
         // Write route to the choosen trip set the "Edit" flag to true, 
         // When hit newtrip then the "Edit" flag is false
@@ -60,6 +34,7 @@ class SavedTripScreen extends Component {
         // Navigation to DayDetail
         // this.props.navigation.navigate('DayDetail')
     }
+
 
 
     render() {
@@ -122,11 +97,14 @@ class SavedTripScreen extends Component {
 const mapDispatchToProps = dispatch => ({
     fetchSavedTrip: uid => dispatch(action.SavedTripAction.fetchSavedTrip(uid)),
     fetchChoosenTrip: tripID => dispatch(action.SavedTripAction.fetchChoosenTrip(tripID)),
-    removeSavedTrip: (tripID, uid)  => { dispatch(action.SavedTripAction.removeSavedTrip(tripID)), dispatch(action.SavedTripAction.fetchSavedTrip(uid))}
+    removeSavedTrip: (tripID, uid)  => { dispatch(action.SavedTripAction.removeSavedTrip(tripID)), dispatch(action.SavedTripAction.fetchSavedTrip(uid))},
+    setDate: (dayInfo) => dispatch(action.DayPickerAction.setDate(dayInfo)),
+    saveDayPOI: (dayPOIInput) => dispatch(action.DayDetailAction.saveDayPOI(dayPOIInput))
 })
 
 const mapStateToProps = state => ({
     savedTrips: state.savedTrips.savedTrips,
+    currentTrip: state.savedTrips.currentTrip,
     user: state.auth.user,
 })
 
