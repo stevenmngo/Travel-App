@@ -3,6 +3,9 @@ import { View, Text, StyleSheet, ScrollView, Alert } from 'react-native'
 import { Header, Left, Right, Icon, Tab, Tabs, ScrollableTab, Button, ActionSheet, Content, ListItem, Body, Title,
     Thumbnail, TextInput, FlatList} from 'native-base'
 import { connect } from 'react-redux'
+import { Dropdown } from 'react-native-material-dropdown';
+import {DropdownMenu} from 'react-native-dropdown-menu';
+import ModalDropdown from 'react-native-modal-dropdown';
 
 import action from '../actions'
 
@@ -20,12 +23,23 @@ class DayDetailScreen extends Component {
             tags: 'museum',
             buttons:[ 
                 "Day 1", "Day 2", "Day 3", "Day 4", "Cancel"
-                    ]
+            ],
+            tagData: [
+                {
+                    value: 'Museum',
+                }, 
+                {
+                    value: 'Restaurant',
+                }
+            ],
+            dataTag: ["C", "Java", "JavaScript", "PHP"],
+            menuSelectedValue: '',
         }
         this.fetchPlaces = this.fetchPlaces.bind(this)
         this.addPOI = this.addPOI.bind(this)
         this.removePOI = this.removePOI.bind(this)
         this.savesTrip = this.savesTrip.bind(this)
+        this.dropMenufunction = this.dropMenufunction.bind(this)
     }
 
     savesTrip = () =>{
@@ -128,6 +142,12 @@ class DayDetailScreen extends Component {
         console.log(days)
         this.setState({days})
         this.props.saveDayPOI(days)
+    }
+
+    dropMenufunction = (value)=>{
+        menuSelectedValue = this.state.value
+        console.log(menuSelectedValue)
+        this.setState(menuSelectedValue)
     }
 
     fetchPlaces = () => {
@@ -240,6 +260,18 @@ class DayDetailScreen extends Component {
                 {/* render All POI  */}
                 <Tabs renderTabBar = {() => <ScrollableTab/>}>
                     <Tab heading="ALL">
+                        <Dropdown
+                            style = {{textAlign: 'center'}}
+                            label = 'POI'
+                            data={this.state.tagData}
+                            value={this.state.tagData.valueExtracted}
+                            onChangeText={
+                                (value) => {
+                                    this.dropMenufunction(value)
+                                }
+                            }
+                        >
+                        </Dropdown>
                         <ScrollView> 
                             {renderAll}
                         </ScrollView>
@@ -271,3 +303,4 @@ export default connect (
 ) (DayDetailScreen)
 
 // export default DayDetailScreen
+
