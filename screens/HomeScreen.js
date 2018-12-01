@@ -68,10 +68,7 @@ class Home extends Component {
           </Body>
           <Right>
             {/* <Thumbnail small source={require('../assets/group.png')} /> */}
-            <Button iconRight light onPress={() => { this.props.navigation.navigate('DayPicker')}}>
-              <Text style={{ marginRight: 10 }}>  Next</Text>
-              <Icon name='arrow-forward' />
-            </Button>
+            
           </Right>
         </Header>
         
