@@ -39,6 +39,40 @@ class DayDetailScreen extends Component {
                     this.props.navigation.navigate('DayPicker')
                 } else {
                     const tripID = Math.floor(Math.random() * 1000000);
+
+                    // Create the list of poiID
+                    // tupple to insert
+                    tuple = []
+                    for (saveDayPOIs of this.props.savedDayPOI) {
+                        for (poi of saveDayPOIs.list) {
+                            tuple.push({
+                                poiID: poi.place_id,
+                                day: saveDayPOIs.day,
+                                userID: this.props.user.user.uid,
+                                tripID: tripID
+                            })
+                        }
+                    }
+
+                    console.log("Phuc Here")
+                    console.log(tuple)
+
+                    daydetail = {
+                        tupleList: tuple
+                    }
+                    // Check for the flag here and make an update instead of insert new
+                    fetch("http://ec2-52-15-252-121.us-east-2.compute.amazonaws.com:3000/daydetail/", {
+                        method: "POST",
+                        headers: {
+                            Accept: "application/json",
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify(daydetail)
+                    }).then(response => {
+                        // console.log(response)
+                    });
+
+
                     // console.log("PHUC")
                     // console.log(tripObject)
                     // // Form Object then save
