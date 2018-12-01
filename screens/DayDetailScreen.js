@@ -29,8 +29,8 @@ class DayDetailScreen extends Component {
     }
 
     savesTrip = () =>{
-        console.log("USER:")
-        console.log(this.props.user.user)
+        // console.log("USER:")
+        // console.log(this.props.user.user)
         if (this.props.user.user != null) {
             if (this.props.Destination.name == null){
                 this.props.navigation.navigate('Destination')
@@ -54,8 +54,8 @@ class DayDetailScreen extends Component {
                         }
                     }
 
-                    console.log("Phuc Here")
-                    console.log(tuple)
+                    // console.log("Phuc Here")
+                    // console.log(tuple)
 
                     daydetail = {
                         tupleList: tuple
@@ -108,7 +108,7 @@ class DayDetailScreen extends Component {
                             ],
                             { cancelable: false }
                             );
-                        console.log(response)
+                        // console.log(response)
                     });
 
                 }
@@ -120,16 +120,16 @@ class DayDetailScreen extends Component {
 
     removePOI = (buttonIndex, poi, day) =>
     {
-        console.log(poi.name)
-        console.log(buttonIndex)
+        // console.log(poi.name)
+        // console.log(buttonIndex)
         days = this.state.days 
         for (thing of days){
             if (thing.day == day){
                 let newList = []
                 for (let i = 0; i< thing.list.length; i++){
-                    console.log(thing.list.length) 
+                    // console.log(thing.list.length) 
                     checkResult = thing.list[i] 
-                    console.log(checkResult.name)
+                    // console.log(checkResult.name)
                     if (checkResult.name != poi.name)
                     {
                         //newList = thing.list
@@ -147,8 +147,8 @@ class DayDetailScreen extends Component {
     addPOI = (buttonIndex, poi) => {
         days = this.state.days
         for (thing of days){
-            console.log(thing.day)
-            console.log(buttonIndex + 1)
+            // console.log(thing.day)
+            // console.log(buttonIndex + 1)
             if (thing.day == buttonIndex+1){
                 thing.list.push(poi)
                 // console.log(thing)
@@ -159,7 +159,7 @@ class DayDetailScreen extends Component {
         // select = currentDay[buttonIndex]
         // select.push(poi)
         // day = [...currentDay.slice(0, buttonIndex - 1), select, ...currentDay.slice(buttonIndex + 1, currentDay.length-1) ]
-        console.log(days)
+        // console.log(days)
         this.setState({days})
         this.props.saveDayPOI(days)
     }

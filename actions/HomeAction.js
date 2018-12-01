@@ -39,11 +39,11 @@ const fetchSuggestionDestination = (input) => {
             .then((response) => response.json())
             .then((responseJson) => {
                 result = responseJson.predictions
-                console.log(result)
+                // console.log(result)
                 dispatch(receiveSuggestionDestination(result))
             })
             .catch((error) => {
-                console.error(error);
+                // console.error(error);
             });
     }
 }
@@ -77,7 +77,7 @@ const fetchDestination = (place) => {
         })
             .then((response) => response.json())
             .then((responseJson) => {
-                console.log(responseJson.result)
+                // console.log(responseJson.result)
                 dispatch(receiveDestination(responseJson.result))
             })
             .catch((error) => {

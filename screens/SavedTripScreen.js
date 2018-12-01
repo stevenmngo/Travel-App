@@ -21,7 +21,7 @@ class SavedTripScreen extends Component {
 
     onTripClick = (tripID) =>{
         // Fetch the choosen Trip and put all info into the store.
-        console.log(tripID)
+        // console.log(tripID)
         this.props.fetchChoosenTrip(String(tripID))
 
         // this.props.setDate()
