@@ -41,8 +41,25 @@ export function createUser(email, password) {
       .auth()
       .createUserWithEmailAndPassword(email, password)
       .then(data => {
+        const userObject = {userID: data.user.uid, userEmail: data.user.email}
+        console.log('=====================================================')
+        console.log(userObject)
+        fetch('http://ec2-52-15-252-121.us-east-2.compute.amazonaws.com:3000/user/createUser', {
+          method: 'POST',
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(userObject),
+        })
+          .then(response => {
+            console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>')
+            console.log(response)
+          })
+          .catch(error => {
+            console.error(error)
+          })
         dispatch(signUpSuccess(data))
-        //  this.props.navigation.navigate('SignIn')
       })
       .catch(error => {
         dispatch(signUpFailure(error))

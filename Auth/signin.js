@@ -42,10 +42,8 @@ class SignIn extends React.Component {
 
     // setTimeout(() => {
     //   if (Object.keys(this.props.auth.user).length !== 0) {
-    //     const userID = this.props.auth.user.user.uid
-    //     console.log(
-    //       `++++++++++++++++here id  '${userID}'  ++++++++++++++++++++++++++++++++++++++++++++++++`
-    //     )
+    //     const userID = this.props.auth.user.uid
+
     //     const string = `http://ec2-52-15-252-121.us-east-2.compute.amazonaws.com:3000/user/?userid ='${userID}'`
     //     console.log(
     //       `++++++++++++++++here id  '${string}' ++++++++++++++++++++++++++++++++++++++++++++++++`
@@ -72,13 +70,13 @@ class SignIn extends React.Component {
     //         console.error(error)
     //       })
     //   }
-    // }, 1300)
+    // }, 5300)
 
     setTimeout(() => {
       if (Object.keys(this.props.auth.user).length !== 0) {
         this.props.navigation.navigate('Home')
       }
-    }, 1300)
+    }, 3300)
   }
 
   render() {
