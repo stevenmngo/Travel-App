@@ -17,7 +17,7 @@ class DayDetailScreen extends Component {
         super(props);
         this.state = {
             days: this.props.savedDayPOI,
-            tags: 'restaurant',
+            tags: 'museum',
             buttons:[ 
                 "Day 1", "Day 2", "Day 3", "Day 4", "Cancel"
                     ]
