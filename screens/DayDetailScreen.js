@@ -38,6 +38,7 @@ class DayDetailScreen extends Component {
                 if (this.props.dayInfo.start == '' ){
                     this.props.navigation.navigate('DayPicker')
                 } else {
+                    // Check for the flag here and make an update instead of insert new
                     if (this.props.editting){
                         // We are editing the trip then just need to make a put request
                         // Create the list of poiID
@@ -47,6 +48,7 @@ class DayDetailScreen extends Component {
                             for (poi of saveDayPOIs.list) {
                                 tuple.push({
                                     poiID: poi.place_id,
+                                    name: poi.name,
                                     day: saveDayPOIs.day,
                                     userID: this.props.user.user.uid,
                                     // this tripID should get from the store
@@ -54,10 +56,6 @@ class DayDetailScreen extends Component {
                                 })
                             }
                         }
-
-                        // console.log("Phuc Here")
-                        // console.log(tuple)
-
                         daydetail = {
                             tupleList: tuple
                         }
@@ -83,20 +81,18 @@ class DayDetailScreen extends Component {
                             for (poi of saveDayPOIs.list) {
                                 tuple.push({
                                     poiID: poi.place_id,
+                                    name: poi.name,
                                     day: saveDayPOIs.day,
                                     userID: this.props.user.user.uid,
                                     tripID: tripID
                                 })
                             }
                         }
-    
-                        // console.log("Phuc Here")
-                        // console.log(tuple)
-    
+
                         daydetail = {
                             tupleList: tuple
                         }
-                        // Check for the flag here and make an update instead of insert new
+                        
                         fetch("http://ec2-52-15-252-121.us-east-2.compute.amazonaws.com:3000/daydetail/", {
                             method: "POST",
                             headers: {
@@ -108,16 +104,12 @@ class DayDetailScreen extends Component {
                             // console.log(response)
                         });
 
-
-                        // console.log("PHUC")
-                        // console.log(tripObject)
                         // // Form Object then save
                         tripObject = {
                             tripName: this.props.tripName,
                             destination: this.props.Destination.name,
                             destinationImage: this.props.Destination.photos[0].photo_reference,
                             destinationID: this.props.Destination.place_id,
-                            //destinationImage: this.props.Destination.photos[0].photo_reference,
                             totalDay: this.props.dayInfo.total,
                             tripID: tripID,
                             userID: this.props.user.user.uid,

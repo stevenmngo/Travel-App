@@ -32,7 +32,7 @@ class SavedTripScreen extends Component {
         // One more variable in store callled "currentTripID" contain the current edit tripID
 
         // Navigation to DayDetail
-        // this.props.navigation.navigate('DayDetail')
+        this.props.navigation.navigate('DayDetail')
     }
 
 
@@ -128,8 +128,8 @@ const mapDispatchToProps = dispatch => ({
     fetchSavedTrip: uid => dispatch(action.SavedTripAction.fetchSavedTrip(uid)),
     fetchChoosenTrip: tripID => dispatch(action.SavedTripAction.fetchChoosenTrip(tripID)),
     removeSavedTrip: (tripID, uid)  => { dispatch(action.SavedTripAction.removeSavedTrip(tripID)), dispatch(action.SavedTripAction.fetchSavedTrip(uid))},
-    setDate: (dayInfo) => dispatch(action.DayPickerAction.setDate(dayInfo)),
-    saveDayPOI: (dayPOIInput) => dispatch(action.DayDetailAction.saveDayPOI(dayPOIInput))
+    // setDate: (dayInfo) => dispatch(action.DayPickerAction.setDate(dayInfo)),
+    // saveDayPOI: (dayPOIInput) => dispatch(action.DayDetailAction.saveDayPOI(dayPOIInput))
 })
 
 const mapStateToProps = state => ({
