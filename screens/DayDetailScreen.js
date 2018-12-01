@@ -38,78 +38,115 @@ class DayDetailScreen extends Component {
                 if (this.props.dayInfo.start == '' ){
                     this.props.navigation.navigate('DayPicker')
                 } else {
-                    const tripID = Math.floor(Math.random() * 1000000);
-
-                    // Create the list of poiID
-                    // tupple to insert
-                    tuple = []
-                    for (saveDayPOIs of this.props.savedDayPOI) {
-                        for (poi of saveDayPOIs.list) {
-                            tuple.push({
-                                poiID: poi.place_id,
-                                day: saveDayPOIs.day,
-                                userID: this.props.user.user.uid,
-                                tripID: tripID
-                            })
+                    if (this.props.editting){
+                        // We are editing the trip then just need to make a put request
+                        // Create the list of poiID
+                        // tupple to insert
+                        tuple = []
+                        for (saveDayPOIs of this.props.savedDayPOI) {
+                            for (poi of saveDayPOIs.list) {
+                                tuple.push({
+                                    poiID: poi.place_id,
+                                    day: saveDayPOIs.day,
+                                    userID: this.props.user.user.uid,
+                                    // this tripID should get from the store
+                                    tripID: this.props.currentTrip.tripID
+                                })
+                            }
                         }
+
+                        // console.log("Phuc Here")
+                        // console.log(tuple)
+
+                        daydetail = {
+                            tupleList: tuple
+                        }
+                        // Check for the flag here and make an update instead of insert new
+                        fetch("http://ec2-52-15-252-121.us-east-2.compute.amazonaws.com:3000/daydetail/", {
+                            method: "PUT",
+                            headers: {
+                                Accept: "application/json",
+                                "Content-Type": "application/json"
+                            },
+                            body: JSON.stringify(daydetail)
+                        }).then(response => {
+                            // console.log(response)
+                        });
+
+                    } else{
+                        const tripID = Math.floor(Math.random() * 1000000);
+    
+                        // Create the list of poiID
+                        // tupple to insert
+                        tuple = []
+                        for (saveDayPOIs of this.props.savedDayPOI) {
+                            for (poi of saveDayPOIs.list) {
+                                tuple.push({
+                                    poiID: poi.place_id,
+                                    day: saveDayPOIs.day,
+                                    userID: this.props.user.user.uid,
+                                    tripID: tripID
+                                })
+                            }
+                        }
+    
+                        // console.log("Phuc Here")
+                        // console.log(tuple)
+    
+                        daydetail = {
+                            tupleList: tuple
+                        }
+                        // Check for the flag here and make an update instead of insert new
+                        fetch("http://ec2-52-15-252-121.us-east-2.compute.amazonaws.com:3000/daydetail/", {
+                            method: "POST",
+                            headers: {
+                                Accept: "application/json",
+                                "Content-Type": "application/json"
+                            },
+                            body: JSON.stringify(daydetail)
+                        }).then(response => {
+                            // console.log(response)
+                        });
+
+
+                        // console.log("PHUC")
+                        // console.log(tripObject)
+                        // // Form Object then save
+                        tripObject = {
+                            tripName: this.props.tripName,
+                            destination: this.props.Destination.name,
+                            destinationImage: this.props.Destination.photos[0].photo_reference,
+                            destinationID: this.props.Destination.place_id,
+                            //destinationImage: this.props.Destination.photos[0].photo_reference,
+                            totalDay: this.props.dayInfo.total,
+                            tripID: tripID,
+                            userID: this.props.user.user.uid,
+                            startDay: this.props.dayInfo.start,
+                            endDay: this.props.dayInfo.end,
+                        }
+                        // Check for the flag here and make an update instead of insert new
+                        fetch("http://ec2-52-15-252-121.us-east-2.compute.amazonaws.com:3000/trip/savetrip", {
+                            method: "POST",
+                            headers: {
+                                Accept: "application/json",
+                                "Content-Type": "application/json"
+                            },
+                            body: JSON.stringify(tripObject)
+                        }).then(response => {
+                            Alert.alert(
+                                "Successful",
+                                "Your trip has been saved",
+                                [
+                                    {
+                                    text: "OK",
+                                    onPress: () => this.props.navigation.navigate("Saved Trip")
+                                    }
+                                ],
+                                { cancelable: false }
+                                );
+                            // console.log(response)
+                        });
                     }
-
-                    // console.log("Phuc Here")
-                    // console.log(tuple)
-
-                    daydetail = {
-                        tupleList: tuple
-                    }
-                    // Check for the flag here and make an update instead of insert new
-                    fetch("http://ec2-52-15-252-121.us-east-2.compute.amazonaws.com:3000/daydetail/", {
-                        method: "POST",
-                        headers: {
-                            Accept: "application/json",
-                            "Content-Type": "application/json"
-                        },
-                        body: JSON.stringify(daydetail)
-                    }).then(response => {
-                        // console.log(response)
-                    });
-
-
-                    // console.log("PHUC")
-                    // console.log(tripObject)
-                    // // Form Object then save
-                    tripObject = {
-                        tripName: this.props.tripName,
-                        destination: this.props.Destination.name,
-                        destinationImage: this.props.Destination.photos[0].photo_reference,
-                        destinationID: this.props.Destination.place_id,
-                        //destinationImage: this.props.Destination.photos[0].photo_reference,
-                        totalDay: this.props.dayInfo.total,
-                        tripID: tripID,
-                        userID: this.props.user.user.uid,
-                        startDay: this.props.dayInfo.start,
-                        endDay: this.props.dayInfo.end,
-                    }
-                    // Check for the flag here and make an update instead of insert new
-                    fetch("http://ec2-52-15-252-121.us-east-2.compute.amazonaws.com:3000/trip/savetrip", {
-                        method: "POST",
-                        headers: {
-                            Accept: "application/json",
-                            "Content-Type": "application/json"
-                        },
-                        body: JSON.stringify(tripObject)
-                    }).then(response => {
-                        Alert.alert(
-                            "Successful",
-                            "Your trip has been saved",
-                            [
-                                {
-                                text: "OK",
-                                onPress: () => this.props.navigation.navigate("Saved Trip")
-                                }
-                            ],
-                            { cancelable: false }
-                            );
-                        // console.log(response)
-                    });
 
                 }
             }
@@ -291,6 +328,7 @@ const mapStateToProps = state => ({
     dayInfo: state.DayPickerReducer.dayInfo,
     user: state.auth.user,
     editting: state.savedTrips.editting,
+    currentTrip: state.savedTrips.currentTrip,
     savedDayPOI: state.DayDetailReducer.dayPOI,
 })
 
