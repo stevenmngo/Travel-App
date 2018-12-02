@@ -32,9 +32,17 @@ class SavedTripScreen extends Component {
         // One more variable in store callled "currentTripID" contain the current edit tripID
 
         // Navigation to DayDetail
-        this.props.navigation.navigate('DayDetail')
+        // if (!this.props.fetching){
+        //     this.props.navigation.navigate('DayDetail')
+        // }
     }
-
+    
+    // componentDidUpdate(prevProps) {
+    //     if(this.props.fetching){
+    //         console.log("here!!")
+    //         this.props.navigation.navigate('DayDetail')
+    //     }
+    // }
 
 
     render() {
@@ -57,7 +65,7 @@ class SavedTripScreen extends Component {
                 <Container>
                     <ScrollView>
                         {this.props.savedTrips.map(item => (
-                            <Card style={{ elevation: 3 }}>
+                            <Card style={{ elevation: 3 }} key={item.tripID}>
                                 <CardItem>
                                     <Left>
                                         <Body>
@@ -135,6 +143,7 @@ const mapDispatchToProps = dispatch => ({
 const mapStateToProps = state => ({
     savedTrips: state.savedTrips.savedTrips,
     currentTrip: state.savedTrips.currentTrip,
+    fetching: state.savedTrips.fetching,
     user: state.auth.user,
     auth: state.auth,
 })

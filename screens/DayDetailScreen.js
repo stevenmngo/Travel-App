@@ -225,15 +225,21 @@ class DayDetailScreen extends Component {
     }
 
     componentDidUpdate(prevProps) {
-        if (prevProps.Destination.name !== this.props.Destination.name) {
-            this.fetchPlaces();
+        if (!prevProps.Destination){
+            if (this.props.Destination.name){
+                this.fetchPlaces();
+            }
+        } else{
+            if (prevProps.Destination.name !== this.props.Destination.name) {
+                this.fetchPlaces();
+            }
         }
     }
 
     render() {
         const renderAll = this.props.fetchedPOI.map(b => {  
             return (
-                <ListItem key={b.id}>
+                <ListItem key={b.id+'1'}>
                     <Button onPress={() => ActionSheet.show({
                         options: this.state.buttons,
                         cancelButtonIndex: this.state.days.length,
