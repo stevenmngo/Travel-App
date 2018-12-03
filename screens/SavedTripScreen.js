@@ -51,7 +51,6 @@ class SavedTripScreen extends Component {
                     </Body>
                     <Right>
                         <Icon name="add" onPress={() => this.props.navigation.navigate('Home')} style ={{marginRight: 20}}></Icon>
-                        <Thumbnail small source={require('../assets/group.png')} />
                     </Right>
                 </Header>
                 <Container>
