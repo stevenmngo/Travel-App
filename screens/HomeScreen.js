@@ -55,6 +55,7 @@ class Home extends Component {
         'https://images.unsplash.com/photo-1496568816309-51d7c20e3b21?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=9f4033e517acff897a1536ed69fc9dab&auto=format&fit=crop&w=3289&q=80'
     }
     // const photo = this.props.Destination.photos[0].html_attributions[0] || "../assets/lasvegas.jpg"
+    if(Object.keys(this.props.auth.user).length !== 0){
     return (
       <View style={{ flex: 1, backgroundColor: '#ffffff'}}>
         <Header>
@@ -67,27 +68,11 @@ class Home extends Component {
             <Title>Destination</Title>
           </Body>
           <Right>
-            {/* <Thumbnail small source={require('../assets/group.png')} /> */}
-            <Button iconRight light onPress={() => { this.props.navigation.navigate('DayPicker')}}>
-              <Text style={{ marginRight: 10 }}>  Next</Text>
-              <Icon name='arrow-forward' />
-            </Button>
+              <View>
+              {<Thumbnail small source={require('../assets/unicorn.png')} />}
+            </View> 
           </Right>
         </Header>
-        
-        {/*Trip Name */}
-        {/*style={{ width: '90%', height: 40, alignItems: 'center', justifyContent: 'center' }}
-        <View style = {styles.container}>
-          <Item rounded> 
-          <TextInput
-            style={{ width: '100%', height: 40, alignItems: 'center', justifyContent: 'center'}}
-            placeholder="Enter Trip Name"
-            onChangeText={tripName => this.props.setTripName(tripName)}
-            value={this.props.tripName}
-          />
-          </Item>
-        </View>*/}
-
         <View style={styles.container}>
           <Item>
             <Input 
@@ -147,7 +132,85 @@ class Home extends Component {
         </Text>
       </View>
     )
-  }
+}else{
+  return (
+    <View style={{ flex: 1, backgroundColor: '#ffffff'}}>
+      <Header>
+        <Left>
+          <Button transparent>
+            <Icon name="menu" onPress={() => this.props.navigation.openDrawer()} />
+          </Button>
+        </Left>
+        <Body>
+          <Title>Destination</Title>
+        </Body>
+        <Right>
+            <View>
+            {<Thumbnail small source={require('../assets/fatty.png')} />}
+          </View> 
+        </Right>
+      </Header>
+      <View style={styles.container}>
+        <Item>
+          <Input 
+            style={{ width: '100%', height: 40, alignItems: 'center', justifyContent: 'center' }}
+            placeholder = " Enter Trip Name "
+            onChangeText={tripName => this.props.setTripName(tripName)}
+            value={this.props.tripName}
+          />
+        </Item>
+      </View>
+       
+
+      {/* search bar */} 
+      <View style={styles.container}>
+        <Item searchBar rounded>
+          <Icon name="ios-search" />
+          <TextInput
+            placeholder="Search Places"
+            style={{ width: '100%', height: 40, alignItems: 'center', justifyContent: 'center' }}
+            onChangeText={stateCity => this.realTimeSearch(stateCity)}
+            value={this.state.stateCity}
+          />
+        </Item>
+      </View>
+
+      {/* Image of the place */}
+      <Image
+        resizeMode="cover"
+        style={{ width: '100%', height: 200, marginTop: 0, marginBottom: 0 }}
+        source={{ uri: uri_ }}
+      />
+
+      {/* <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+                  <Text style={{ marginTop: 0, marginBottom: 0, textAlign: 'center' }}>
+                      Selected City
+                  </Text>
+              </View> */}
+
+      <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+        <FlatList
+          keyExtractor={this._keyExtractor}
+          data={this.props.searchResult}
+          renderItem={({item}) => (
+            <Text
+              id={item.structured_formatting.main_text}
+              onPress={() => this.setSelected(item)}
+              style={{padding: 2, fontSize: 30, height: 50}}
+            >
+              {item.structured_formatting.main_text}
+            </Text>
+          )}
+        />
+      </View>
+
+      <Text style={{ marginTop: 0, marginBottom: 10, textAlign: 'center', fontSize: 20 }}>
+        {this.props.selectedCiti.structured_formatting.main_text}
+      </Text>
+    </View>
+  )
+}
+}
 }
 
 const mapStateToProps = state => ({
@@ -155,6 +218,8 @@ const mapStateToProps = state => ({
   searchResult: state.home.searchResult,
   Destination: state.home.Destination,
   tripName: state.home.tripName,
+  user: state.auth.user,
+  auth: state.auth,
 })
 
 const mapDispatchToProps = dispatch => ({

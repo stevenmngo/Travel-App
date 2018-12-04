@@ -39,11 +39,11 @@ const fetchSuggestionDestination = (input) => {
             .then((response) => response.json())
             .then((responseJson) => {
                 result = responseJson.predictions
-                console.log(result)
+                // console.log(result)
                 dispatch(receiveSuggestionDestination(result))
             })
             .catch((error) => {
-                console.error(error);
+                // console.error(error);
             });
     }
 }
@@ -67,6 +67,7 @@ const fetchDestination = (place) => {
     // APItoFectch = 'https://maps.googleapis.com/maps/api/place/autocomplete/json?input=' + input + '&inputtype=textquery&key=AIzaSyD7Oa99Y264n7KesaO7LWB-OGmSUntkPHI'
     // APItoFectch = 'https://maps.googleapis.com/maps/api/place/autocomplete/json?input='+input+'&sensor=false&types=(regions)&key=AIzaSyD7Oa99Y264n7KesaO7LWB-OGmSUntkPHI'
     APItoFectch = 'https://maps.googleapis.com/maps/api/place/details/json?placeid=' + place.place_id +'&key=AIzaSyD7Oa99Y264n7KesaO7LWB-OGmSUntkPHI'
+    console.log(APItoFectch)
     return (dispatch, place) => {
         dispatch(requestDestination(place));
         return fetch(APItoFectch, {
@@ -77,8 +78,12 @@ const fetchDestination = (place) => {
         })
             .then((response) => response.json())
             .then((responseJson) => {
-                console.log(responseJson.result)
+                // console.log(responseJson.result)
                 dispatch(receiveDestination(responseJson.result))
+                dispatch({
+                    type: constant.SAVETRIP.SET_FETCHING,
+                    payload: true
+                })
             })
             .catch((error) => {
                 console.error(error);

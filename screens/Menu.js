@@ -3,7 +3,7 @@ import {View, SafeAreaView, ScrollView, Text, Image, StyleSheet} from 'react-nat
 import {createDrawerNavigator, DrawerItems} from 'react-navigation'
 import {createMaterialBottomTabNavigator} from 'react-navigation-material-bottom-tabs'
 import {connect} from 'react-redux'
-
+import NavigationService from './NavigationService';
 import Tab from '../Auth/Tab'
 import signOut from '../Auth/signout'
 
@@ -16,10 +16,14 @@ import DayPickerScreen from './DayPickerScreen'
 class Menu extends React.Component {
   render() {
     if (Object.keys(this.props.auth.user).length !== 0) {
-      return <AppDrawNavigator02 />
+      return <AppDrawNavigator02 ref={navigatorRef => {
+        NavigationService.setTopLevelNavigator(navigatorRef);
+      }}/>
     }
 
-    return <AppDrawNavigator01 />
+    return <AppDrawNavigator01 ref={navigatorRef => {
+      NavigationService.setTopLevelNavigator(navigatorRef);
+    }}/>
   }
 }
 

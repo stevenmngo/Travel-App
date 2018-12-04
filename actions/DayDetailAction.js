@@ -42,11 +42,11 @@ const fetchSuggestionPOI = (tags, location) => {
                 // for (thing of result) {
                 //     APIResult.push(thing.structured_formatting.main_text)
                 // }
-                console.log(result)
+                // console.log(result)
                 dispatch(receiveSuggestionPOI(result))
             })
             .catch((error) => {
-                console.error(error);
+                // console.error(error);
             });
     }
 }

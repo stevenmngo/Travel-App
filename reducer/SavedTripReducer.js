@@ -3,7 +3,8 @@ import constant from '../contants'
 const initialState = {
 	savedTrips: [],
 	currentTrip: {},
-	editting: false
+	editting: false,
+	fetching: false
 }
 
 export default (state = initialState, action) => {
@@ -18,6 +19,11 @@ export default (state = initialState, action) => {
 				...state,
 				editting: true,
 				currentTrip: action.payload
+			}
+		case constant.SAVETRIP.SET_FETCHING:
+			return {
+				...state,
+				fetching: action.payload,
 			}
 		default:
 			return state

@@ -21,11 +21,12 @@ class DayPickerScreen extends Component {
     }
 
     onSubmmit(startDate, untilDate){
+
         let startDay = Date.parse(startDate)
         let endDay = Date.parse(untilDate)
         let timeDiff = Math.abs(endDay - startDay);
         let totalDays = Math.ceil(timeDiff / (1000 * 3600 * 24)) + 1;
-        console.log(totalDays)
+        // console.log(totalDays)
         this.setState({ startDate, untilDate, totalDays})
         this.props.setDate({
             start: startDate,
@@ -67,14 +68,9 @@ class DayPickerScreen extends Component {
                             </Button>
                         </Left>
                         <Body>
-                            <Title>Pick Date</Title>
+                            <Title style={{textAlign:"center"}}>Pick Date</Title>
                         </Body>
                         <Right>
-                            {/* <Thumbnail small source={require('../assets/group.png')} /> */}
-                            <Button iconRight light onPress={() => { this.props.navigation.navigate('DayDetail') }}>
-                                <Text style={{ marginRight: 10 }}>  Next</Text>
-                                <Icon name='arrow-forward' />
-                            </Button>
                         </Right>
                     </Header>
                 <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
@@ -85,8 +81,8 @@ class DayPickerScreen extends Component {
                         selectedTextColor= 'white'
                         todayColor= 'red'
                         buttonColor= '#2196f3'
-                        startDate = '13052017'
-                        untilDate = '26062017'
+                        startDate = {this.props.dayInfo.start}
+                        untilDate = {this.props.dayInfo.end}
                         onConfirm = {(startDate, untilDate) => this.onSubmmit(startDate, untilDate)}
                     />
                 </View>
