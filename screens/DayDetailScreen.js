@@ -56,7 +56,7 @@ class DayDetailScreen extends Component {
                                     day: saveDayPOIs.day,
                                     userID: this.props.user.user.uid,
                                     // this tripID should get from the store
-                                    tripID: this.props.currentTrip.tripID
+                                    tripID: this.props.currentTrip[0].tripID
                                 })
                             }
                         }
@@ -72,7 +72,17 @@ class DayDetailScreen extends Component {
                             },
                             body: JSON.stringify(daydetail)
                         }).then(response => {
-                            // console.log(response)
+                            Alert.alert(
+                                "Successful",
+                                "Your trip has been saved",
+                                [
+                                    {
+                                        text: "OK",
+                                        onPress: () => this.props.navigation.navigate("Saved Trip")
+                                    }
+                                ],
+                                { cancelable: false }
+                            );
                         });
 
                     } else{

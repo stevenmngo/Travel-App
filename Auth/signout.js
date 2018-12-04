@@ -5,7 +5,7 @@ import {connect} from 'react-redux'
 
 import Input from '../dummyComponents/input'
 import Buttons from '../dummyComponents/Buttons'
-import {signingOut} from '../actions/AuthAction'
+import {signingOut, clearStore} from '../actions/AuthAction'
 
 import firebase from './firebase'
 
@@ -14,6 +14,7 @@ class signOut extends React.Component {
     this.props.dispatchSignOut()
 
     if (!this.props.auth.user.Object) {
+      this.props.dispatchClearStore()
       this.props.navigation.navigate('Home')
     }
   }
@@ -65,10 +66,15 @@ class signOut extends React.Component {
 
 const mapDispatchToProps = {
   dispatchSignOut: () => signingOut(),
+  dispatchClearStore: () => clearStore(),
 }
 
 const mapStateToProps = state => ({
   auth: state.auth,
+  home: state.home,
+  savedTrips: state.savedTrips,
+  DayDetail: state.DayDetailReducer,
+  DayPicker: state.DayPickerReducer,
 })
 
 export default connect(
