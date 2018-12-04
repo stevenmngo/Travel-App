@@ -69,7 +69,7 @@ class Home extends Component {
           </Body>
           <Right>
               <View>
-              {<Thumbnail small source={require('../assets/unicorn.png')} />}
+              {<Thumbnail small source={require('../assets/unlock.png')} />}
             </View> 
           </Right>
         </Header>
@@ -146,7 +146,7 @@ class Home extends Component {
         </Body>
         <Right>
             <View>
-            {<Thumbnail small source={require('../assets/fatty.png')} />}
+            {<Thumbnail small source={require('../assets/Lock.png')} />}
           </View> 
         </Right>
       </Header>

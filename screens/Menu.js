@@ -38,7 +38,8 @@ const CustomDrawComponent02 = props => (
         justifyContent: 'center',
       }}
     >
-      <Image source={require('../assets/passanger.png')} style={{height: 80, width: 80}} />
+      <Image source={require('../assets/unlock.png')} style={{height: 80, width: 80}} />
+      
     </View>
     <ScrollView>
       <DrawerItems {...props} />
@@ -55,7 +56,7 @@ const CustomDrawComponent01 = props => (
         justifyContent: 'center',
       }}
     >
-      <Image source={require('../assets/passanger.png')} style={{height: 80, width: 80}} />
+      <Image source={require('../assets/Lock.png')} style={{height: 80, width: 80}} />
     </View>
     <ScrollView>
       <DrawerItems {...props} />
