@@ -24,7 +24,7 @@ class AboutScreen extends Component {
           <Title style={{fontSize: 25, textAlign: 'center'}}> Let's Travel </Title>
           <Text style={styles.paragraph}>
             {`      Let’s Travel allows you to create and plan your own trips in an organize and effective manner.\n`}
-            {`      It provides a list of suggestions on destinations and estimated time spend at a certain location.\n`}
+            {`      It provides a list of suggestions on destinations and ley user adds to their planner.\n`}
             {`      Let’s Travel focuses on helping everyone to plan their holiday from A to Z with a touch of a button.\n`}
             {`      With Let's Travel, you will have a better trip and never miss any hidden attraction no more.\n`}
           </Text>
