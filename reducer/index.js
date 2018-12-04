@@ -11,7 +11,7 @@ const combinedReducers = combineReducers({
   savedTrips: SavedTripReducer,
   auth: AuthReducer,
   DayDetailReducer,
-  DayPickerReducer
+  DayPickerReducer,
 })
 
 export default combinedReducers

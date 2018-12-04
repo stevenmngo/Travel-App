@@ -42,8 +42,7 @@ export function createUser(email, password) {
       .createUserWithEmailAndPassword(email, password)
       .then(data => {
         const userObject = {userID: data.user.uid, userEmail: data.user.email}
-        console.log('=====================================================')
-        console.log(userObject)
+
         fetch('http://ec2-52-15-252-121.us-east-2.compute.amazonaws.com:3000/user/createUser', {
           method: 'POST',
           headers: {
@@ -139,4 +138,8 @@ export function signingOut() {
         dispatch(logOutFailure(error))
       })
   }
+}
+
+export function clearStore() {
+  return {type: 'RESET'}
 }
