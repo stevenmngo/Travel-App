@@ -1,4 +1,8 @@
 import constant from '../contants'
+import DayPickerAction from './DayPickerAction'
+import HomeAction from './HomeAction'
+import NavigationService from '../screens/NavigationService';
+import { NavigationActions } from 'react-navigation'
 
 const fetchSavedTrip = (uid) => {
 	let string = `http://ec2-52-15-252-121.us-east-2.compute.amazonaws.com:3000/trip/savedtrips?userid='${uid}'`
@@ -29,24 +33,47 @@ const removeSavedTrip = (id) => {
 	            },
 				body: where
 	          }).then(response => {
-				//   dispatch(fetchSavedTrip(getState().auth.user.user.uid))
+				  dispatch(fetchSavedTrip(getState().auth.user.user.uid))
 	          });
 			}
 }
 
 const fetchChoosenTrip = (id) => {
-	// where = JSON.stringify({
-	// 	tripID: id,
-	// })
 	let string = `http://ec2-52-15-252-121.us-east-2.compute.amazonaws.com:3000/trip?tripID='${id}'`
 	return (dispatch, uid) => {
 		return fetch(string)
 			.then(res => res.json())
 			.then(trip => {
-				// console.log(trip)
+				console.log(trip)
 				dispatch({
 					type: constant.SAVETRIP.FETCH_CHOSEN_TRIP,
 					payload: trip
+				})
+				// fetch tripPOI and put into store
+				dispatch(fetchChoosenTripPOI(trip[0].userID, trip[0].tripID))
+				// put the day info into store
+				dispatch(DayPickerAction.setDate({
+					start: trip[0].startDay,
+					end: trip[0].endDay,
+					total: trip[0].totalDay
+				}))
+				dispatch(HomeAction.fetchDestination({ place_id: trip[0].destinationID })).then(() => {
+					NavigationService.navigate('DayDetail')
+				})
+			});
+	}
+}
+
+const fetchChoosenTripPOI = (userid, tripID) => {
+	let string = `http://ec2-52-15-252-121.us-east-2.compute.amazonaws.com:3000/daydetail?tripID='${tripID}'&userID='${userid}'`
+	return (dispatch, uid) => {
+		return fetch(string)
+			.then(res => res.json())
+			.then(dayPOI => {
+				console.log(dayPOI)
+				dispatch({
+					type: constant.DAYDETAIL.SAVEDAY_POI,
+					payload: dayPOI
 				})
 			});
 	}

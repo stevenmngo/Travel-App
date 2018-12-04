@@ -5,7 +5,7 @@ import allReducers from '../reducer';
 import { connect } from 'react-redux';
 import { Container, Header, View, Card, CardItem, Text, Left, Right, Body, Icon, Title, Thumbnail } from 'native-base';
 import action from '../actions'
-
+import { TextButton, RaisedTextButton } from 'react-native-material-buttons';
 // const store = createStore(allReducers);
 
 class SavedTripScreen extends Component {
@@ -32,13 +32,22 @@ class SavedTripScreen extends Component {
         // One more variable in store callled "currentTripID" contain the current edit tripID
 
         // Navigation to DayDetail
-        // this.props.navigation.navigate('DayDetail')
+        // if (!this.props.fetching){
+        //     this.props.navigation.navigate('DayDetail')
+        // }
     }
-
+    
+    // componentDidUpdate(prevProps) {
+    //     if(this.props.fetching){
+    //         console.log("here!!")
+    //         this.props.navigation.navigate('DayDetail')
+    //     }
+    // }
 
 
     render() {
         // console.log(this.state.savedTrips);
+        if (Object.keys(this.props.auth.user).length !== 0){
         return (
             <View style={{flex:1}}>
                 <Header>
@@ -50,14 +59,12 @@ class SavedTripScreen extends Component {
                     </Body>
                     <Right>
                         <Icon name="add" onPress={() => this.props.navigation.navigate('Home')} style ={{marginRight: 20}}></Icon>
-                        <Thumbnail small source={require('../assets/group.png')} />
                     </Right>
                 </Header>
                 <Container>
                     <ScrollView>
-                        {/* {this.state.savedTrips.filter(item => this.state.ignore.indexOf(item.tripID) === -1).map(item => ( */}
                         {this.props.savedTrips.map(item => (
-                            <Card style={{ elevation: 3 }}>
+                            <Card style={{ elevation: 3 }} key={item.tripID}>
                                 <CardItem>
                                     <Left>
                                         <Body>
@@ -88,24 +95,56 @@ class SavedTripScreen extends Component {
                                 
                             </Card>
                         ))}
+                        }
+
                     </ScrollView>
                 </Container>
             </View>
         )
     }
+    else{
+        return(
+            <View>
+            <Header>
+                    <Left>
+                        <Icon name="menu" onPress={() => this.props.navigation.openDrawer()}></Icon>
+                    </Left>
+                    <Body>
+                        <Title> My Trips </Title>
+                    </Body>
+                    <Right>
+                        <Icon name="add" onPress={() => this.props.navigation.navigate('Home')} style ={{marginRight: 20}}></Icon>
+                        
+                    </Right>
+                </Header>
+            <View>
+            <Image source={require('../assets/fatty.png')} style={{width:"100%"}} />
+            
+        </View>
+        <View>
+            <Text style={{fontSize: 24, fontWeight: "bold", textAlign: "center", margin:20}}>You must sign in first!</Text>
+            <RaisedTextButton color= "#2196f3" title="Sign in" onPress={()=> this.props.navigation.navigate('SignIn')}/>
+        </View>
+        </View>
+        )
+    }
 }
+}
+    
 const mapDispatchToProps = dispatch => ({
     fetchSavedTrip: uid => dispatch(action.SavedTripAction.fetchSavedTrip(uid)),
     fetchChoosenTrip: tripID => dispatch(action.SavedTripAction.fetchChoosenTrip(tripID)),
     removeSavedTrip: (tripID, uid)  => { dispatch(action.SavedTripAction.removeSavedTrip(tripID)), dispatch(action.SavedTripAction.fetchSavedTrip(uid))},
-    setDate: (dayInfo) => dispatch(action.DayPickerAction.setDate(dayInfo)),
-    saveDayPOI: (dayPOIInput) => dispatch(action.DayDetailAction.saveDayPOI(dayPOIInput))
+    // setDate: (dayInfo) => dispatch(action.DayPickerAction.setDate(dayInfo)),
+    // saveDayPOI: (dayPOIInput) => dispatch(action.DayDetailAction.saveDayPOI(dayPOIInput))
 })
 
 const mapStateToProps = state => ({
     savedTrips: state.savedTrips.savedTrips,
     currentTrip: state.savedTrips.currentTrip,
+    fetching: state.savedTrips.fetching,
     user: state.auth.user,
+    auth: state.auth,
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(SavedTripScreen)
