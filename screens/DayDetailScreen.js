@@ -1,8 +1,10 @@
 import React, { Component } from 'react'
-import { View, Text, StyleSheet, ScrollView, Alert } from 'react-native'
+import { View, Text, StyleSheet, ScrollView, Alert, Platform, Picker} from 'react-native'
 import { Header, Left, Right, Icon, Tab, Tabs, ScrollableTab, Button, ActionSheet, Content, ListItem, Body, Title,
     Thumbnail, TextInput, FlatList} from 'native-base'
 import { connect } from 'react-redux'
+
+
 
 import action from '../actions'
 
@@ -20,12 +22,14 @@ class DayDetailScreen extends Component {
             tags: 'museum',
             buttons:[ 
                 "Day 1", "Day 2", "Day 3", "Day 4", "Cancel"
-                    ]
+                    ],
+            tagSelectedVal : '',
         }
         this.fetchPlaces = this.fetchPlaces.bind(this)
         this.addPOI = this.addPOI.bind(this)
         this.removePOI = this.removePOI.bind(this)
         this.savesTrip = this.savesTrip.bind(this)
+        
     }
 
     savesTrip = () =>{
@@ -325,6 +329,15 @@ class DayDetailScreen extends Component {
                 {/* render All POI  */}
                 <Tabs renderTabBar = {() => <ScrollableTab/>}>
                     <Tab heading="ALL">
+                        {/* <View>
+                            <Picker
+                                selectedValue = {this.state.tagSelectedVal}
+                                onValueChange = {(itemValue, itemIndex) => this.setState({tagSelectedVal: itemValue})}
+                            > 
+                                <Picker.Item label = 'Restaurant' value = 'Restaurant' />
+                                <Picker.Item label='Museum' value='Museum' />
+                            </Picker>
+                        </View> */}
                         <ScrollView> 
                             {renderAll}
                         </ScrollView>
