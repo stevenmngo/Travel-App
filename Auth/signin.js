@@ -74,7 +74,7 @@ class SignIn extends React.Component {
 
     setTimeout(() => {
       if (Object.keys(this.props.auth.user).length !== 0) {
-        this.props.navigation.navigate('Home')
+        this.props.navigation.navigate('New Trip')
       }
     }, 3300)
   }
