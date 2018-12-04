@@ -122,7 +122,7 @@ class SavedTripScreen extends Component {
             
         </View>
         <View>
-            <Text style={{fontSize: 24, fontWeight: "bold", textAlign: "center", margin:20}}>You must sign in first!</Text>
+            <Text style={{fontSize: 24, fontWeight: "bold", textAlign: "center", margin:20}}>Please sign in to see your saved trip!</Text>
             <RaisedTextButton color= "#2196f3" title="Sign in" onPress={()=> this.props.navigation.navigate('SignIn')}/>
         </View>
         </View>
