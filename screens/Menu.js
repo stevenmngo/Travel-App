@@ -41,11 +41,13 @@ const CustomDrawComponent02 = props => (
       <Image source={require('../assets/unlock.png')} style={{height: 80, width: 80}} />
       
     </View>
+
     <ScrollView>
       <DrawerItems {...props} />
     </ScrollView>
   </SafeAreaView>
 )
+
 const CustomDrawComponent01 = props => (
   <SafeAreaView style={{flex: 1}}>
     <View
@@ -58,6 +60,7 @@ const CustomDrawComponent01 = props => (
     >
       <Image source={require('../assets/Lock.png')} style={{height: 80, width: 80}} />
     </View>
+
     <ScrollView>
       <DrawerItems {...props} />
     </ScrollView>
@@ -74,11 +77,11 @@ const TabNavigation = createMaterialBottomTabNavigator({
 // This is the main Navigator for the app
 const AppDrawNavigator01 = createDrawerNavigator(
   {
-    "Home": HomeScreen,
-    "New Trip": TabNavigation,
-    "Saved Trip": SavedTripScreen,
-    "Sign In": Tab,
-    "About": AboutScreen,
+    Home: HomeScreen,
+    'New Trip': TabNavigation,
+    'Saved Trip': SavedTripScreen,
+    'Sign In': Tab,
+    About: AboutScreen,
   },
 
   {
@@ -92,11 +95,11 @@ const AppDrawNavigator01 = createDrawerNavigator(
 
 const AppDrawNavigator02 = createDrawerNavigator(
   {
-    "Home": HomeScreen,
-    "New Trip": TabNavigation,
-    "Saved Trip": SavedTripScreen,
-    "Sign Out": signOut,
-    "About": AboutScreen,
+    Home: HomeScreen,
+    'New Trip': TabNavigation,
+    'Saved Trip': SavedTripScreen,
+    'Sign Out': signOut,
+    About: AboutScreen,
   },
 
   {

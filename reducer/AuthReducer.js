@@ -78,6 +78,21 @@ export default (state = initialState, action) => {
         signOutErrorMessage: action.error.message,
       }
 
+    case 'RESET':
+      return {
+        ...state,
+        isAuthenticating: false,
+        user: {},
+
+        signUpError: false,
+        signInError: false,
+        signOutError: false,
+
+        signInErrorMessage: '',
+        signUpErrorMessage: '',
+        signOutErrorMessage: '',
+      }
+
     default:
       return state
   }
