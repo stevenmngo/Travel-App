@@ -131,10 +131,6 @@ class Home extends Component {
             )}
           />
         </View>
-
-        <Text style={{ marginTop: 0, marginBottom: 10, textAlign: 'center', fontSize: 20 }}>
-          {this.props.selectedCiti.structured_formatting.main_text}
-        </Text>
       </View>
     )
 }else{
