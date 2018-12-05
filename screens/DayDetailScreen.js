@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, ScrollView, Alert, Platform, Picker} from 'reac
 import { Header, Left, Right, Icon, Tab, Tabs, ScrollableTab, Button, ActionSheet, Content, ListItem, Body, Title,
     Thumbnail, TextInput, FlatList} from 'native-base'
 import { connect } from 'react-redux'
-
+import { Dropdown } from 'react-native-material-dropdown';
 
 
 import action from '../actions'
@@ -249,8 +249,26 @@ class DayDetailScreen extends Component {
             }
         }
     }
+ 
+    render() { 
+        let data = [{
+        value: 'Church',
+      }, {
+        value: 'Courthouse',
+      }, {
+        value: 'Casino',
+      }, {
+          value:'Park'
+      },{
+          value: 'Stadium'
+      },{
+        value: 'Zoo'
+      },{
+          value:'Shopping_mall'
+      },{
+          value: 'Restaurant'
+      }];
 
-    render() {
         const renderAll = this.props.fetchedPOI.map(b => {  
             return (
                 <ListItem key={b.id+'1'}>
@@ -329,15 +347,12 @@ class DayDetailScreen extends Component {
                 {/* render All POI  */}
                 <Tabs renderTabBar = {() => <ScrollableTab/>}>
                     <Tab heading="ALL">
-                        {/* <View>
-                            <Picker
-                                selectedValue = {this.state.tagSelectedVal}
-                                onValueChange = {(itemValue, itemIndex) => this.setState({tagSelectedVal: itemValue})}
-                            > 
-                                <Picker.Item label = 'Restaurant' value = 'Restaurant' />
-                                <Picker.Item label='Museum' value='Museum' />
-                            </Picker>
-                        </View> */}
+                        {
+                            <Dropdown
+                            label='Filter'
+                            data={data}
+                          />
+                        }
                         <ScrollView> 
                             {renderAll}
                         </ScrollView>
