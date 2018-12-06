@@ -29,8 +29,8 @@ class DayPickerScreen extends Component {
         // console.log(totalDays)
         this.setState({ startDate, untilDate, totalDays})
         this.props.setDate({
-            start: startDate,
-            end: untilDate,
+            start: startDate.toISOString(),
+            end: untilDate.toISOString(),
             total: totalDays
         })
         
@@ -81,8 +81,8 @@ class DayPickerScreen extends Component {
                         selectedTextColor= 'white'
                         todayColor= 'red'
                         buttonColor= '#2196f3'
-                        startDate = {String(this.props.dayInfo.start)}
-                        untilDate = {String(this.props.dayInfo.end)}
+                        startDate = {this.props.dayInfo.start}
+                        untilDate = {this.props.dayInfo.end}
                         onConfirm = {(startDate, untilDate) => this.onSubmmit(startDate, untilDate)}
                     />
                 </View>
