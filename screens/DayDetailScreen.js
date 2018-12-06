@@ -282,7 +282,7 @@ class DayDetailScreen extends Component {
                 <ListItem key={b.id+'1'}>
                     <Button onPress={() => ActionSheet.show({
                         options: this.state.buttons,
-                        cancelButtonIndex: this.state.days.length,
+                        cancelButtonIndex: this.state.buttons.length,
                         title: "Select Day to be added"
                     },
                         buttonIndex => {
