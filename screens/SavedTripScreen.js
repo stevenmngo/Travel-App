@@ -21,32 +21,10 @@ class SavedTripScreen extends Component {
 
     onTripClick = (tripID) =>{
         // Fetch the choosen Trip and put all info into the store.
-        // console.log(tripID)
         this.props.fetchChoosenTrip(String(tripID))
-
-        // this.props.setDate()
-        // this.props.saveDayPOI()
-
-        // Write route to the choosen trip set the "Edit" flag to true, 
-        // When hit newtrip then the "Edit" flag is false
-        // One more variable in store callled "currentTripID" contain the current edit tripID
-
-        // Navigation to DayDetail
-        // if (!this.props.fetching){
-        //     this.props.navigation.navigate('DayDetail')
-        // }
     }
-    
-    // componentDidUpdate(prevProps) {
-    //     if(this.props.fetching){
-    //         console.log("here!!")
-    //         this.props.navigation.navigate('DayDetail')
-    //     }
-    // }
-
 
     render() {
-        // console.log(this.state.savedTrips);
         if (Object.keys(this.props.auth.user).length !== 0){
         return (
             <View style={{flex:1}}>
