@@ -19,7 +19,7 @@ class DayDetailScreen extends Component {
         super(props);
         this.state = {
             days: this.props.savedDayPOI,
-            tags: 'museum',
+            tags: 'restaurant',
             buttons:[ 
                 "Day 1", "Day 2", "Day 3", "Day 4", "Cancel"
                     ],
@@ -308,7 +308,7 @@ class DayDetailScreen extends Component {
         const renderedTabs = this.props.savedDayPOI.map((b,i) => {
             const renderedPOI = b.list.map(a =>{
                 return(
-                    <ListItem key={a.id}>
+                    <ListItem key={a.place_id}>
                     <Button onPress={() => ActionSheet.show({
                         options: REMOVE,
                         title: "Remove POI"
@@ -359,6 +359,7 @@ class DayDetailScreen extends Component {
                             <Dropdown
                             label='Filter'
                             data={data}
+                            value = 'restaurant'
                             onChangeText={(value, index, data) => this.onSelectDropDown(value)}
                       />
                     }
