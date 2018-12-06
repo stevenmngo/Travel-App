@@ -50,7 +50,7 @@ const fetchChoosenTrip = (id) => {
 					payload: trip
 				})
 				// fetch tripPOI and put into store
-				dispatch(fetchChoosenTripPOI(trip[0].userID, trip[0].tripID))
+				dispatch(fetchChoosenTripPOI(trip[0].userID, trip[0].tripID, trip[0].totalDay))
 				// put the day info into store
 				dispatch(DayPickerAction.setDate({
 					start: trip[0].startDay,
@@ -64,8 +64,8 @@ const fetchChoosenTrip = (id) => {
 	}
 }
 
-const fetchChoosenTripPOI = (userid, tripID) => {
-	let string = `http://ec2-52-15-252-121.us-east-2.compute.amazonaws.com:3000/daydetail?tripID='${tripID}'&userID='${userid}'`
+const fetchChoosenTripPOI = (userid, tripID, totalDay) => {
+	let string = `http://ec2-52-15-252-121.us-east-2.compute.amazonaws.com:3000/daydetail?tripID='${tripID}'&userID='${userid}'&totalDay=${totalDay}`
 	return (dispatch, uid) => {
 		return fetch(string)
 			.then(res => res.json())
