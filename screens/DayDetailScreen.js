@@ -172,7 +172,7 @@ class DayDetailScreen extends Component {
     {
         // console.log(poi.name)
         // console.log(buttonIndex)
-        days = this.state.days 
+        days = this.props.savedDayPOI
         for (thing of days){
             if (thing.day == day){
                 let newList = []
@@ -195,7 +195,7 @@ class DayDetailScreen extends Component {
     }
 
     addPOI = (buttonIndex, poi) => {
-        days = this.state.days
+        days = this.props.savedDayPOI
         for (thing of days){
             // console.log(thing.day)
             // console.log(buttonIndex + 1)
@@ -304,7 +304,7 @@ class DayDetailScreen extends Component {
                 this.props.savedDayPOI.push({day: count, list: []})
             }
         }
-        console.log(this.props.savedDayPOI);
+        // console.log(this.props.savedDayPOI);
         const renderedTabs = this.props.savedDayPOI.map((b,i) => {
             const renderedPOI = b.list.map(a =>{
                 return(
