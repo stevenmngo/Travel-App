@@ -79,19 +79,19 @@ class DayDetailScreen extends Component {
                             },
                             body: JSON.stringify(daydetail)
                         }).then(response => {
-                            Alert.alert(
-                                "Successful",
-                                "Your trip has been saved",
-                                [
-                                    {
-                                        text: "OK",
-                                        onPress: () => this.props.navigation.navigate("Saved Trip")
-                                    }
-                                ],
-                                { cancelable: false }
-                            );
+                            // Alert.alert(
+                            //     "Successful",
+                            //     "Your trip has been saved",
+                            //     [
+                            //         {
+                            //             text: "OK",
+                            //             onPress: () => this.props.navigation.navigate("Saved Trip")
+                            //         }
+                            //     ],
+                            //     { cancelable: false }
+                            // );
                         });
-
+                        this.props.navigation.navigate("Saved Trip")
                     } else{
                         const tripID = Math.floor(Math.random() * 1000000);
     

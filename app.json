@@ -1,8 +1,8 @@
 {
   "expo": {
-    "name": "TravelBobgelv2",
-    "description": "This project is really great.",
-    "slug": "TravelBobgelv2",
+    "name": "LetsTravel",
+    "description": "Let's Travel App of SJSU Student",
+    "slug": "letstravel",
     "privacy": "public",
     "sdkVersion": "30.0.0",
     "platforms": [
