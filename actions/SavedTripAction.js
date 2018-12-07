@@ -1,13 +1,12 @@
+import { NavigationActions } from 'react-navigation'
 import constant from '../contants'
 import DayPickerAction from './DayPickerAction'
 import HomeAction from './HomeAction'
 import NavigationService from '../screens/NavigationService';
-import { NavigationActions } from 'react-navigation'
 
-const fetchSavedTrip = (uid) => {
-	let string = `http://ec2-52-15-252-121.us-east-2.compute.amazonaws.com:3000/trip/savedtrips?userid='${uid}'`
-	return (dispatch, uid) => {
-		return fetch(string)
+const fetchSavedTrip = uid => {
+  const string = `http://ec2-52-15-252-121.us-east-2.compute.amazonaws.com:3000/trip/savedtrips?userid='${uid}'`
+  return (dispatch, uid) => fetch(string)
 				.then(res => res.json())
 				.then(trips => {
 					// console.log(trips)
@@ -15,17 +14,14 @@ const fetchSavedTrip = (uid) => {
 						type: constant.SAVETRIP.FETCH_SAVED_TRIP,
 						payload: trips
 					})
-				});
-	}
+				})
 }
 
-
-const removeSavedTrip = (id) => {
-	where = JSON.stringify({
-		tripID: id,
-	})
-	return (dispatch, getState, id) => {
-		return fetch("http://ec2-52-15-252-121.us-east-2.compute.amazonaws.com:3000/trip/deletetrip", {
+const removeSavedTrip = id => {
+  where = JSON.stringify({
+    tripID: id,
+  })
+  return (dispatch, getState, id) => fetch("http://ec2-52-15-252-121.us-east-2.compute.amazonaws.com:3000/trip/deletetrip", {
 	            method: "POST",
 	            headers: {
 	              Accept: "application/json",
@@ -34,14 +30,12 @@ const removeSavedTrip = (id) => {
 				body: where
 	          }).then(response => {
 				  dispatch(fetchSavedTrip(getState().auth.user.user.uid))
-	          });
-			}
+	          })
 }
 
-const fetchChoosenTrip = (id) => {
-	let string = `http://ec2-52-15-252-121.us-east-2.compute.amazonaws.com:3000/trip?tripID='${id}'`
-	return (dispatch, uid) => {
-		return fetch(string)
+const fetchChoosenTrip = id => {
+  const string = `http://ec2-52-15-252-121.us-east-2.compute.amazonaws.com:3000/trip?tripID='${id}'`
+  return (dispatch, uid) => fetch(string)
 			.then(res => res.json())
 			.then(trip => {
 				console.log(trip)
@@ -61,14 +55,12 @@ const fetchChoosenTrip = (id) => {
 				dispatch(HomeAction.fetchDestination({ place_id: trip[0].destinationID })).then(() => {
 					NavigationService.navigate('DayDetail')
 				})
-			});
-	}
+			})
 }
 
 const fetchChoosenTripPOI = (userid, tripID, totalDay) => {
-	let string = `http://ec2-52-15-252-121.us-east-2.compute.amazonaws.com:3000/daydetail?tripID='${tripID}'&userID='${userid}'&totalDay=${totalDay}`
-	return (dispatch, uid) => {
-		return fetch(string)
+  const string = `http://ec2-52-15-252-121.us-east-2.compute.amazonaws.com:3000/daydetail?tripID='${tripID}'&userID='${userid}'&totalDay=${totalDay}`
+  return (dispatch, uid) => fetch(string)
 			.then(res => res.json())
 			.then(dayPOI => {
 				console.log(dayPOI)
@@ -76,10 +68,11 @@ const fetchChoosenTripPOI = (userid, tripID, totalDay) => {
 					type: constant.DAYDETAIL.SAVEDAY_POI,
 					payload: dayPOI
 				})
-			});
-	}
+			})
 }
 
+export function clearTripInfo() {
+  return {type: 'RESET_ONE'}
+}
 
-
-export default { fetchSavedTrip, removeSavedTrip, fetchChoosenTrip }
+export default {fetchSavedTrip, removeSavedTrip, fetchChoosenTrip, clearTripInfo}

@@ -32,6 +32,14 @@ export default (state = initialState, action) => {
         dayPOI: [],
       }
 
+    case 'RESET_ONE':
+      return {
+        ...state,
+        fetching: false,
+        fetchedPOI: [{name: ''}],
+        dayPOI: [],
+      }
+
     default:
       return state
   }

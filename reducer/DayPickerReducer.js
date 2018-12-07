@@ -24,6 +24,15 @@ export default (state = initialState, action) => {
           total: 0,
         },
       }
+    case 'RESET_ONE':
+      return {
+        ...state,
+        dayInfo: {
+          start: '',
+          end: '',
+          total: 0,
+        },
+      }
 
     default:
       return state

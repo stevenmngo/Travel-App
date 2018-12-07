@@ -59,6 +59,19 @@ export default (state = initialState, action) => {
         searchResult: [],
         tripName: '',
       }
+    case 'RESET_ONE':
+      return {
+        ...state,
+        SelectedDestination: {
+          structured_formatting: {
+            main_text: '',
+          },
+        },
+        Destination: {},
+        fetching: false,
+        searchResult: [],
+        tripName: '',
+      }
 
     default:
       return state
