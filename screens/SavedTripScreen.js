@@ -53,7 +53,7 @@ class SavedTripScreen extends Component {
                                 </CardItem>
                                 <CardItem cardBody>
                                     <TouchableHighlight onPress={() => this.onTripClick(item.tripID)}>
-                                    <Image style={{ height: 150, width: 390, resizeMode: 'cover',  flex: 1 }} source={{uri: 
+                                    <Image style={{ height: 200, width: 700, resizeMode: 'cover',  flex: 1 }} source={{uri: 
                                         'https://maps.googleapis.com/maps/api/place/photo?maxwidth=1000&photoreference=' +
                                         item.destinationImage +
                                         '&key=AIzaSyD7Oa99Y264n7KesaO7LWB-OGmSUntkPHI'
@@ -100,7 +100,7 @@ class SavedTripScreen extends Component {
             
         </View>
         <View>
-            <Text style={{fontSize: 24, fontWeight: "bold", textAlign: "center", margin:20}}>Please sign in to see your saved trips!</Text>
+            <Text style={{fontSize: 24, fontWeight: "bold", textAlign: "center", margin:20}}>Uh oh! Please sign in to see your saved trips!</Text>
             <RaisedTextButton color= "#2196f3" title="Sign in" onPress={()=> this.props.navigation.navigate('SignIn')}/>
         </View>
         </View>
