@@ -86,7 +86,7 @@ class Home extends Component {
         
         <View>
           <Text style={{ marginTop: 0, marginBottom: 10, textAlign: 'center', fontSize: 18, color: "#2f4f4f" }}>
-            Selected Destination: {this.props.selectedCiti.structured_formatting.main_text}
+            Selected Destination: {this.props.Destination.name}
           </Text>
         </View>
 

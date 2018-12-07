@@ -57,6 +57,7 @@ const fetchChoosenTrip = (id) => {
 					end: trip[0].endDay,
 					total: trip[0].totalDay
 				}))
+				dispatch(HomeAction.setTripName(trip[0].tripName))
 				dispatch(HomeAction.fetchDestination({ place_id: trip[0].destinationID })).then(() => {
 					NavigationService.navigate('DayDetail')
 				})
