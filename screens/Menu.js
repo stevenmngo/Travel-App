@@ -3,10 +3,11 @@ import {View, SafeAreaView, ScrollView, Text, Image, StyleSheet} from 'react-nat
 import {createDrawerNavigator, DrawerItems} from 'react-navigation'
 import {createMaterialBottomTabNavigator} from 'react-navigation-material-bottom-tabs'
 import {connect} from 'react-redux'
-import NavigationService from './NavigationService';
+
 import Tab from '../Auth/Tab'
 import signOut from '../Auth/signout'
 
+import NavigationService from './NavigationService'
 import HomeScreen from './HomeScreen'
 import AboutScreen from './AboutScreen'
 import SavedTripScreen from './SavedTripScreen'
@@ -16,14 +17,22 @@ import DayPickerScreen from './DayPickerScreen'
 class Menu extends React.Component {
   render() {
     if (Object.keys(this.props.auth.user).length !== 0) {
-      return <AppDrawNavigator02 ref={navigatorRef => {
-        NavigationService.setTopLevelNavigator(navigatorRef);
-      }}/>
+      return (
+        <AppDrawNavigator02
+          ref={navigatorRef => {
+            NavigationService.setTopLevelNavigator(navigatorRef)
+          }}
+        />
+      )
     }
 
-    return <AppDrawNavigator01 ref={navigatorRef => {
-      NavigationService.setTopLevelNavigator(navigatorRef);
-    }}/>
+    return (
+      <AppDrawNavigator01
+        ref={navigatorRef => {
+          NavigationService.setTopLevelNavigator(navigatorRef)
+        }}
+      />
+    )
   }
 }
 
@@ -39,7 +48,6 @@ const CustomDrawComponent02 = props => (
       }}
     >
       <Image source={require('../assets/unlock.png')} style={{height: 80, width: 80}} />
-      
     </View>
 
     <ScrollView>
@@ -121,9 +129,3 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(Menu)
-
-const styles = StyleSheet.create({
-  baseText: {
-    fontFamily: 'Cochin',
-  },
-})
