@@ -6,6 +6,7 @@ import {connect} from 'react-redux'
 import Input from '../dummyComponents/input'
 import Buttons from '../dummyComponents/Buttons'
 import {authenticate} from '../actions/AuthAction'
+import {daydetail} from '../screens/DayDetailScreen'
 
 import firebase from './firebase'
 
@@ -15,76 +16,19 @@ class SignIn extends React.Component {
     this.state = {email: '', password: ''}
   }
 
-  // createUserInDatabe = (id, email) => {
-  //   const userObject = {userID: id, userEmail: email}
-  //   fetch('http://ec2-52-15-252-121.us-east-2.compute.amazonaws.com:3000/user/createUser', {
-  //     method: 'POST',
-  //     headers: {
-  //       Accept: 'application/json',
-  //       'Content-Type': 'application/json',
-  //     },
-  //     body: JSON.stringify(userObject),
-  //   })
-  //     .then(response => {
-  //       console.log('++++++++++++++++success from creteuser in databse++++++++++++++++')
-  //       console.log(response)
-  //     })
-  //     .catch(error => {
-  //       console.log(
-  //         '++++++++++++++++error from create user in database++++++++++++++++++++++++++++++++++++++++++++++++'
-  //       )
-  //       console.error(error)
-  //     })
-  // }
-
   handleLogin = () => {
     this.props.dispatchAuthenticate(this.state.email, this.state.password)
 
     // setTimeout(() => {
     //   if (Object.keys(this.props.auth.user).length !== 0) {
-    //     const userID = this.props.auth.user.uid
-
-    //     const string = `http://ec2-52-15-252-121.us-east-2.compute.amazonaws.com:3000/user/?userid ='${userID}'`
-    //     console.log(
-    //       `++++++++++++++++here id  '${string}' ++++++++++++++++++++++++++++++++++++++++++++++++`
-    //     )
-    //     fetch(string)
-    //       .then(res => {
-    //         res.json()
-    //         console.log(
-    //           `++++++++++++++++here first then '${res.json()}' ++++++++++++++++++++++++++++++++++++++++++++++++`
-    //         )
-    //       })
-    //       .then(idofUser => {
-    //         console.log(
-    //           '++++++++++++++++here at then in the login++++++++++++++++++++++++++++++++++++++++++++++++'
-    //         )
-    //         if (Object.keys(idofUser).length === 0) {
-    //           this.createUserInDatabe(userID, this.state.email)
-    //         }
-    //       })
-    //       .catch(error => {
-    //         console.log(
-    //           '++++++++++++++++error from login++++++++++++++++++++++++++++++++++++++++++++++++'
-    //         )
-    //         console.error(error)
-    //       })
+    //     if (this.props.Destination.name !== null && this.props.date.start !== '') {
+    //       console.log('+++++++++++++++++++++++++++++++++++++++++++++++++')
+    //       this.props.navigation.navigate('Sign Out')
+    //     } else {
+    //       this.props.navigation.navigate('About')
+    //     }
     //   }
-    // }, 5300)
-
-    setTimeout(() => {
-      if (Object.keys(this.props.auth.user).length !== 0) {
-        if (
-          Object.keys(this.props.destination.Destination).length !== 0 &&
-          Object.keys(this.props.date.dayInfo).length !== 0 &&
-          Object.keys(this.props.poi.dayPOI).length !== 0
-        ) {
-          this.props.navigation.navigate('New Trip')
-        } else {
-          this.props.navigation.navigate('New Trip')
-        }
-      }
-    }, 2300)
+    // }, 7300)
   }
 
   render() {
