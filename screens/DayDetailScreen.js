@@ -222,7 +222,9 @@ class DayDetailScreen extends Component {
     componentWillMount(){
         let days = this.props.savedDayPOI
         this.setState(days)
-        this.fetchPlaces()
+        if (this.props.Destination.name){
+            this.fetchPlaces()
+        }
     }
 
     componentDidMount(){
