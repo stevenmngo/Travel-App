@@ -74,15 +74,15 @@ class SignIn extends React.Component {
 
     setTimeout(() => {
       if (Object.keys(this.props.auth.user).length !== 0) {
-        // if (
-        //   Object.keys(this.props.destination.Destination).length !== 0 &&
-        //   Object.keys(this.props.date.dayInfo).length !== 0
-        //   // && Object.keys(this.props.poi.dayPOI).length !== 0
-        // ) {
-        //   this.props.navigation.navigate('Saved Trip')
-        // } else {
-        this.props.navigation.navigate('New Trip')
-        // }
+        if (
+          Object.keys(this.props.destination.Destination).length !== 0 &&
+          Object.keys(this.props.date.dayInfo).length !== 0 &&
+          Object.keys(this.props.poi.dayPOI).length !== 0
+        ) {
+          this.props.navigation.navigate('New Trip')
+        } else {
+          this.props.navigation.navigate('New Trip')
+        }
       }
     }, 2300)
   }
