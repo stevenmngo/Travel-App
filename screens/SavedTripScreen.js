@@ -33,6 +33,7 @@ class SavedTripScreen extends Component {
   componentWillMount() {
     if (this.props.user.user != null) {
       this.props.fetchSavedTrip(this.props.user.user.uid)
+      this.props.dispatchClearTripInfo()
     }
   }
 
