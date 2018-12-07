@@ -7,8 +7,8 @@ import SignUp from './signup'
 
 const styles = StyleSheet.create({
   icon: {
-    width: 26,
-    height: 26,
+    width: 40,
+    height: 40,
   },
 })
 
