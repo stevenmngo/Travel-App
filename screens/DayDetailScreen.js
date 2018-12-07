@@ -19,7 +19,7 @@ class DayDetailScreen extends Component {
         super(props);
         this.state = {
             days: this.props.savedDayPOI,
-            tags: 'museum',
+            tags: 'restaurant',
             buttons:[ 
                 "Day 1", "Day 2", "Day 3", "Day 4", "Cancel"
                     ],
@@ -29,7 +29,14 @@ class DayDetailScreen extends Component {
         this.addPOI = this.addPOI.bind(this)
         this.removePOI = this.removePOI.bind(this)
         this.savesTrip = this.savesTrip.bind(this)
+        this.onSelectDropDown = this.onSelectDropDown.bind(this)
         
+    }
+
+    onSelectDropDown = (selected) =>{
+        var tags = selected
+        this.setState({tags})
+        this.fetchPlaces()
     }
 
     savesTrip = () =>{
@@ -165,7 +172,7 @@ class DayDetailScreen extends Component {
     {
         // console.log(poi.name)
         // console.log(buttonIndex)
-        days = this.state.days 
+        days = this.props.savedDayPOI
         for (thing of days){
             if (thing.day == day){
                 let newList = []
@@ -188,7 +195,7 @@ class DayDetailScreen extends Component {
     }
 
     addPOI = (buttonIndex, poi) => {
-        days = this.state.days
+        days = this.props.savedDayPOI
         for (thing of days){
             // console.log(thing.day)
             // console.log(buttonIndex + 1)
@@ -251,30 +258,31 @@ class DayDetailScreen extends Component {
     }
  
     render() { 
-        let data = [{
-        value: 'Church',
-      }, {
-        value: 'Courthouse',
-      }, {
-        value: 'Casino',
-      }, {
-          value:'Park'
-      },{
-          value: 'Stadium'
-      },{
-        value: 'Zoo'
-      },{
-          value:'Shopping_mall'
-      },{
-          value: 'Restaurant'
-      }];
+    //     let data = [{
+    //     value: 'church',
+    //   }, {
+    //     value: 'courthouse',
+    //   }, {
+    //     value: 'casino',
+    //   }, {
+    //       value:'park'
+    //   },{
+    //       value: 'stadium'
+    //   },{
+    //     value: 'zoo'
+    //   },{
+    //       value:'shopping_mall'
+    //   },{
+    //       value: 'restaurant'
+    //   }];
+        let data = [{ value: "accounting" }, { value: "airport"}, { value: "amusement_park"}, { value: "aquarium"}, { value: "art_gallery"}, { value: "atm"}, { value: "bakery"}, { value: "bank"}, { value: "bar"}, { value: "beauty_salon"}, { value: "bicycle_store"}, { value: "book_store"}, { value: "bowling_alley"}, { value: "bus_station"}, { value: "cafe"}, { value: "campground"}, { value: "car_dealer"}, { value: "car_rental"}, { value: "car_repair"}, { value: "car_wash"}, { value: "casino"}, { value: "cemetery"}, { value: "church"}, { value: "city_hall"}, { value: "clothing_store"}, { value: "convenience_store"}, { value: "courthouse"}, { value: "dentist"}, { value: "department_store"}, { value: "doctor"}, { value: "electrician"}, { value: "electronics_store"}, { value: "embassy"}, { value: "fire_station"}, { value: "florist"}, { value: "funeral_home"}, { value: "furniture_store"}, { value: "gas_station"}, { value: "gym"}, { value: "hair_care"}, { value: "hardware_store"}, { value: "hindu_temple"}, { value: "home_goods_store"}, { value: "hospital"}, { value: "insurance_agency"}, { value: "jewelry_store"}, { value: "laundry"}, { value: "lawyer"}, { value: "library"}, { value: "liquor_store"}, { value: "local_government_office"}, { value: "locksmith"}, { value: "lodging"}, { value: "meal_delivery"}, { value: "meal_takeaway"}, { value: "mosque"}, { value: "movie_rental"}, { value: "movie_theater"}, { value: "moving_company"}, { value: "museum"}, { value: "night_club"}, { value: "painter"}, { value: "park"}, { value: "parking"}, { value: "pet_store"}, { value: "pharmacy"}, { value: "physiotherapist"}, { value: "plumber"}, { value: "police"}, { value: "post_office"}, { value: "real_estate_agency"}, { value: "restaurant"}, { value: "roofing_contractor"}, { value: "rv_park"}, { value: "school"}, { value: "shoe_store"}, { value: "shopping_mall"}, { value: "spa"}, { value: "stadium"}, { value: "storage"}, { value: "store"}, { value: "subway_station"}, { value: "supermarket"}, { value: "synagogue"}, { value: "taxi_stand"}, { value: "train_station"}, { value: "transit_station"}, { value: "travel_agency"}, { value: "veterinary_care"}, { value: "zoo"}]
 
         const renderAll = this.props.fetchedPOI.map(b => {  
             return (
                 <ListItem key={b.id+'1'}>
                     <Button onPress={() => ActionSheet.show({
                         options: this.state.buttons,
-                        cancelButtonIndex: this.state.days.length,
+                        cancelButtonIndex: this.state.buttons.length,
                         title: "Select Day to be added"
                     },
                         buttonIndex => {
@@ -296,11 +304,11 @@ class DayDetailScreen extends Component {
                 this.props.savedDayPOI.push({day: count, list: []})
             }
         }
-        console.log(this.props.savedDayPOI);
+        // console.log(this.props.savedDayPOI);
         const renderedTabs = this.props.savedDayPOI.map((b,i) => {
             const renderedPOI = b.list.map(a =>{
                 return(
-                    <ListItem key={a.id}>
+                    <ListItem key={a.place_id}>
                     <Button onPress={() => ActionSheet.show({
                         options: REMOVE,
                         title: "Remove POI"
@@ -351,8 +359,10 @@ class DayDetailScreen extends Component {
                             <Dropdown
                             label='Filter'
                             data={data}
-                          />
-                        }
+                            value = 'restaurant'
+                            onChangeText={(value, index, data) => this.onSelectDropDown(value)}
+                      />
+                    }
                         <ScrollView> 
                             {renderAll}
                         </ScrollView>

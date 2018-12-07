@@ -29,8 +29,8 @@ class DayPickerScreen extends Component {
         // console.log(totalDays)
         this.setState({ startDate, untilDate, totalDays})
         this.props.setDate({
-            start: startDate,
-            end: untilDate,
+            start: startDate.toISOString(),
+            end: untilDate.toISOString(),
             total: totalDays
         })
         
