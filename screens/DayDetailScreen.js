@@ -137,6 +137,7 @@ class DayDetailScreen extends Component {
                             startDay: this.props.dayInfo.start,
                             endDay: this.props.dayInfo.end,
                         }
+                       
                         // Check for the flag here and make an update instead of insert new
                         fetch("http://ec2-52-15-252-121.us-east-2.compute.amazonaws.com:3000/trip/savetrip", {
                             method: "POST",
@@ -258,24 +259,7 @@ class DayDetailScreen extends Component {
     }
  
     render() { 
-    //     let data = [{
-    //     value: 'church',
-    //   }, {
-    //     value: 'courthouse',
-    //   }, {
-    //     value: 'casino',
-    //   }, {
-    //       value:'park'
-    //   },{
-    //       value: 'stadium'
-    //   },{
-    //     value: 'zoo'
-    //   },{
-    //       value:'shopping_mall'
-    //   },{
-    //       value: 'restaurant'
-    //   }];
-        let data = [{ value: "accounting" }, 
+        let data = [
         { value: "airport"}, 
         { value: "amusement_park"}, 
         { value: "aquarium"}, 
@@ -390,7 +374,7 @@ class DayDetailScreen extends Component {
                         <Title> Planner </Title>
                     </Body>
                     <Right>
-                        <Button iconRight light onPress={() => { this.savedTrip() }}>
+                        <Button iconRight light onPress={() => { this.savesTrip() }}>
                             <Text style={{ marginRight: 10 }}>Save</Text>
                         </Button>
                     </Right>
